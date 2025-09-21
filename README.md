@@ -27,7 +27,7 @@ O **Best Umbrella** é uma aplicação móvel inovadora que resolve o problema d
 - Notificações push personalizadas
 
 ### Backend API
--API RESTful com Spring Boot
+- API RESTful com Spring Boot
 - Autenticação JWT segura
 - Integração com OpenWeatherMap API
 - Gestão de base de dados PostgreSQL
