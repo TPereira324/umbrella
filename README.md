@@ -3,7 +3,7 @@ Sistema Inteligente de Partilha de Guarda-Chuvas
 
 ## Sobre o Projeto
 
-O **Best Umbrella** é uma aplicação móvel inovadora que resolve o problema de pessoas serem apanhadas desprevenidas pela chuva sem guarda-chuva. Através de uma rede colaborativa de pontos de partilha, os utilizadores podem localizar, reservar e utilizar guarda-chuvas de forma rápida e conveniente.
+** A Best Umbrella ** é uma aplicação móvel que permite a partilha de guarda-chuva em ambientes urbanos. O problema identificado é a falta de soluções práticas quando chove inesperadamente as pessoas acabam por comprar guarda-chuvas baratos, que rapidamente são descartados, gerando desperdício.
 
 ###  Objetivos
 - Promover a sustentabilidade e redução de desperdício
