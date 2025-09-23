@@ -1,6 +1,6 @@
 # Best Umbrella – Entrega 1
 
-**Projeto Mobile – Universidade Europeia**  
+**Projeto Mobile – Universidade Europeia**  / **Iade**
 **Licenciatura em Engenharia Informática – 3º Semestre (2025/2026)**  
 
 ---
