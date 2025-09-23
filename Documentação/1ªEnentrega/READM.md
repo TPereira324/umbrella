@@ -1,12 +1,12 @@
-# 🌂 Best Umbrella – Entrega 1
+# Best Umbrella – Entrega 1
 
 **Projeto Mobile – Universidade Europeia**  
 **Licenciatura em Engenharia Informática – 3º Semestre (2025/2026)**  
 
 ---
 
-## 📌 Identificação
-- **Grupo:** g03  
+##  Identificação
+- **Grupo:** G03  
 - **Elementos:** Feleciano Barata, Márcio Quintas, Taha-Wur Pereira.   
 - **Nome do Projeto:** Best Umbrella  
 
