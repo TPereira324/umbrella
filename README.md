@@ -1,7 +1,7 @@
 #  Best Umbrella
 
 Aplicação móvel para **aluguer de guarda-chuvas** em ambiente urbano.  
-Desenvolvido no âmbito da **Licenciatura em Engenharia Informática – 3º Semestre (2025/2026)** da Universidade Europeia.  
+Desenvolvido no âmbito da **Licenciatura em Engenharia Informática – 3º Semestre (2025/2026)** da Universidade Europeia / IADE.  
 
 ---
 
