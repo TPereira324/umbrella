@@ -1,41 +1,44 @@
-# Best-Umbrella
-Sistema Inteligente de Partilha de Guarda-Chuvas
+# 🌂 Best Umbrella
 
-## Sobre o Projeto
+Aplicação móvel para **aluguer de guarda-chuvas** em ambiente urbano.  
+Desenvolvido no âmbito da **Licenciatura em Engenharia Informática – 3º Semestre (2025/2026)** da Universidade Europeia.  
 
- **A Best Umbrella** é uma aplicação móvel que permite a partilha de guarda-chuva em ambientes urbanos. O problema identificado é a falta de soluções práticas quando chove inesperadamente as pessoas acabam por comprar guarda-chuvas baratos, que rapidamente são descartados, gerando desperdício.
+---
 
-###  Objetivos
-- Promover a sustentabilidade e redução de desperdício
-- Oferecer conveniência no quotidiano urbano
-- Criar uma comunidade de partilha colaborativa
-- Integrar previsão meteorológica inteligente
+## Objetivo
+O **Best Umbrella** pretende oferecer uma solução prática e sustentável para quem é apanhado pela chuva sem guarda-chuva.  
+A app permite **localizar, reservar, alugar e devolver** guarda-chuvas em pontos parceiros espalhados pela cidade.  
+
+---
 
 ##  Funcionalidades
+-  **Mapa interativo** com pontos de aluguer/devolução.  
+-  **Login/Registo** de utilizadores.  
+-  **Reserva de guarda-chuva** em tempo real.  
+-  **Aluguer e devolução via QR Code**.  
+-  **Histórico de alugueres**.  
+-  **Notificações meteorológicas** (API Meteo).  
 
-###  Principais
-- **Mapa Interativo**: Visualize guarda-chuvas disponíveis em tempo real
-- **Sistema de Reservas**: Reserve com QR code em segundos
-- **Alertas Meteorológicos**: Notificações proativas antes da chuva
-- **Sistema de Rating**: Avaliação de utilizadores e guarda-chuvas
-- **Gamificação**: Pontos e recompensas por utilização
+---
 
-###  Mobile App
-- Localização em tempo real
-- Scanner de QR codes integrado
-- Interface moderna com Jetpack Compose
-- Notificações push personalizadas
+##  Arquitetura
+- **App Mobile (Cliente)** → Android (Kotlin + Jetpack Compose).  
+- **Backend (Servidor)** → Spring Boot (REST API, arquitetura MVC).  
+- **Base de Dados** → PostgreSQL/MySQL.  
+- **APIs externas** → OpenWeather API (alertas de chuva).  
 
-### Backend API
-- API RESTful com Spring Boot
-- Autenticação JWT segura
-- Integração com OpenWeatherMap API
-- Gestão de base de dados PostgreSQL
+---
 
+##  Tecnologias
+- **Android Studio Koala Feature Drop | 2024.1.2**  
+- **Kotlin + Jetpack Compose**  
+- **Spring Boot**  
+- **PostgreSQL / MySQL**  
+- **GitHub** (gestão de versões + documentação)  
+- **ClickUp** (gestão de projeto)  
+- **Discord** (comunicação)  
+- **Figma** (mockups e UI)  
 
+---
 
-
-
-
-
-
+## 📂 Estrutura do Projeto
