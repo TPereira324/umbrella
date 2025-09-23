@@ -1,4 +1,4 @@
-# 🌂 Best Umbrella
+#  Best Umbrella
 
 Aplicação móvel para **aluguer de guarda-chuvas** em ambiente urbano.  
 Desenvolvido no âmbito da **Licenciatura em Engenharia Informática – 3º Semestre (2025/2026)** da Universidade Europeia.  
@@ -41,4 +41,4 @@ A app permite **localizar, reservar, alugar e devolver** guarda-chuvas em pontos
 
 ---
 
-## 📂 Estrutura do Projeto
+
