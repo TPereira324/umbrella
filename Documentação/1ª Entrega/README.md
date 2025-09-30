@@ -1,7 +1,5 @@
 #  Best Umbrella  
 
-# Best Umbrella – Entrega 1
-
 **Projeto Mobile – Universidade Europeia / IADE**  
 **Licenciatura em Engenharia Informática – 3º Semestre (2025/2026)**  
 
@@ -90,6 +88,38 @@ O modelo inicial é composto por quatro entidades principais que estruturam o si
 - O **Ponto de Aluguer**, que representa o local físico e o parceiro responsável pelo guarda-chuva.  
 
 Este modelo poderá ser expandido com novas entidades, como notificações personalizadas e sistema de fidelização.  
+
+---
+
+
+## 💳 Modelo de Pagamento  
+
+Um dos aspetos centrais do **Best Umbrella** é garantir que o processo de aluguer seja simples e acessível. Para isso, a aplicação irá suportar diferentes métodos de pagamento digitais, adequados tanto para utilizadores locais como turistas.  
+
+### Métodos de Pagamento Disponíveis  
+- **Cartão de Crédito/Débito** → integrado através de serviços como **Stripe** ou **Adyen**, garantindo segurança e conformidade com normas internacionais (PCI DSS).  
+- **MB WAY** → solução popular em Portugal, ideal para estudantes e trabalhadores urbanos que procuram rapidez em microtransações.  
+- **Google Pay e Apple Pay** → pagamentos móveis sem necessidade de inserir dados de cartão sempre que for feito um aluguer.  
+- **PayPal** → pensado para turistas, permitindo uma opção internacionalmente reconhecida.  
+
+### Modelos de Utilização  
+- **Pay-per-use (pagar por utilização):** o utilizador paga apenas pelo tempo de utilização do guarda-chuva (ex.: 1€ por 24h).  
+- **Depósito reembolsável:** para incentivar a devolução, o utilizador paga um valor de caução (ex.: 5€) que é devolvido assim que o guarda-chuva for entregue num ponto autorizado.  
+- **Subscrição mensal:** opção para utilizadores frequentes, com um valor fixo (ex.: 5€/mês) que permite alugueres ilimitados.  
+- **Campanhas promocionais:** primeiros 30 minutos grátis ou descontos em parcerias com cafés, universidades e centros comerciais, para atrair novos utilizadores.  
+
+### Depósito de Segurança  
+O **depósito reembolsável** funciona como um mecanismo de confiança:  
+1. No momento do primeiro aluguer, é cobrado um valor de caução (ex.: 5€).  
+2. Este valor fica bloqueado no método de pagamento do utilizador, mas não é consumido caso o guarda-chuva seja devolvido.  
+3. Assim que a devolução é confirmada via QR Code, o sistema liberta o depósito.  
+4. Caso o guarda-chuva não seja devolvido no prazo definido, o valor da caução é convertido em pagamento automático, cobrindo o custo de reposição.  
+
+Este sistema garante que os utilizadores têm motivação para devolver os guarda-chuvas e reduz drasticamente o risco de perdas para a plataforma.  
+
+### Estratégia Inicial  
+Na primeira fase, o **Best Umbrella** irá disponibilizar **Cartão de Crédito/Débito via Stripe** e **MB WAY** como principais métodos de pagamento. Estes garantem simplicidade e abrangem a maioria dos utilizadores em Portugal.  
+Num segundo momento, será integrada a compatibilidade com **Google Pay, Apple Pay e PayPal**, de forma a ampliar o alcance para turistas e mercados internacionais.  
 
 ---
 
