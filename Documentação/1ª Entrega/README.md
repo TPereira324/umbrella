@@ -92,36 +92,31 @@ Este modelo poderá ser expandido com novas entidades, como notificações perso
 ---
 
 
-## Modelo de Pagamento  
+##  Modelo de Pagamento  
 
-Um dos aspetos centrais do **Best Umbrella** é garantir que o processo de aluguer seja simples e acessível. Para isso, a aplicação irá suportar diferentes métodos de pagamento digitais, adequados tanto para utilizadores locais como turistas.  
+Para garantir uma experiência simples, rápida e segura, o **Best Umbrella** aposta em métodos de pagamento digitais amplamente utilizados e fáceis de integrar.  
 
 ### Métodos de Pagamento Disponíveis  
-- **Cartão de Crédito/Débito** → integrado através de serviços como **Stripe** ou **Adyen**, garantindo segurança e conformidade com normas internacionais (PCI DSS).  
-- **MB WAY** → solução popular em Portugal, ideal para estudantes e trabalhadores urbanos que procuram rapidez em microtransações.  
-- **Google Pay e Apple Pay** → pagamentos móveis sem necessidade de inserir dados de cartão sempre que for feito um aluguer.  
-- **PayPal** → pensado para turistas, permitindo uma opção internacionalmente reconhecida.  
+- **Google Pay e Apple Pay** → soluções móveis que permitem pagamentos instantâneos através do smartphone, sem necessidade de inserir dados de cartão em cada aluguer.  
+- **PayPal** → opção internacionalmente reconhecida, ideal para turistas que não pretendem utilizar cartões locais.  
 
 ### Modelos de Utilização  
 - **Pay-per-use (pagar por utilização):** o utilizador paga apenas pelo tempo de utilização do guarda-chuva (ex.: 1€ por 24h).  
-- **Depósito reembolsável:** para incentivar a devolução, o utilizador paga um valor de caução (ex.: 5€) que é devolvido assim que o guarda-chuva for entregue num ponto autorizado.  
-- **Subscrição mensal:** opção para utilizadores frequentes, com um valor fixo (ex.: 5€/mês) que permite alugueres ilimitados.  
-- **Campanhas promocionais:** primeiros 30 minutos grátis ou descontos em parcerias com cafés, universidades e centros comerciais, para atrair novos utilizadores.  
+- **Depósito reembolsável:** um valor de caução (ex.: 5€) é bloqueado no momento do aluguer e libertado assim que o guarda-chuva é devolvido corretamente. Caso não haja devolução, o depósito cobre o custo de reposição.  
+- **Subscrição mensal:** para utilizadores frequentes, existe a possibilidade de pagar um valor fixo (ex.: 5€/mês) que permite alugueres ilimitados.  
+- **Campanhas promocionais:** descontos e primeiros minutos grátis, em colaboração com parceiros locais (universidades, cafés, centros comerciais).  
 
 ### Depósito de Segurança  
-O **depósito reembolsável** funciona como um mecanismo de confiança:  
-1. No momento do primeiro aluguer, é cobrado um valor de caução (ex.: 5€).  
-2. Este valor fica bloqueado no método de pagamento do utilizador, mas não é consumido caso o guarda-chuva seja devolvido.  
-3. Assim que a devolução é confirmada via QR Code, o sistema liberta o depósito.  
-4. Caso o guarda-chuva não seja devolvido no prazo definido, o valor da caução é convertido em pagamento automático, cobrindo o custo de reposição.  
+O **depósito reembolsável** é o elemento-chave do sistema:  
+1. O valor da caução é bloqueado no PayPal ou Google/Apple Pay no momento da reserva.  
+2. O utilizador recolhe o guarda-chuva e utiliza-o normalmente.  
+3. Quando faz a devolução via QR Code, o sistema liberta automaticamente o depósito.  
+4. Se não devolver no prazo definido, o valor é cobrado como penalização, garantindo sustentabilidade ao serviço.  
 
-Este sistema garante que os utilizadores têm motivação para devolver os guarda-chuvas e reduz drasticamente o risco de perdas para a plataforma.  
-
-### Estratégia Inicial  
-Na primeira fase, o **Best Umbrella** irá disponibilizar **Cartão de Crédito/Débito via Stripe** e **MB WAY** como principais métodos de pagamento. Estes garantem simplicidade e abrangem a maioria dos utilizadores em Portugal.  
-Num segundo momento, será integrada a compatibilidade com **Google Pay, Apple Pay e PayPal**, de forma a ampliar o alcance para turistas e mercados internacionais.  
+Este método cria um equilíbrio entre confiança no utilizador e proteção da infraestrutura, tornando o sistema justo e eficiente.  
 
 ---
+
 
 ##  Mockups  
 
