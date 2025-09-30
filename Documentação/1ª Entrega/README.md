@@ -127,7 +127,7 @@ Os primeiros protótipos desenvolvidos no Figma apresentam:
 - Um **histórico de alugueres** com detalhes sobre datas, locais e custos.  
 - Um **sistema de notificações**, que alerta para chuva iminente ou promoções de parceiros.  
 
-*(https://www.figma.com/make/R6owKAQrHkWpdB7z8hp85O/Umbrella-Sharing-App?node-id=0-1&t=pFGLOQdrlCiDIgsW-1)*  
+*(https://www.figma.com/make/R6owKAQrHkWpdB7z8hp85O/Umbrella-Sharing-App?node-id=0-1&p=f&t=9VHfm9paVixsfT2k-0&fullscreen=1)*  
 
 ---
 
