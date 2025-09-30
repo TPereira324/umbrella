@@ -92,7 +92,7 @@ Este modelo poderá ser expandido com novas entidades, como notificações perso
 ---
 
 
-## 💳 Modelo de Pagamento  
+## Modelo de Pagamento  
 
 Um dos aspetos centrais do **Best Umbrella** é garantir que o processo de aluguer seja simples e acessível. Para isso, a aplicação irá suportar diferentes métodos de pagamento digitais, adequados tanto para utilizadores locais como turistas.  
 
