@@ -142,7 +142,7 @@ Os primeiros protótipos desenvolvidos no Figma apresentam:
 
 ##  Conclusão  
 
-O **Best Umbrella** é mais do que uma simples aplicação de aluguer: é uma resposta tecnológica a um problema urbano real. O projeto alia **sustentabilidade, inovação e conveniência**, oferecendo uma alternativa prática e responsável para os utilizadores.  
+O **Best Umbrella** é mais do que uma simples aplicação de aluguer é uma resposta tecnológica a um problema urbano real. O projeto alia **sustentabilidade, inovação e conveniência**, oferecendo uma alternativa prática e responsável para os utilizadores.  
 
 Com um modelo escalável, sem dependência de infraestruturas complexas, o Best Umbrella está preparado para crescer em diferentes cidades, promovendo **mobilidade urbana sustentável** e incentivando o consumo consciente.  
 
