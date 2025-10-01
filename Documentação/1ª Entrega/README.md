@@ -102,8 +102,7 @@ Para garantir uma experiência simples, rápida e segura, o **Best Umbrella** ap
 ### Modelos de Utilização  
 - **Pay-per-use (pagar por utilização):** o utilizador paga apenas pelo tempo de utilização do guarda-chuva (ex.: 1€ por 24h).  
 - **Depósito reembolsável:** um valor de caução (ex.: 5€) é bloqueado no momento do aluguer e libertado assim que o guarda-chuva é devolvido corretamente. Caso não haja devolução, o depósito cobre o custo de reposição.  
-- **Subscrição mensal:** para utilizadores frequentes, existe a possibilidade de pagar um valor fixo (ex.: 5€/mês) que permite alugueres ilimitados.  
-- **Campanhas promocionais:** descontos e primeiros minutos grátis, em colaboração com parceiros locais (universidades, cafés, centros comerciais).  
+  - **Campanhas promocionais:** descontos e primeiros minutos grátis, em colaboração com parceiros locais (universidades, cafés, centros comerciais).  
 
 ### Depósito de Segurança  
 O **depósito reembolsável** é o elemento-chave do sistema:  
