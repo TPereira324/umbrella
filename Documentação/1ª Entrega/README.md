@@ -92,13 +92,12 @@ Este modelo poderá ser expandido com novas entidades, como notificações perso
 ---
 
 
-##  Modelo de Pagamento  
+## Modelo de Pagamento  
 
 Para garantir uma experiência simples, rápida e segura, o **Best Umbrella** aposta em métodos de pagamento digitais amplamente utilizados e fáceis de integrar.  
 
-### Métodos de Pagamento Disponíveis  
-- **Google Pay e Apple Pay** → soluções móveis que permitem pagamentos instantâneos através do smartphone, sem necessidade de inserir dados de cartão em cada aluguer.  
-- **PayPal** → opção internacionalmente reconhecida, ideal para turistas que não pretendem utilizar cartões locais.  
+### Método de Pagamento Disponível  
+- **PayPal** → opção internacionalmente reconhecida, ideal para turistas e utilizadores que preferem não utilizar cartões locais.  
 
 ### Modelos de Utilização  
 - **Pay-per-use (pagar por utilização):** o utilizador paga apenas pelo tempo de utilização do guarda-chuva (ex.: 1€ por 24h).  
@@ -108,7 +107,7 @@ Para garantir uma experiência simples, rápida e segura, o **Best Umbrella** ap
 
 ### Depósito de Segurança  
 O **depósito reembolsável** é o elemento-chave do sistema:  
-1. O valor da caução é bloqueado no PayPal ou Google/Apple Pay no momento da reserva.  
+1. O valor da caução é bloqueado no PayPal no momento da reserva.  
 2. O utilizador recolhe o guarda-chuva e utiliza-o normalmente.  
 3. Quando faz a devolução via QR Code, o sistema liberta automaticamente o depósito.  
 4. Se não devolver no prazo definido, o valor é cobrado como penalização, garantindo sustentabilidade ao serviço.  
@@ -116,6 +115,7 @@ O **depósito reembolsável** é o elemento-chave do sistema:
 Este método cria um equilíbrio entre confiança no utilizador e proteção da infraestrutura, tornando o sistema justo e eficiente.  
 
 ---
+
 
 
 ##  Mockups  
