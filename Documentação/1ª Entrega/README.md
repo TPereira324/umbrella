@@ -130,12 +130,12 @@ Os primeiros protótipos desenvolvidos no Figma apresentam:
 
 ---
 
-##  Roadmap  
 
-- **Entrega 1 (set 2025):** Ideia, pesquisa de mercado, requisitos e mockups iniciais  
-- **Entrega 2 (nov 2025):** Protótipo funcional (login, mapa, reservas)  
-- **Entrega 3 (jan 2026):** Integração de QR Code e API meteorológica  
-- **Entrega 4 (fev 2026):** Versão final com testes e apresentação  
+## Roadmap  
+
+- **Entrega 1 (05 de outubro 2025):** Ideia do projeto, pesquisa de mercado, definição de requisitos e mockups iniciais.  
+- **Entrega 2 (início de novembro 2025):** Protótipo funcional com autenticação, mapa interativo, sistema de reservas e integração do QR Code.  
+- **Entrega 3 (até 14 de dezembro 2025):** Versão final da aplicação com API meteorológica integrada, testes completos, refinamento da interface e apresentação final.  
 
 ---
 
