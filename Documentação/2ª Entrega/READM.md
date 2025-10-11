@@ -90,10 +90,10 @@ A aplicação deve ser compatível com Android 10 ou superior, garantir conformi
 ##  Modelo de Domínio  
 
 O modelo inicial é composto por quatro entidades principais que estruturam o sistema:  
-- O **Utilizador**, que possui identificação única, nome, email, password encriptada e um rating associado.  
-- O **GuardaChuva**, identificado por um estado e localização, sendo registado em diferentes pontos da cidade.  
-- O **Aluguer**, que guarda toda a informação relativa ao processo, como as datas de início e fim, custo e associação ao utilizador.  
-- O **Ponto de Aluguer**, que representa o local físico e o parceiro responsável pelo guarda-chuva.  
+- **Utilizador**, que possui identificação única, nome, email, password encriptada e um rating associado.  
+- **GuardaChuva**, identificado por um estado e localização, sendo registado em diferentes pontos da cidade.  
+- **Aluguer**, que guarda toda a informação relativa ao processo, como as datas de início e fim, custo e associação ao utilizador.  
+- **Ponto de Aluguer**, que representa o local físico e o parceiro responsável pelo guarda-chuva.  
 
 Além destas entidades base, o modelo foi expandido com três novas componentes:  
 - **Notificação**, responsável por alertar o utilizador sobre previsões de chuva, estado do aluguer ou campanhas promocionais.  
@@ -127,9 +127,6 @@ O **depósito reembolsável** é o elemento-chave do sistema:
 Este método cria um equilíbrio entre confiança no utilizador e proteção da infraestrutura, tornando o sistema justo e eficiente.  
 
 ---
-
-
-
 ##  Mockups  
 
 Os primeiros protótipos desenvolvidos no Figma apresentam:  
@@ -154,8 +151,6 @@ O sistema utiliza uma base de dados **PostgreSQL**, com entidades principais:
 Ficheiros SQL incluídos para criação (`create.sql`), povoamento (`populate.sql`) e consultas (`queries.sql`).  
 
 ---
-
-
 ## Tecnologias  
 
 - **Frontend Mobile:** Kotlin + Jetpack Compose  
