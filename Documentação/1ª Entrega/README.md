@@ -130,7 +130,7 @@ Os primeiros protótipos desenvolvidos no Figma apresentam:
 ![Scanner QR](images/scaner.jpg)
 ![Mapa](images/Mapa.jpg)
 ![Histórico](images/Historico.jpg)
-![Perfil](images/Perfil.jpg)
+![Perfil](imagens/Perfil.jpg)
 
 *(https://www.figma.com/make/R6owKAQrHkWpdB7z8hp85O/Umbrella-Sharing-App?node-id=0-1&p=f&t=9VHfm9paVixsfT2k-0&fullscreen=1)*  
 
