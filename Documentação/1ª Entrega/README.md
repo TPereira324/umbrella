@@ -127,13 +127,9 @@ Os primeiros protótipos desenvolvidos no Figma apresentam:
 - Um **sistema de notificações**, que alerta para chuva iminente ou promoções de parceiros.
 
   
-![Image](https://github.com/user-attachments/assets/3540fd9e-6439-4426-8761-bca5a1cc97b9)
-![Image](https://github.com/user-attachments/assets/575034e8-ab35-4604-b1c1-d3ffe0d3069a)
-![Image](https://github.com/user-attachments/assets/8b8f09c0-174b-4433-b0c9-070ae1b1d430)
-![Image](https://github.com/user-attachments/assets/71af7c74-99e9-4438-be99-0439fd21a5f2)
-
-
-*(https://www.figma.com/make/R6owKAQrHkWpdB7z8hp85O/Umbrella-Sharing-App?node-id=0-1&p=f&t=9VHfm9paVixsfT2k-0&fullscreen=1)*  
+![Image](https://github.com/user-attachments/assets/3540fd9e-6439-4426-8761-bca5a1cc97b9)    ![Image](https://github.com/user-attachments/assets/575034e8-ab35-4604-b1c1-d3ffe0d3069a)
+![Image](https://github.com/user-attachments/assets/8b8f09c0-174b-4433-b0c9-070ae1b1d430)   ![Image](https://github.com/user-attachments/assets/71af7c74-99e9-4438-be99-0439fd21a5f2)
+ 
 
 ---
 
