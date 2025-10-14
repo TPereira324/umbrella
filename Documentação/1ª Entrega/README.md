@@ -125,6 +125,10 @@ Os primeiros protótipos desenvolvidos no Figma apresentam:
 - Um **scanner de QR Code** integrado na aplicação, que simplifica o processo de recolha e devolução.  
 - Um **histórico de alugueres** com detalhes sobre datas, locais e custos.  
 - Um **sistema de notificações**, que alerta para chuva iminente ou promoções de parceiros.
+![Mockup 1 - Ecrã de Mapa](./Imagem%20WhatsApp%202025-10-14%20às%2009.12.43_750a856c.jpg)
+![Mockup 2 - Scanner QR](./Imagem%20WhatsApp%202025-10-14%20às%2009.12.43_7e18c46a.jpg)
+![Mockup 3 - Painel Principal](./Imagem%20WhatsApp%202025-10-14%20às%2009.12.43_3ba5c6cd.jpg)
+
   
 *(https://www.figma.com/make/R6owKAQrHkWpdB7z8hp85O/Umbrella-Sharing-App?node-id=0-1&p=f&t=9VHfm9paVixsfT2k-0&fullscreen=1)*  
 
