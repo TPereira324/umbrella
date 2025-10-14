@@ -5,22 +5,14 @@
 
 ---
 
-## Identificação
+##  Identificação
 - **Grupo:** G03  
 - **Elementos:** Fábio Texeira, Feleciano Barata, Márcio Quintas, Joybeth Mateus e Taha-Wur Pereira.   
 - **Nome do Projeto:** Best Umbrella  
 
 ---
-## Protótipo Funcional  
 
-Esta segunda entrega apresenta o **protótipo funcional (versão alfa)** do projeto, com:  
-- **Aplicação Android (Kotlin + Jetpack Compose)**;  
-- **Servidor Spring Boot (REST API)** com ligação à base de dados;  
-- **Base de dados relacional (PostgreSQL)**;  
-- Comunicação real entre app e backend.  
-
----
-## Descrição  
+##  Descrição  
 
 O **Best Umbrella** é uma aplicação móvel que surgiu para resolver um problema comum em cidades: ser apanhado pela chuva sem proteção e acabar por comprar um guarda-chuva descartável de baixa qualidade.  
 A proposta é simples e sustentável: oferecer um serviço de **aluguer temporário de guarda-chuvas** em pontos estratégicos da cidade, como universidades, estações, cafés parceiros e centros comerciais.  
@@ -90,17 +82,12 @@ A aplicação deve ser compatível com Android 10 ou superior, garantir conformi
 ##  Modelo de Domínio  
 
 O modelo inicial é composto por quatro entidades principais que estruturam o sistema:  
-- **Utilizador**, que possui identificação única, nome, email, password encriptada e um rating associado.  
-- **GuardaChuva**, identificado por um estado e localização, sendo registado em diferentes pontos da cidade.  
-- **Aluguer**, que guarda toda a informação relativa ao processo, como as datas de início e fim, custo e associação ao utilizador.  
-- **Ponto de Aluguer**, que representa o local físico e o parceiro responsável pelo guarda-chuva.  
+- O **Utilizador**, que possui identificação única, nome, email, password encriptada e um rating associado.  
+- O **GuardaChuva**, identificado por um estado e localização, sendo registado em diferentes pontos da cidade.  
+- O **Aluguer**, que guarda toda a informação relativa ao processo, como as datas de início e fim, custo e associação ao utilizador.  
+- O **Ponto de Aluguer**, que representa o local físico e o parceiro responsável pelo guarda-chuva.  
 
-Além destas entidades base, o modelo foi expandido com três novas componentes:  
-- **Notificação**, responsável por alertar o utilizador sobre previsões de chuva, estado do aluguer ou campanhas promocionais.  
-- **Histórico**, que armazena o registo completo das reservas e devoluções efetuadas, permitindo ao utilizador consultar os seus alugueres passados.  
-- **Fidelização**, que gere pontos ou recompensas atribuídos conforme o número de alugueres realizados, incentivando o uso contínuo da plataforma.  
-
-Este modelo garante uma estrutura escalável e flexível, permitindo futuras integrações e melhorias funcionais no ecossistema do **Best Umbrella**.    
+Este modelo poderá ser expandido com novas entidades, como notificações personalizadas e sistema de fidelização.  
 
 ---
 
@@ -127,6 +114,9 @@ O **depósito reembolsável** é o elemento-chave do sistema:
 Este método cria um equilíbrio entre confiança no utilizador e proteção da infraestrutura, tornando o sistema justo e eficiente.  
 
 ---
+
+
+
 ##  Mockups  
 
 Os primeiros protótipos desenvolvidos no Figma apresentam:  
@@ -134,33 +124,15 @@ Os primeiros protótipos desenvolvidos no Figma apresentam:
 - Um **ecrã de reserva** que confirma a disponibilidade e o tempo de utilização.  
 - Um **scanner de QR Code** integrado na aplicação, que simplifica o processo de recolha e devolução.  
 - Um **histórico de alugueres** com detalhes sobre datas, locais e custos.  
-- Um **sistema de notificações**, que alerta para chuva iminente ou promoções de parceiros.  
+- Um **sistema de notificações**, que alerta para chuva iminente ou promoções de parceiros.
 
-*(https://www.figma.com/make/R6owKAQrHkWpdB7z8hp85O/Umbrella-Sharing-App?node-id=0-1&p=f&t=9VHfm9paVixsfT2k-0&fullscreen=1)*  
-
----
-## Base de Dados  
-
-O sistema utiliza uma base de dados **PostgreSQL**, com entidades principais:  
-- **Utilizador**  
-- **GuardaChuva**  
-- **Aluguer**  
-- **PontoAluguer**
-- **Notificações**
-
-Ficheiros SQL incluídos para criação (`create.sql`), povoamento (`populate.sql`) e consultas (`queries.sql`).  
+  
+![Image](https://github.com/user-attachments/assets/3540fd9e-6439-4426-8761-bca5a1cc97b9)    ![Image](https://github.com/user-attachments/assets/575034e8-ab35-4604-b1c1-d3ffe0d3069a)
+![Image](https://github.com/user-attachments/assets/8b8f09c0-174b-4433-b0c9-070ae1b1d430)   ![Image](https://github.com/user-attachments/assets/71af7c74-99e9-4438-be99-0439fd21a5f2)
+ 
 
 ---
-## Tecnologias  
 
-- **Frontend Mobile:** Kotlin + Jetpack Compose  
-- **Backend:** Spring Boot (REST API)  
-- **Base de Dados:** PostgreSQL  
-- **Design & Mockups:** Figma  
-- **Gestão de Projeto:** GitHub, ClickUp, Discord  
-
-
----
 
 ## Roadmap  
 
@@ -168,7 +140,9 @@ Ficheiros SQL incluídos para criação (`create.sql`), povoamento (`populate.sq
 - **Entrega 2 (início de novembro 2025):** Protótipo funcional com autenticação, mapa interativo, sistema de reservas e integração do QR Code.  
 - **Entrega 3 (até 14 de dezembro 2025):** Versão final da aplicação com API meteorológica integrada, testes completos, refinamento da interface e apresentação final.  
 
+![Image](https://github.com/user-attachments/assets/00cc96c1-20a5-45b4-88e2-8662eb73a03d)
 ---
+
 ##  Conclusão  
 
 O **Best Umbrella** é mais do que uma simples aplicação de aluguer é uma resposta tecnológica a um problema urbano real. O projeto alia **sustentabilidade, inovação e conveniência**, oferecendo uma alternativa prática e responsável para os utilizadores.  
@@ -176,7 +150,6 @@ O **Best Umbrella** é mais do que uma simples aplicação de aluguer é uma res
 Com um modelo escalável, sem dependência de infraestruturas complexas, o Best Umbrella está preparado para crescer em diferentes cidades, promovendo **mobilidade urbana sustentável** e incentivando o consumo consciente.  
 
 ---
-
 
 
 
