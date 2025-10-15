@@ -28,14 +28,17 @@ import pt.iade.ei.bestumbrella1.ui.theme.blue
 import pt.iade.ei.bestumbrella1.ui.theme.white
 
 @Composable
-fun LoginScreen(
-    onRegisterClick: (() -> Unit)? = null,
-    onLoginSuccess: (() -> Unit)? = null
+fun RegisterScreen(
+    onLoginClick: (() -> Unit)? = null,
+    onRegisterSuccess: (() -> Unit)? = null
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(false) }
+    var showConfirmPassword by remember { mutableStateOf(false) }
     var emailError by remember { mutableStateOf(false) }
+    var passwordMismatch by remember { mutableStateOf(false) }
 
     fun isEmailValid(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -44,9 +47,7 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.linearGradient(colors = listOf(blue, white))
-            )
+            .background(brush = Brush.linearGradient(colors = listOf(blue, white)))
             .verticalScroll(rememberScrollState())
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -56,12 +57,12 @@ fun LoginScreen(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "App Logo",
             modifier = Modifier
-                .size(200.dp)
-                .padding(bottom = 25.dp)
+                .size(180.dp)
+                .padding(bottom = 20.dp)
         )
 
         Text(
-            text = "Bem-vindo ao Best Umbrella",
+            text = "Criar Conta",
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
             color = black
@@ -84,7 +85,7 @@ fun LoginScreen(
 
         if (emailError) {
             Text(
-                text = "❌ Email inválido. Verifica o formato.",
+                text = "❌ Email inválido.",
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.align(Alignment.Start).padding(top = 4.dp)
@@ -95,7 +96,10 @@ fun LoginScreen(
 
         OutlinedTextField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = {
+                password = it
+                passwordMismatch = false
+            },
             label = { Text("Palavra-passe", color = black, fontWeight = FontWeight.Bold) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
@@ -104,39 +108,71 @@ fun LoginScreen(
                 IconButton(onClick = { showPassword = !showPassword }) {
                     Icon(
                         imageVector = if (showPassword) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                        contentDescription = if (showPassword) "Ocultar palavra-passe" else "Mostrar palavra-passe"
+                        contentDescription = "Mostrar palavra-passe"
                     )
                 }
             }
         )
 
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = confirmPassword,
+            onValueChange = {
+                confirmPassword = it
+                passwordMismatch = false
+            },
+            label = { Text("Confirmar palavra-passe", color = black, fontWeight = FontWeight.Bold) },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth(),
+            visualTransformation = if (showConfirmPassword) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                IconButton(onClick = { showConfirmPassword = !showConfirmPassword }) {
+                    Icon(
+                        imageVector = if (showConfirmPassword) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                        contentDescription = "Mostrar confirmar palavra-passe"
+                    )
+                }
+            },
+            isError = passwordMismatch
+        )
+
+        if (passwordMismatch) {
+            Text(
+                text = "❌ As palavras-passe não coincidem.",
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.align(Alignment.Start).padding(top = 4.dp)
+            )
+        }
+
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
             onClick = {
-                if (!isEmailValid(email)) {
-                    emailError = true
-                } else {
-                    onLoginSuccess?.invoke()
+                when {
+                    !isEmailValid(email) -> emailError = true
+                    password != confirmPassword -> passwordMismatch = true
+                    else -> onRegisterSuccess?.invoke()
                 }
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
         ) {
-            Text("Entrar", fontWeight = FontWeight.Bold)
+            Text("Registar", fontWeight = FontWeight.Bold)
         }
 
         Spacer(modifier = Modifier.height(18.dp))
 
-        TextButton(onClick = { onRegisterClick?.invoke() }) {
-            Text("Ainda não tens conta? Regista-te", color = black, fontWeight = FontWeight.Bold)
+        TextButton(onClick = { onLoginClick?.invoke() }) {
+            Text("Já tens conta? Inicia sessão", color = black, fontWeight = FontWeight.Bold)
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun LoginScreenPreview() {
-    LoginScreen()
+fun RegisterScreenPreview() {
+    RegisterScreen()
 }

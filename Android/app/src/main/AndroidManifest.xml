@@ -23,5 +23,10 @@
             </intent-filter>
         </activity>
     </application>
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="A_TUA_API_KEY_AQUI" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.any" />
 
 </manifest>
