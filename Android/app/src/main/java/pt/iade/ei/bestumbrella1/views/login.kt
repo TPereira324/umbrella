@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import pt.iade.ei.bestumbrella1.R
 import pt.iade.ei.bestumbrella1.ui.theme.black
 import pt.iade.ei.bestumbrella1.ui.theme.blue
@@ -44,27 +46,26 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.linearGradient(colors = listOf(blue, white))
-            )
+            .background(brush = Brush.verticalGradient(colors = listOf(blue, white)))
             .verticalScroll(rememberScrollState())
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo),
-            contentDescription = "App Logo",
+            painter = painterResource(id = R.mipmap.ic_launcher_foreground),
+            contentDescription = "Logo da App",
             modifier = Modifier
-                .size(200.dp)
-                .padding(bottom = 25.dp)
+                .size(300.dp)
+                .padding(bottom = 3.dp)
         )
 
         Text(
-            text = "Bem-vindo ao Best Umbrella",
-            style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Center,
-            color = black
+            text = "Bem-vindo! ao Best Umbrella",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = black,
+            textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -79,15 +80,18 @@ fun LoginScreen(
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            isError = emailError
+            isError = emailError,
+            textStyle = TextStyle(fontWeight = FontWeight.Bold)
         )
 
         if (emailError) {
             Text(
-                text = "❌ Email inválido. Verifica o formato.",
+                text = "Email inválido. Verifica o formato.",
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.align(Alignment.Start).padding(top = 4.dp)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(top = 4.dp)
             )
         }
 
@@ -103,14 +107,15 @@ fun LoginScreen(
             trailingIcon = {
                 IconButton(onClick = { showPassword = !showPassword }) {
                     Icon(
-                        imageVector = if (showPassword) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                        imageVector = if (showPassword) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
                         contentDescription = if (showPassword) "Ocultar palavra-passe" else "Mostrar palavra-passe"
                     )
                 }
-            }
+            },
+            textStyle = TextStyle(fontWeight = FontWeight.Bold)
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         Button(
             onClick = {
@@ -127,10 +132,10 @@ fun LoginScreen(
             Text("Entrar", fontWeight = FontWeight.Bold)
         }
 
-        Spacer(modifier = Modifier.height(18.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         TextButton(onClick = { onRegisterClick?.invoke() }) {
-            Text("Ainda não tens conta? Regista-te", color = black, fontWeight = FontWeight.Bold)
+            Text("Ainda não tens conta? Regista-te", color = black)
         }
     }
 }

@@ -32,11 +32,15 @@ fun RegisterScreen(
     onLoginClick: (() -> Unit)? = null,
     onRegisterSuccess: (() -> Unit)? = null
 ) {
+    var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+
     var showPassword by remember { mutableStateOf(false) }
     var showConfirmPassword by remember { mutableStateOf(false) }
+
+    var nameError by remember { mutableStateOf(false) }
     var emailError by remember { mutableStateOf(false) }
     var passwordMismatch by remember { mutableStateOf(false) }
 
@@ -54,22 +58,48 @@ fun RegisterScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = R.mipmap.ic_launcher_foreground),
             contentDescription = "App Logo",
             modifier = Modifier
-                .size(180.dp)
-                .padding(bottom = 20.dp)
+                .size(300.dp)
+                .padding(bottom = 1.dp)
         )
 
         Text(
             text = "Criar Conta",
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
-            color = black
+            color = black,
+            fontWeight = FontWeight.Bold
         )
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        // Campo Nome
+        OutlinedTextField(
+            value = name,
+            onValueChange = {
+                name = it
+                nameError = false
+            },
+            label = { Text("Nome", color = black, fontWeight = FontWeight.Bold) },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth(),
+            isError = nameError
+        )
+
+        if (nameError) {
+            Text(
+                text = " Nome obrigatório.",
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.align(Alignment.Start).padding(top = 4.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Campo Email
         OutlinedTextField(
             value = email,
             onValueChange = {
@@ -85,7 +115,7 @@ fun RegisterScreen(
 
         if (emailError) {
             Text(
-                text = "❌ Email inválido.",
+                text = " Email inválido.",
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.align(Alignment.Start).padding(top = 4.dp)
@@ -94,6 +124,7 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Campo Palavra-passe
         OutlinedTextField(
             value = password,
             onValueChange = {
@@ -116,6 +147,7 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Campo Confirmar palavra-passe
         OutlinedTextField(
             value = confirmPassword,
             onValueChange = {
@@ -139,7 +171,7 @@ fun RegisterScreen(
 
         if (passwordMismatch) {
             Text(
-                text = "❌ As palavras-passe não coincidem.",
+                text = " As palavras-passe não coincidem.",
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.align(Alignment.Start).padding(top = 4.dp)
@@ -148,9 +180,11 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
+        // Botão Registar
         Button(
             onClick = {
                 when {
+                    name.isBlank() -> nameError = true
                     !isEmailValid(email) -> emailError = true
                     password != confirmPassword -> passwordMismatch = true
                     else -> onRegisterSuccess?.invoke()
@@ -165,6 +199,7 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(18.dp))
 
+        // Link para login
         TextButton(onClick = { onLoginClick?.invoke() }) {
             Text("Já tens conta? Inicia sessão", color = black, fontWeight = FontWeight.Bold)
         }

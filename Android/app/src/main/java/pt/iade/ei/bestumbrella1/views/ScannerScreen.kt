@@ -3,7 +3,9 @@ package pt.iade.ei.bestumbrella1.views
 import android.Manifest
 import android.content.pm.PackageManager
 import android.util.Log
+import androidx.annotation.OptIn
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -88,6 +90,7 @@ fun ScannerScreen() {
 }
 
 // 🔍 Função para processar o código QR
+@OptIn(ExperimentalGetImage::class)
 private fun scanQRCode(imageProxy: ImageProxy, onResult: (String) -> Unit) {
     val mediaImage = imageProxy.image
     if (mediaImage != null) {

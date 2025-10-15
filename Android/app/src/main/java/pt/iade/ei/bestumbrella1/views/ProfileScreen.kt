@@ -1,5 +1,6 @@
 package pt.iade.ei.bestumbrella1.views
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,10 +27,11 @@ data class Pagamento(
     val data: String
 )
 
+@SuppressLint("DefaultLocale")
 @Composable
 fun ProfileScreen(
-    userName: String = "Abbass Pereira",
-    userEmail: String = "abbass@email.com",
+    userName: String = "Taha-Wur Pereira",
+    userEmail: String = "tahawur@email.com",
     onLogoutClick: (() -> Unit)? = null
 ) {
     val pagamentos = remember {

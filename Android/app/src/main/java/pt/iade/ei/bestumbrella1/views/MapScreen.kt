@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.*
 import com.google.android.gms.maps.model.LatLng
 
