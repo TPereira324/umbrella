@@ -16,8 +16,7 @@ fun MainNavigation() {
         navController = navController,
         startDestination = "login"
     ) {
-
-        // 🟢 Tela de Login
+        // 🟢 Login
         composable("login") {
             LoginScreen(
                 onRegisterClick = { navController.navigate("register") },
@@ -25,7 +24,7 @@ fun MainNavigation() {
             )
         }
 
-        // 🟢 Tela de Registo
+        // 🟢 Registo
         composable("register") {
             RegisterScreen(
                 onLoginClick = { navController.popBackStack() },
@@ -33,12 +32,12 @@ fun MainNavigation() {
             )
         }
 
-        // 🗺️ Tela do Mapa
+        // 🗺️ Mapa
         composable("map") {
             MapScreen(navController)
         }
 
-        // 📷 Tela de Leitura de QR Code
+        // 📷 Scanner QR
         composable("qrscanner") {
             QrScannerScreen(
                 onCodeScanned = { code ->
@@ -47,7 +46,7 @@ fun MainNavigation() {
             )
         }
 
-        // 📄 Tela de Detalhes do Aluguer
+        // 📄 Detalhes do Aluguer
         composable(
             "rentalDetails/{qrCode}",
             arguments = listOf(navArgument("qrCode") { type = NavType.StringType })
@@ -56,13 +55,27 @@ fun MainNavigation() {
             RentalDetailsScreen(navController, qrCode)
         }
 
-        // 💳 Tela de Pagamento (PayPal)
+        // 💳 Pagamento
         composable(
             "payment/{qrCode}",
             arguments = listOf(navArgument("qrCode") { type = NavType.StringType })
         ) { backStackEntry ->
             val qrCode = backStackEntry.arguments?.getString("qrCode") ?: ""
             PaymentScreen(navController, qrCode)
+        }
+
+        // 👤 Perfil
+        composable("profile") {
+            ProfileScreen(onLogoutClick = {
+                navController.navigate("login") {
+                    popUpTo("login") { inclusive = true }
+                }
+            })
+        }
+
+        // 🔍 Scanner alternativo
+        composable("scanner") {
+            ScannerScreen()
         }
     }
 }

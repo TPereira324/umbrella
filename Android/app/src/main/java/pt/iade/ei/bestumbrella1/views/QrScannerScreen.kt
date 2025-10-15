@@ -20,8 +20,11 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.OptIn
+import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.view.PreviewView
 
+@OptIn(ExperimentalGetImage::class)
 @Composable
 fun QrScannerScreen(
     onCodeScanned: (String) -> Unit
@@ -55,7 +58,7 @@ fun QrScannerScreen(
                 cameraProviderFuture.addListener({
                     val cameraProvider = cameraProviderFuture.get()
                     val preview = Preview.Builder().build().also {
-                        it.setSurfaceProvider(previewView.surfaceProvider)
+                        it.surfaceProvider = previewView.surfaceProvider
                     }
 
                     val imageAnalyzer = ImageAnalysis.Builder().build().also {

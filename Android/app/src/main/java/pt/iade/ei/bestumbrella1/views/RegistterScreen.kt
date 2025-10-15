@@ -54,18 +54,18 @@ fun RegisterScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = R.mipmap.ic_launcher_foreground),
             contentDescription = "App Logo",
             modifier = Modifier
-                .size(180.dp)
-                .padding(bottom = 20.dp)
+                .size(300.dp)
+                .padding(bottom = 1.dp)
         )
 
         Text(
             text = "Criar Conta",
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
-            color = black
+            color = black, fontWeight = FontWeight.Bold
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -85,7 +85,7 @@ fun RegisterScreen(
 
         if (emailError) {
             Text(
-                text = "❌ Email inválido.",
+                text = " Email inválido.",
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.align(Alignment.Start).padding(top = 4.dp)
@@ -139,7 +139,7 @@ fun RegisterScreen(
 
         if (passwordMismatch) {
             Text(
-                text = "❌ As palavras-passe não coincidem.",
+                text = " As palavras-passe não coincidem.",
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.align(Alignment.Start).padding(top = 4.dp)
