@@ -1,46 +1,43 @@
 package pt.iade.ei.bestumbrella1.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import pt.iade.ei.bestumbrella1.data.UserRepository
-import pt.ipleiria.estubetural.views.LoginScreen
-import pt.ipleiria.estubetural.views.RegisterScreen
+import androidx.navigation.navArgument
+import pt.iade.ei.bestumbrella1.views.*
 
 @Composable
-fun MainNavigation(userRepository: UserRepository) {
+fun MainNavigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "login") {
-
-        composable("login") {
-            LoginScreen(
-                userRepository = userRepository,
-                onLoginSuccess = {
-                    // Aqui podes navegar para a tela principal, ex: "home"
-                    // navController.navigate("home")
-                },
-                onRegisterClick = {
-                    navController.navigate("register")
-                }
-            )
+    NavHost(navController = navController, startDestination = "map") {
+        composable("map") {
+            MapScreen(navController)
         }
-
-        composable("register") {
-            RegisterScreen(
-                userRepository = userRepository,
-                onRegisterSuccess = {
-                    // Após registo, volta para login ou navega para outra tela
-                    navController.popBackStack("login", inclusive = false)
-                },
-                onLoginClick = {
-                    navController.popBackStack()
-                }
-            )
+        composable("payment/{qrCode}", arguments = listOf(
+            navArgument("qrCode") { type = NavType.StringType }
+        )) { backStackEntry ->
+            val qrCode = backStackEntry.arguments?.getString("qrCode") ?: ""
+            PaymentScreen(navController)
         }
-
-        // composable("home") { HomeScreen(...) }
-        // composable("profile") { ProfileScreen(...) }
+        composable("profile") {
+            ProfileScreen(onLogoutClick = { navController.navigate("map") })
+        }
+        composable("qrscanner") {
+            QrScannerScreen(onCodeScanned = { code ->
+                navController.navigate("rental/$code")
+            })
+        }
+        composable("rental/{qrCode}", arguments = listOf(
+            navArgument("qrCode") { type = NavType.StringType }
+        )) { backStackEntry ->
+            val qrCode = backStackEntry.arguments?.getString("qrCode") ?: ""
+            RentalDetailsScreen(navController, qrCode)
+        }
+        composable("scanner") {
+            ScannerScreen()
+        }
     }
 }
