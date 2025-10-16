@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import pt.iade.ei.bestumbrella1.MainActivity
 import pt.iade.ei.bestumbrella1.R
 import pt.iade.ei.bestumbrella1.ui.theme.black
 import pt.iade.ei.bestumbrella1.ui.theme.blue
@@ -32,7 +33,8 @@ import pt.iade.ei.bestumbrella1.ui.theme.white
 @Composable
 fun LoginScreen(
     onRegisterClick: (() -> Unit)? = null,
-    onLoginSuccess: (() -> Unit)? = null
+    onLoginSuccess: (() -> Unit)? = null,
+    userRepository: MainActivity.UserRepository
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }

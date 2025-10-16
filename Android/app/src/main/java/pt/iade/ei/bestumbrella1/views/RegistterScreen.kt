@@ -21,6 +21,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import pt.iade.ei.bestumbrella1.MainActivity
 import pt.iade.ei.bestumbrella1.R
 import pt.iade.ei.bestumbrella1.ui.theme.black
 import pt.iade.ei.bestumbrella1.ui.theme.blue
@@ -29,7 +30,8 @@ import pt.iade.ei.bestumbrella1.ui.theme.white
 @Composable
 fun RegisterScreen(
     onLoginClick: (() -> Unit)? = null,
-    onRegisterSuccess: (() -> Unit)? = null
+    onRegisterSuccess: (() -> Unit)? = null,
+    userRepository: MainActivity.UserRepository
 ) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }

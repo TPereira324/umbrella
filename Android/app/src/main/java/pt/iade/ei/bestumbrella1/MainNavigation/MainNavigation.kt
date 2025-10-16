@@ -9,7 +9,7 @@ import androidx.navigation.navArgument
 import pt.iade.ei.bestumbrella1.views.*
 
 @Composable
-fun MainNavigation() {
+fun MainNavigation(userRepository: Any) {
     val navController = rememberNavController()
 
     NavHost(
@@ -20,7 +20,7 @@ fun MainNavigation() {
         composable("login") {
             LoginScreen(
                 onRegisterClick = { navController.navigate("register") },
-                onLoginSuccess = { navController.navigate("map") }
+                onLoginSuccess = { navController.navigate("map") },
             )
         }
 
@@ -28,7 +28,7 @@ fun MainNavigation() {
         composable("register") {
             RegisterScreen(
                 onLoginClick = { navController.popBackStack() },
-                onRegisterSuccess = { navController.navigate("map") }
+                onRegisterSuccess = { navController.navigate("map") },
             )
         }
 
