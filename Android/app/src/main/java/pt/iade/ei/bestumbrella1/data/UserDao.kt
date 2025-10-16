@@ -1,7 +1,6 @@
 package pt.iade.ei.bestumbrella1.data
 
 import androidx.room.*
-import androidx.room.Insert
 import pt.iade.ei.bestumbrella1.models.User
 
 @Dao

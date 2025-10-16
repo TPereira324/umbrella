@@ -3,21 +3,21 @@ package pt.iade.ei.bestumbrella1
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.*
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.room.Room
-import pt.iade.ei.bestumbrella1.MainNavigation.MainNavigation
 import pt.iade.ei.bestumbrella1.data.AppDatabase
-import pt.iade.ei.bestumbrella1.data.UserDao
+import pt.iade.ei.bestumbrella1.data.UserRepository
 import pt.iade.ei.bestumbrella1.ui.theme.BestUmbrella1Theme
+import pt.iade.ei.bestumbrella1.views.LoginScreen
+import pt.iade.ei.bestumbrella1.views.RegisterScreen
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Inicializar a base de dados Room
         val database = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
@@ -32,13 +32,19 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
-                    MainNavigation(userRepository = userRepository)
+                    LoginScreen(
+                        userRepository = userRepository,
+                        onLoginSuccess = { /* Navegar para MapScreen */ },
+                        onRegisterClick = {
+                            RegisterScreen(
+                                userRepository = userRepository,
+                                onRegisterSuccess = { /* Navegar para MapScreen */ },
+                                onLoginClick = { /* Voltar para Login */ }
+                            )
+                        }
+                    )
                 }
             }
         }
     }
-
-    annotation class UserRepository(val value: UserDao)
-
 }
