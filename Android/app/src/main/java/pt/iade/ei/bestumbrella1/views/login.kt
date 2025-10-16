@@ -1,6 +1,7 @@
 package pt.iade.ei.bestumbrella1.views
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
@@ -8,9 +9,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import pt.iade.ei.bestumbrella1.R
 import pt.iade.ei.bestumbrella1.data.UserRepository
 
 @Composable
@@ -33,6 +36,15 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        // Logo
+        Image(
+            painter = painterResource(id = R.mipmap.ic_launcher_foreground),
+            contentDescription = "Logo da aplicação",
+            modifier = Modifier
+                .size(180.dp)
+                .padding(bottom = 16.dp)
+        )
+
         Text("Iniciar Sessão", style = MaterialTheme.typography.titleLarge)
 
         Spacer(modifier = Modifier.height(24.dp))

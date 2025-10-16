@@ -67,7 +67,7 @@ fun MapScreen(navController: NavController) {
 
             // Texto informativo
             Text(
-                text = "Clique no botão 📷 para desbloquear um guarda-chuva!",
+                text = "Clique no botão  para desbloquear um guarda-chuva!",
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .padding(top = 70.dp)

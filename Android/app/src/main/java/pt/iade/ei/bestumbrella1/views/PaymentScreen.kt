@@ -40,7 +40,7 @@ fun PaymentScreen(
                     }
                 }
             ) {
-                Text("💳 Pagar com PayPal")
+                Text(" Pagar com PayPal")
             }
 
             Spacer(modifier = Modifier.height(16.dp))
