@@ -32,7 +32,7 @@ data class Pagamento(
 @Composable
 fun ProfileScreen(
     userName: String = "Taha-Wur Pereira",
-    userEmail: String = "tahawur@email.com",
+    userEmail: String = "tahawur@gmail.com",
     onLogoutClick: (() -> Unit)? = null
 ) {
     val pagamentos = remember {
