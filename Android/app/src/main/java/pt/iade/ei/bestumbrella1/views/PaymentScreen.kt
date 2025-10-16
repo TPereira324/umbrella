@@ -11,8 +11,7 @@ import androidx.navigation.NavController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaymentScreen(
-    navController: NavController,
-    qrCode: String
+    navController: NavController
 ) {
     Scaffold(
         topBar = {

@@ -1,4 +1,4 @@
-package pt.iade.ei.bestumbrella1.views
+package pt.ipleiria.estubetural.views
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -13,14 +13,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import pt.iade.ei.bestumbrella1.R
 import pt.iade.ei.bestumbrella1.data.UserRepository
 
+import pt.iade.ei.bestumbrella1.R
 @Composable
 fun LoginScreen(
     userRepository: UserRepository,
-    onLoginSuccess: (() -> Unit)? = null,
-    onRegisterClick: (() -> Unit)? = null
+    onLoginSuccess: () -> Unit,
+    onRegisterClick: () -> Unit
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -36,10 +36,9 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Logo
         Image(
             painter = painterResource(id = R.mipmap.ic_launcher_foreground),
-            contentDescription = "Logo da aplicação",
+            contentDescription = "Logo",
             modifier = Modifier
                 .size(180.dp)
                 .padding(bottom = 16.dp)
@@ -83,8 +82,8 @@ fun LoginScreen(
                     val user = userRepository.autenticar(email)
                     loginError = user == null || user.password != password
                     if (!loginError) {
-                        Toast.makeText(context, "Bem-vindo, ${user?.nome}!", Toast.LENGTH_SHORT).show()
-                        onLoginSuccess?.invoke()
+                        Toast.makeText(context, "Bem-vindo!", Toast.LENGTH_SHORT).show()
+                        onLoginSuccess()
                     }
                 }
             },
@@ -100,8 +99,12 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        TextButton(onClick = { onRegisterClick?.invoke() }) {
+        TextButton(onClick = onRegisterClick) {
             Text("Ainda não tens conta? Regista-te")
         }
     }
+}
+
+private fun UserRepository.autenticar(email: String) {
+    TODO("Not yet implemented")
 }

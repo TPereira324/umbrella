@@ -61,7 +61,7 @@ fun MainNavigation(userRepository: Any) {
             arguments = listOf(navArgument("qrCode") { type = NavType.StringType })
         ) { backStackEntry ->
             val qrCode = backStackEntry.arguments?.getString("qrCode") ?: ""
-            PaymentScreen(navController, qrCode)
+            PaymentScreen(navController)
         }
 
         // 👤 Perfil
