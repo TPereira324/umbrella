@@ -1,5 +1,4 @@
 package pt.iade.ei.bestumbrella1.views
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -73,7 +72,7 @@ fun RegisterScreen(
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(25.dp))
 
         // Campo Nome
         OutlinedTextField(
