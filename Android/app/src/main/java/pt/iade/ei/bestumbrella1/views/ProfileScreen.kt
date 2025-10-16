@@ -15,8 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import pt.iade.ei.bestumbrella1.ui.theme.blue
 import pt.iade.ei.bestumbrella1.ui.theme.white
 
@@ -31,7 +32,7 @@ data class Pagamento(
 @Composable
 fun ProfileScreen(
     userName: String = "Taha-Wur Pereira",
-    userEmail: String = "tahawur@email.com",
+    userEmail: String = "tahawur@gmail.com",
     onLogoutClick: (() -> Unit)? = null
 ) {
     val pagamentos = remember {
@@ -143,4 +144,10 @@ fun ProfileScreen(
             Text("Terminar sessão", fontWeight = FontWeight.Bold)
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ProfileScreenPreview() {
+    ProfileScreen()
 }

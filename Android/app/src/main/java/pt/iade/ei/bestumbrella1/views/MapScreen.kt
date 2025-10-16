@@ -1,5 +1,4 @@
 package pt.iade.ei.bestumbrella1.views
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -8,11 +7,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.maps.model.CameraPosition
-import com.google.maps.android.compose.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,9 +48,10 @@ fun MapScreen(navController: NavController) {
         },
         floatingActionButtonPosition = FabPosition.Center
     ) { padding ->
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
         ) {
             GoogleMap(
                 modifier = Modifier.fillMaxSize(),
@@ -67,7 +69,53 @@ fun MapScreen(navController: NavController) {
 
             // Texto informativo
             Text(
-                text = "Clique no botão 📷 para desbloquear um guarda-chuva!",
+                text = "Clique no botão para desbloquear um guarda-chuva!",
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 70.dp)
+                    .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.8f))
+                    .padding(8.dp),
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
+@Composable
+fun MapScreenPreviewSimplified() {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Mapa de Estações") }
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { /* ação simulada */ },
+                containerColor = MaterialTheme.colorScheme.primary
+            ) {
+                Icon(Icons.Default.QrCodeScanner, contentDescription = "Desbloquear com QR")
+            }
+        },
+        floatingActionButtonPosition = FabPosition.Center
+    ) { padding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+        ) {
+            // Simulação de mapa
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
+            )
+
+            // Texto informativo
+            Text(
+                text = "Clique no botão para desbloquear um guarda-chuva!",
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .padding(top = 70.dp)

@@ -1,11 +1,10 @@
 package pt.iade.ei.bestumbrella1.views
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -14,128 +13,119 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
+import kotlinx.coroutines.launch
 import pt.iade.ei.bestumbrella1.R
-import pt.iade.ei.bestumbrella1.ui.theme.black
-import pt.iade.ei.bestumbrella1.ui.theme.blue
-import pt.iade.ei.bestumbrella1.ui.theme.white
+import pt.iade.ei.bestumbrella1.data.FakeUserRepository
+import pt.iade.ei.bestumbrella1.data.UserRepository
 
 @Composable
 fun LoginScreen(
-    onRegisterClick: (() -> Unit)? = null,
-    onLoginSuccess: (() -> Unit)? = null
+    userRepository: UserRepository,
+    onLoginSuccess: () -> Unit,
+    onRegisterClick: () -> Unit
 ) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var showPassword by remember { mutableStateOf(false) }
-    var emailError by remember { mutableStateOf(false) }
+    var loginError by remember { mutableStateOf(false) }
+    var passwordVisible by remember { mutableStateOf(false) }
 
-    fun isEmailValid(email: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
-
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(brush = Brush.verticalGradient(colors = listOf(blue, white)))
-            .verticalScroll(rememberScrollState())
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Image(
-            painter = painterResource(id = R.mipmap.ic_launcher_foreground),
-            contentDescription = "Logo da App",
-            modifier = Modifier
-                .size(300.dp)
-                .padding(bottom = 3.dp)
-        )
-
-        Text(
-            text = "Bem-vindo! ao Best Umbrella",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = black,
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        OutlinedTextField(
-            value = email,
-            onValueChange = {
-                email = it
-                emailError = false
-            },
-            label = { Text("Email", color = black, fontWeight = FontWeight.Bold) },
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            isError = emailError,
-            textStyle = TextStyle(fontWeight = FontWeight.Bold)
-        )
-
-        if (emailError) {
-            Text(
-                text = "Email inválido. Verifica o formato.",
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(top = 4.dp)
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(Color(0xFFB3E5FC), Color.White)
+                )
             )
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Palavra-passe", color = black, fontWeight = FontWeight.Bold) },
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(),
-            visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
-            trailingIcon = {
-                IconButton(onClick = { showPassword = !showPassword }) {
-                    Icon(
-                        imageVector = if (showPassword) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
-                        contentDescription = if (showPassword) "Ocultar palavra-passe" else "Mostrar palavra-passe"
-                    )
-                }
-            },
-            textStyle = TextStyle(fontWeight = FontWeight.Bold)
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Button(
-            onClick = {
-                if (!isEmailValid(email)) {
-                    emailError = true
-                } else {
-                    onLoginSuccess?.invoke()
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
+            .padding(24.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Entrar", fontWeight = FontWeight.Bold)
-        }
+            Image(
+                painter = painterResource(id = R.mipmap.ic_launcher_foreground),
+                contentDescription = "Logo",
+                modifier = Modifier.size(250.dp).padding(bottom = 16.dp)
+            )
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Text("Iniciar Sessão", style = MaterialTheme.typography.titleLarge,
+                color = Color.Black,fontWeight = FontWeight.Bold)
 
-        TextButton(onClick = { onRegisterClick?.invoke() }) {
-            Text("Ainda não tens conta? Regista-te", color = black)
+            Spacer(modifier = Modifier.height(24.dp))
+
+            OutlinedTextField(
+                value = email,
+                onValueChange = {
+                    email = it
+                    loginError = false
+                },
+                label = { Text("Email", fontWeight = FontWeight.Bold,color = Color.Black) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = password,
+                onValueChange = {
+                    password = it
+                    loginError = false
+                },
+                label = { Text("Palavra-passe", fontWeight = FontWeight.Bold,color = Color.Black) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    val icon = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(imageVector = icon, contentDescription = "Toggle password visibility")
+                    }
+                }
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Button(
+                onClick = {
+                    scope.launch {
+                        val user = userRepository.autenticar(email)
+                        loginError = user == null || user.password != password
+                        if (!loginError) {
+                            Toast.makeText(context, "Bem-vindo, ${user?.nome}!", Toast.LENGTH_SHORT).show()
+                            onLoginSuccess()
+                        }
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Entrar")
+            }
+
+            if (loginError) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text("Email ou palavra-passe incorretos", color = MaterialTheme.colorScheme.error)
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            TextButton(onClick = onRegisterClick) {
+                Text("Ainda não tens conta? Regista-te")
+            }
         }
     }
 }
@@ -143,5 +133,9 @@ fun LoginScreen(
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+    LoginScreen(
+        userRepository = FakeUserRepository(),
+        onLoginSuccess = {},
+        onRegisterClick = {}
+    )
 }
