@@ -40,7 +40,7 @@ fun RegisterScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = R.mipmap.ic_launcher_foreground),
             contentDescription = "Logo",
             modifier = Modifier
                 .size(120.dp)
