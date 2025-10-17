@@ -1,7 +1,5 @@
 package pt.iade.ei.bestumbrella1.views
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.util.Log
 import androidx.annotation.OptIn
 import androidx.camera.core.CameraSelector
