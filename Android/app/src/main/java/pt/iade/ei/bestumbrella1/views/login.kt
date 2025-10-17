@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.launch
 import pt.iade.ei.bestumbrella1.R
 import pt.iade.ei.bestumbrella1.data.FakeUserRepository
@@ -29,7 +30,8 @@ import pt.iade.ei.bestumbrella1.data.UserRepository
 fun LoginScreen(
     userRepository: UserRepository,
     onLoginSuccess: () -> Unit,
-    onRegisterClick: () -> Unit
+    onRegisterClick: () -> Unit,
+    navController: NavHostController
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -136,6 +138,6 @@ fun LoginScreenPreview() {
     LoginScreen(
         userRepository = FakeUserRepository(),
         onLoginSuccess = {},
-        onRegisterClick = {}
+        onRegisterClick = {},
     )
 }

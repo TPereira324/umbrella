@@ -25,6 +25,7 @@ playServicesMaps = "19.2.0"
 roomCommonJvm = "2.8.2"
 roomKtx = "2.8.2"
 foundation = "1.9.3"
+material3 = "1.4.0"
 
 [libraries]
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCamera2" }
@@ -62,6 +63,7 @@ play-services-maps = { module = "com.google.android.gms:play-services-maps", ver
 androidx-room-common-jvm = { group = "androidx.room", name = "room-common-jvm", version.ref = "roomCommonJvm" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
