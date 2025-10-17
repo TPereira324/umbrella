@@ -1,7 +1,6 @@
 package pt.iade.ei.bestumbrella1.data
 
 import androidx.room.*
-import pt.iade.ei.bestumbrella1.models.Estacao
 
 @Dao
 interface EstacaoDao {

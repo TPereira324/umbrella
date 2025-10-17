@@ -9,7 +9,6 @@ class UserRepository {
 
     // Simulação de base de dados em memória
     private val users = mutableListOf<User>()
-
     private var loggedInUser: User? = null
 
     fun register(email: String, password: String): Boolean {
