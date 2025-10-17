@@ -1,19 +1,13 @@
 package pt.iade.ei.bestumbrella1.models
 
-data class User(
-    val email: String,
-    val password: String
-)
-
 class UserRepository {
 
-    // Simulação de base de dados em memória
     private val users = mutableListOf<User>()
     private var loggedInUser: User? = null
 
-    fun register(email: String, password: String): Boolean {
-        if (users.any { it.email == email }) return false // já existe
-        users.add(User(email, password))
+    fun register(name: String, email: String, password: String): Boolean {
+        if (users.any { it.email == email }) return false
+        users.add(User(name, email, password))
         return true
     }
 

@@ -1,5 +1,4 @@
 package pt.iade.ei.bestumbrella1.views
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -9,10 +8,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -22,13 +19,6 @@ import pt.iade.ei.bestumbrella1.models.SessionManager
 import pt.iade.ei.bestumbrella1.models.UserRepository
 import pt.iade.ei.bestumbrella1.utils.isValidEmail
 import pt.iade.ei.bestumbrella1.utils.isValidPassword
-fun isValidEmail(email: String): Boolean {
-    return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-}
-
-fun isValidPassword(password: String): Boolean {
-    return password.length >= 6
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,7 +55,7 @@ fun LoginScreen(
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email",fontWeight = FontWeight.Bold, color = Color.Black) },
+            label = { Text("Email") },
             leadingIcon = { Icon(Icons.Default.MailOutline, contentDescription = null) },
             singleLine = true
         )

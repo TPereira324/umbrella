@@ -10,9 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -20,7 +18,6 @@ import pt.iade.ei.bestumbrella1.R
 import pt.iade.ei.bestumbrella1.models.UserRepository
 import pt.iade.ei.bestumbrella1.utils.isValidEmail
 import pt.iade.ei.bestumbrella1.utils.isValidPassword
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,9 +39,7 @@ fun RegisterScreen(
         Image(
             painter = painterResource(id = R.mipmap.ic_launcher_foreground),
             contentDescription = "Logo",
-            modifier = Modifier
-                .size(120.dp)
-                .padding(bottom = 16.dp)
+            modifier = Modifier.size(120.dp).padding(bottom = 16.dp)
         )
 
         Text("Criar Conta", style = MaterialTheme.typography.headlineMedium)
@@ -63,7 +58,7 @@ fun RegisterScreen(
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email",fontWeight = FontWeight.Bold,color = Color.Black) },
+            label = { Text("Email") },
             leadingIcon = { Icon(Icons.Default.MailOutline, contentDescription = null) },
             singleLine = true
         )
@@ -95,7 +90,7 @@ fun RegisterScreen(
                 return@Button
             }
 
-            val success = userRepository.register(email, password)
+            val success = userRepository.register(name, email, password)
             if (success) {
                 error = null
                 navController.navigate("login")
