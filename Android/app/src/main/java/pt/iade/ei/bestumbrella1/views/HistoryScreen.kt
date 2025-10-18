@@ -11,8 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 data class RentalEntry(
     val date: String,
@@ -34,10 +37,30 @@ fun HistoryScreen(navController: NavController) {
     Scaffold(
         bottomBar = {
             NavigationBar {
-                NavigationBarItem(selected = false, onClick = { navController.navigate("map") }, icon = { Icon(Icons.Default.Map, null) }, label = { Text("Mapa") })
-                NavigationBarItem(selected = false, onClick = { navController.navigate("qrscanner") }, icon = { Icon(Icons.Default.QrCodeScanner, null) }, label = { Text("Scanner") })
-                NavigationBarItem(selected = true, onClick = {}, icon = { Icon(Icons.Default.History, null) }, label = { Text("Histórico") })
-                NavigationBarItem(selected = false, onClick = { navController.navigate("profile") }, icon = { Icon(Icons.Default.Person, null) }, label = { Text("Perfil") })
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { navController.navigate("map") },
+                    icon = { Icon(Icons.Default.Map, null) },
+                    label = { Text("Mapa") }
+                )
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { navController.navigate("qrscanner") },
+                    icon = { Icon(Icons.Default.QrCodeScanner, null) },
+                    label = { Text("Scanner") }
+                )
+                NavigationBarItem(
+                    selected = true,
+                    onClick = {},
+                    icon = { Icon(Icons.Default.History, null) },
+                    label = { Text("Histórico") }
+                )
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { navController.navigate("profile") },
+                    icon = { Icon(Icons.Default.Person, null) },
+                    label = { Text("Perfil") }
+                )
             }
         }
     ) { padding ->
@@ -48,17 +71,28 @@ fun HistoryScreen(navController: NavController) {
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
-                            MaterialTheme.colorScheme.background
+                            Color(0xFF2196F3).copy(alpha = 0.6f), // Azul topo
+                            Color(0xFFE3F2FD)                      // Branco azulado
                         )
                     )
                 )
         ) {
-            Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-                Text("Histórico", style = MaterialTheme.typography.headlineMedium)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+            ) {
+                Text(
+                    "Histórico",
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = Color.White
+                )
                 Spacer(Modifier.height(16.dp))
 
-                Card(modifier = Modifier.fillMaxWidth()) {
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.9f))
+                ) {
                     Row(
                         modifier = Modifier
                             .padding(16.dp)
@@ -88,23 +122,38 @@ fun HistoryScreen(navController: NavController) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp),
-                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+                            colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.95f))
                         ) {
                             Column(modifier = Modifier.padding(16.dp)) {
-                                Text("${entry.date} — Concluído", style = MaterialTheme.typography.titleMedium)
+                                Text(
+                                    "${entry.date} — Concluído",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = Color(0xFF1565C0)
+                                )
                                 Spacer(Modifier.height(4.dp))
                                 Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Icon(Icons.Default.LocationOn, tint = MaterialTheme.colorScheme.primary, contentDescription = null)
+                                    Icon(
+                                        Icons.Default.LocationOn,
+                                        tint = Color(0xFF2196F3),
+                                        contentDescription = null
+                                    )
                                     Spacer(Modifier.width(4.dp))
                                     Text("De: ${entry.from}", style = MaterialTheme.typography.bodyMedium)
                                 }
                                 Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Icon(Icons.Default.LocationOn, tint = MaterialTheme.colorScheme.error, contentDescription = null)
+                                    Icon(
+                                        Icons.Default.LocationOn,
+                                        tint = Color(0xFFF44336),
+                                        contentDescription = null
+                                    )
                                     Spacer(Modifier.width(4.dp))
                                     Text("Para: ${entry.to}", style = MaterialTheme.typography.bodyMedium)
                                 }
                                 Spacer(Modifier.height(4.dp))
-                                Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+                                Row(
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
                                     Text("Duração: ${entry.duration}")
                                     Text("Custo: ${entry.cost}")
                                 }

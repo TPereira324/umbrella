@@ -15,18 +15,16 @@ import androidx.camera.view.PreviewView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CameraAlt
-import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.Map
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.QrCodeScanner
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
@@ -37,7 +35,7 @@ import com.google.mlkit.vision.common.InputImage
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalGetImage::class)
 @Composable
 fun QrScannerScreen(
-    onCodeScanned: (String) -> Unit
+    onCodeScanned: (String) -> Unit = {}
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -76,8 +74,8 @@ fun QrScannerScreen(
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
-                            MaterialTheme.colorScheme.background
+                            Color(0xFF90CAF9), // Azul claro
+                            Color.White       // Branco
                         )
                     )
                 )
@@ -90,7 +88,10 @@ fun QrScannerScreen(
             ) {
                 Text("Scanner QR", style = MaterialTheme.typography.headlineMedium)
                 Spacer(Modifier.height(8.dp))
-                Text("Escaneie o código QR do guarda-chuva para desbloquear", style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    "Escaneie o código QR do guarda-chuva para desbloquear",
+                    style = MaterialTheme.typography.bodyMedium
+                )
                 Spacer(Modifier.height(32.dp))
 
                 Icon(Icons.Default.QrCodeScanner, contentDescription = null, modifier = Modifier.size(96.dp))
@@ -118,6 +119,7 @@ fun QrScannerScreen(
                 }
             }
 
+            // Mostra a câmara quando o scanner é ativado
             if (startScanner && hasCameraPermission) {
                 AndroidView(factory = { ctx ->
                     val previewView = PreviewView(ctx)
@@ -175,4 +177,10 @@ fun QrScannerScreen(
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewQrScannerScreen() {
+    QrScannerScreen()
 }
