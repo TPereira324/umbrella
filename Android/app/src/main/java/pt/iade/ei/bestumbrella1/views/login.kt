@@ -67,7 +67,7 @@ fun LoginScreen(
                 contentDescription = "Logo",
                 modifier = Modifier
                     .size(300.dp)
-                    .padding(bottom = 16.dp)
+                    .padding(bottom = 24.dp)
             )
 
             Text(

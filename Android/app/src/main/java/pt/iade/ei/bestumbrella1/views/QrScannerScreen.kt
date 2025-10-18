@@ -82,22 +82,22 @@ fun QrScannerScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(24.dp),
+                    .padding(30.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("Scanner QR", style = MaterialTheme.typography.headlineMedium)
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(50.dp))
                 Text(
                     "Escaneie o código QR do guarda-chuva para desbloquear",
                     style = MaterialTheme.typography.bodyMedium
                 )
-                Spacer(Modifier.height(32.dp))
+                Spacer(Modifier.height(50.dp))
 
                 Icon(Icons.Default.QrCodeScanner, contentDescription = null, modifier = Modifier.size(96.dp))
                 Spacer(Modifier.height(16.dp))
                 Text("Pronto para escanear", style = MaterialTheme.typography.titleMedium)
                 Text("Toque no botão abaixo para ativar a câmera", style = MaterialTheme.typography.bodySmall)
-                Spacer(Modifier.height(24.dp))
+                Spacer(Modifier.height(35.dp))
 
                 Button(onClick = { startScanner = true }) {
                     Icon(Icons.Default.CameraAlt, contentDescription = null)
@@ -105,7 +105,7 @@ fun QrScannerScreen(
                     Text("Iniciar Scanner")
                 }
 
-                Spacer(Modifier.height(32.dp))
+                Spacer(Modifier.height(50.dp))
                 Card(modifier = Modifier.fillMaxWidth()) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text("Como usar:", style = MaterialTheme.typography.titleMedium)
