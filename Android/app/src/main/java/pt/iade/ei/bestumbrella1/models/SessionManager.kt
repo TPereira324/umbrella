@@ -11,13 +11,11 @@ val Context.dataStore by preferencesDataStore(name = "session")
 
 class SessionManager(private val context: Context) {
     companion object {
-        val EMAIL_KEY = stringPreferencesKey("email")
+        private val EMAIL_KEY = stringPreferencesKey("email")
     }
 
     suspend fun saveEmail(email: String) {
-        context.dataStore.edit { prefs ->
-            prefs[EMAIL_KEY] = email
-        }
+        context.dataStore.edit { prefs -> prefs[EMAIL_KEY] = email }
     }
 
     suspend fun getEmail(): String? {

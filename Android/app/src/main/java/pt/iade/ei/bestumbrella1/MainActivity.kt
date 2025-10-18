@@ -6,8 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.navigation.compose.rememberNavController
+import pt.iade.ei.bestumbrella1.navigation.AppNavigation
 import pt.iade.ei.bestumbrella1.ui.theme.BestUmbrella1Theme
-import pt.iade.ei.bestumbrella1.views.MainNavigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
             BestUmbrella1Theme {
                 Surface(color = MaterialTheme.colorScheme.background) {
                     val navController = rememberNavController()
-                    MainNavigation(navController)
+                    AppNavigation(navController)
                 }
             }
         }
