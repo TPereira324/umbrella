@@ -19,7 +19,7 @@ import androidx.navigation.compose.rememberNavController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaymentScreen(navController: NavController) {
-    var balance by remember { mutableStateOf(0.00) }
+    var balance by remember { mutableStateOf(5.00) } // saldo inicial fictício
     var amountText by remember { mutableStateOf(TextFieldValue("")) }
     var showConfirmation by remember { mutableStateOf(false) }
 
@@ -60,7 +60,7 @@ fun PaymentScreen(navController: NavController) {
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
-                            Color(0xFF2196F3).copy(alpha = 0.7f), // Azul topo
+                            Color(0xFF2196F3).copy(alpha = 0.8f), // Azul topo
                             Color(0xFFE3F2FD)                      // Branco azulado
                         )
                     )
@@ -74,7 +74,7 @@ fun PaymentScreen(navController: NavController) {
                 verticalArrangement = Arrangement.Top
             ) {
                 Text(
-                    "Recarregar Saldo",
+                    "Pagamento via PayPal",
                     style = MaterialTheme.typography.headlineMedium,
                     color = Color.White
                 )
@@ -103,7 +103,7 @@ fun PaymentScreen(navController: NavController) {
                         OutlinedTextField(
                             value = amountText,
                             onValueChange = { amountText = it },
-                            label = { Text("Valor a recarregar (€)") },
+                            label = { Text("Valor a pagar (€)") },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth()
                         )
@@ -114,23 +114,26 @@ fun PaymentScreen(navController: NavController) {
                             onClick = {
                                 val value = amountText.text.toDoubleOrNull()
                                 if (value != null && value > 0) {
-                                    balance += value
+                                    balance -= value
                                     amountText = TextFieldValue("")
                                     showConfirmation = true
                                 }
                             },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFF003087) // Azul PayPal
+                            )
                         ) {
-                            Icon(Icons.Default.AttachMoney, contentDescription = null)
+                            Icon(Icons.Default.Payment, contentDescription = null, tint = Color.White)
                             Spacer(Modifier.width(8.dp))
-                            Text("Recarregar")
+                            Text("Pagar com PayPal", color = Color.White)
                         }
 
                         Spacer(Modifier.height(16.dp))
 
                         if (showConfirmation) {
                             Text(
-                                "Recarregamento concluído!",
+                                "Pagamento efetuado com sucesso via PayPal!",
                                 color = Color(0xFF4CAF50),
                                 style = MaterialTheme.typography.bodyMedium
                             )
