@@ -21,7 +21,7 @@ data class RentalEntry(
     val date: String,
     val from: String,
     val to: String,
-    val cost: String,
+    val cost: Double,
     val duration: String
 )
 
@@ -29,9 +29,9 @@ data class RentalEntry(
 @Composable
 fun HistoryScreen(navController: NavController) {
     val entries = listOf(
-        RentalEntry("Hoje, 14:30", "Metro Moscavide", "Parque das Nações", "€0.29", "35 min"),
-        RentalEntry("Ontem, 09:16", "Vasco da Gama Shopping", "Metro Oriente", "€1.00", "1h 15min"),
-        RentalEntry("Ontem, 08:03", "Vasco da Gama Shopping", "Vasco da Gama Shopping", "€0.23", "55 min")
+        RentalEntry("Hoje, 14:30", "Metro Moscavide", "Parque das Nações", 0.29, "35 min"),
+        RentalEntry("Ontem, 09:16", "Vasco da Gama Shopping", "Metro Oriente", 1.00, "1h 15min"),
+        RentalEntry("Há 2 dias", "IADE", "Metro Oriente", 2.50, "27h 40min") // > 24h → multa
     )
 
     Scaffold(
@@ -118,6 +118,10 @@ fun HistoryScreen(navController: NavController) {
 
                 LazyColumn {
                     items(entries) { entry ->
+                        val durationHours = extractHours(entry.duration)
+                        val multa = if (durationHours > 24) 100.0 else 0.0
+                        val totalCost = entry.cost + multa
+
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -150,13 +154,25 @@ fun HistoryScreen(navController: NavController) {
                                     Text("Para: ${entry.to}", style = MaterialTheme.typography.bodyMedium)
                                 }
                                 Spacer(Modifier.height(4.dp))
-                                Row(
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    Text("Duração: ${entry.duration}")
-                                    Text("Custo: ${entry.cost}")
+                                Text("Duração: ${entry.duration}", style = MaterialTheme.typography.bodyMedium)
+                                Text("Custo base: €${"%.2f".format(entry.cost)}", style = MaterialTheme.typography.bodyMedium)
+
+                                if (multa > 0) {
+                                    Spacer(Modifier.height(4.dp))
+                                    Text(
+                                        "⚠️ Multa aplicada: €100 — Guarda-chuva não devolvido após 24h!",
+                                        color = Color.Red,
+                                        style = MaterialTheme.typography.bodySmall
+                                    )
                                 }
+
+                                Divider(modifier = Modifier.padding(vertical = 8.dp))
+
+                                Text(
+                                    "💰 Total: €${"%.2f".format(totalCost)}",
+                                    color = Color(0xFF1565C0),
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
                             }
                         }
                     }
@@ -164,6 +180,13 @@ fun HistoryScreen(navController: NavController) {
             }
         }
     }
+}
+
+
+fun extractHours(duration: String): Int {
+    val regex = Regex("(\\d+)h")
+    val match = regex.find(duration)
+    return match?.groupValues?.get(1)?.toIntOrNull() ?: 0
 }
 
 @Preview(showBackground = true, showSystemUi = true)
