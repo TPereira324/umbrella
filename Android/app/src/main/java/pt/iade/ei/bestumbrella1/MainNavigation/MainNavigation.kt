@@ -7,49 +7,41 @@ import androidx.navigation.compose.composable
 import pt.iade.ei.bestumbrella1.views.*
 
 @Composable
-fun AppNavigation(navController: NavHostController) {
+fun MainNavigation(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = "map" // Ecrã inicial da app
+        startDestination = "map" // Tela inicial
     ) {
-        // Ecrã do mapa com as estações
+        // 🌍 Tela principal do mapa
         composable("map") {
-            MapScreen(navController)
+            MapScreenWithMarkers(navController)
         }
 
-        // Ecrã do scanner de QR Code
+        // 📷 Scanner de QR Code
         composable("qrscanner") {
-            QrScannerScreen(
-                onCodeScanned = { code ->
-                    navController.navigate("rentalDetails/$code")
-                }
-            )
+            QrScannerScreen(navController as (String) -> Unit)
         }
 
-        // Ecrã de histórico de alugueres
+        // 📄 Detalhes do Aluguer (exemplo com argumento de QR code)
+        composable("rental/{qrCode}") { backStackEntry ->
+            val qrCode = backStackEntry.arguments?.getString("qrCode") ?: "N/A"
+            RentalDetailsScreen(navController, qrCode)
+        }
+
+        // 💳 Pagamento
+        composable("payment/{qrCode}") { backStackEntry ->
+            val qrCode = backStackEntry.arguments?.getString("qrCode") ?: "N/A"
+            PaymentScreen(navController, qrCode)
+        }
+
+        // 🕓 Histórico
         composable("history") {
             HistoryScreen(navController)
         }
 
-        // Ecrã de perfil do utilizador
+        // 👤 Perfil
         composable("profile") {
             ProfileScreen(navController)
         }
-
-        // Ecrã de pagamento (saldo ou PayPal)
-        composable("payment") {
-            PaymentScreen(navController)
-        }
-
-        // Ecrã com detalhes do aluguer (aparece após ler um QR Code)
-        composable("rentalDetails/{qrCode}") { backStackEntry ->
-            val qrCode = backStackEntry.arguments?.getString("qrCode") ?: ""
-            RentalDetailsScreen(navController, qrCode)
-        }
     }
-}
-
-@Composable
-fun MapScreen(x0: NavHostController) {
-    TODO("Not yet implemented")
 }

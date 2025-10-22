@@ -18,7 +18,7 @@ import androidx.navigation.compose.rememberNavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PaymentScreen(navController: NavController) {
+fun PaymentScreen(navController: NavController, qrCode: String) {
     var balance by remember { mutableStateOf(5.00) } // saldo inicial fictício
     var amountText by remember { mutableStateOf(TextFieldValue("")) }
     var showConfirmation by remember { mutableStateOf(false) }
@@ -149,5 +149,6 @@ fun PaymentScreen(navController: NavController) {
 @Composable
 fun PreviewPaymentScreen() {
     val navController = rememberNavController()
-    PaymentScreen(navController)
+    val qrCode = ""
+    PaymentScreen(navController, qrCode)
 }
