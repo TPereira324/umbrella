@@ -11,7 +11,7 @@ public class PontodeAluguer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ponto_id")
-    private Long pontoId;
+    private Integer pontoId;
 
     private String nome;
     private Double latitude;
@@ -29,11 +29,11 @@ public class PontodeAluguer {
     private List<Aluguer> alugueresTermino;
 
     // Getters e Setters
-    public Long getPontoId() {
+    public Integer getPontoId() {
         return pontoId;
     }
 
-    public void setPontoId(Long pontoId) {
+    public void setPontoId(Integer pontoId) {
         this.pontoId = pontoId;
     }
 

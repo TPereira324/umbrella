@@ -1,10 +1,15 @@
 package com.best_umbrella.backend.model;
 
-import jakarta.persistence.*;
-
-
 import java.time.LocalDateTime;
 import java.util.List;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Utilizador")
@@ -12,7 +17,7 @@ public class Utilizador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "utilizador_id")
-    private Long utilizadorId;
+    private Integer utilizadorId;
 
     @Column(name = "nome")
     private String nome;
@@ -38,11 +43,11 @@ public class Utilizador {
     private List<Noti> notificacoes;
 
     // Getters e Setters
-    public Long getUtilizadorId() {
+    public Integer getUtilizadorId() {
         return utilizadorId;
     }
 
-    public void setUtilizadorId(Long utilizadorId) {
+    public void setUtilizadorId(Integer utilizadorId) {
         this.utilizadorId = utilizadorId;
     }
 

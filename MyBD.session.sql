@@ -1,1 +1,2 @@
 Select * from Utilizador
+
