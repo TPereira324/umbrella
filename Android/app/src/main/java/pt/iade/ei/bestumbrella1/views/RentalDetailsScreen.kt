@@ -3,6 +3,7 @@ package pt.iade.ei.bestumbrella1.views
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,8 +39,8 @@ fun RentalDetailsScreen(
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
-                            Color(0xFFE3F2FD), // Branco azulado topo
-                            Color(0xFF2196F3).copy(alpha = 0.7f) // Azul suave em baixo
+                            Color(0xFF2196F3),
+                            Color(0xFFE3F2FD).copy(alpha = 0.7f)
                         )
                     )
                 )
@@ -59,7 +60,11 @@ fun RentalDetailsScreen(
                     )
                 )
 
-                Divider(color = Color(0xFF90CAF9), thickness = 2.dp, modifier = Modifier.fillMaxWidth())
+                HorizontalDivider(
+                    modifier = Modifier.fillMaxWidth(),
+                    thickness = 2.dp,
+                    color = Color(0xFF90CAF9)
+                )
 
                 Card(
                     modifier = Modifier.fillMaxWidth(),
