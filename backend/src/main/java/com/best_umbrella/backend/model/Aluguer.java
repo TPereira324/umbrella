@@ -3,6 +3,7 @@ package com.best_umbrella.backend.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.time.temporal.Temporal;
 
 @Entity
 @Table(name = "Aluguer")
@@ -108,5 +109,16 @@ public class Aluguer {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Temporal getDataDevolucao() {
+        return null;
+    }
+
+    public Temporal getDataAluguer() {
+        return null;
+    }
+
+    public void setMulta(double v) {
     }
 }
