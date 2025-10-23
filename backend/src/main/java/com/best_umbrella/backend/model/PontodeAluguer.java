@@ -1,40 +1,41 @@
 package com.best_umbrella.backend.model;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
-@Table(name = "Ponto_de_aluguer")
+@Table(name = "pontos_aluguer")
 public class PontodeAluguer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ponto_id")
-    private Long pontoId;
+    private Long id;
 
     private String nome;
-    private Double latitude;
-    private Double longitude;
-    private Integer capacidade;
-    private String tipo;
+    private double latitude;
+    private double longitude;
+    private int totalGuardaChuvas;
 
-    @OneToMany(mappedBy = "pontodeAluguer")
+    @OneToMany(mappedBy = "pontoAluguer", cascade = CascadeType.ALL)
     private List<GuardaChuva> guardaChuvas;
-    
-    @OneToMany(mappedBy = "pontoInicio")
-    private List<Aluguer> alugueresInicio;
-    
-    @OneToMany(mappedBy = "pontoFim")
-    private List<Aluguer> alugueresTermino;
 
-    // Getters e Setters
-    public Long getPontoId() {
-        return pontoId;
+    public PontodeAluguer() {
     }
 
-    public void setPontoId(Long pontoId) {
-        this.pontoId = pontoId;
+    public PontodeAluguer(String nome, double latitude, double longitude, int totalGuardaChuvas) {
+        this.nome = nome;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.totalGuardaChuvas = totalGuardaChuvas;
+    }
+
+    // ========= GETTERS & SETTERS =========
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -45,36 +46,28 @@ public class PontodeAluguer {
         this.nome = nome;
     }
 
-    public Double getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Double latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public Double getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Double longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public Integer getCapacidade() {
-        return capacidade;
+    public int getTotalGuardaChuvas() {
+        return totalGuardaChuvas;
     }
 
-    public void setCapacidade(Integer capacidade) {
-        this.capacidade = capacidade;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTotalGuardaChuvas(int totalGuardaChuvas) {
+        this.totalGuardaChuvas = totalGuardaChuvas;
     }
 
     public List<GuardaChuva> getGuardaChuvas() {
@@ -83,21 +76,5 @@ public class PontodeAluguer {
 
     public void setGuardaChuvas(List<GuardaChuva> guardaChuvas) {
         this.guardaChuvas = guardaChuvas;
-    }
-    
-    public List<Aluguer> getAlugueresInicio() {
-        return alugueresInicio;
-    }
-
-    public void setAlugueresInicio(List<Aluguer> alugueresInicio) {
-        this.alugueresInicio = alugueresInicio;
-    }
-
-    public List<Aluguer> getAlugueresTermino() {
-        return alugueresTermino;
-    }
-
-    public void setAlugueresTermino(List<Aluguer> alugueresTermino) {
-        this.alugueresTermino = alugueresTermino;
     }
 }

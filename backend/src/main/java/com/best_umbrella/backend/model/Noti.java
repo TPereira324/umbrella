@@ -1,47 +1,66 @@
 package com.best_umbrella.backend.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Notificacao")
+@Table(name = "notificacao")
 public class Noti {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "notificacao_id")
-    private Long notificacaoId;
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "utilizador_id")
-    private Utilizador utilizador;
-
+    // 🔹 ID do utilizador que recebe a notificação
     @Column(nullable = false)
-    private String mensagem;
-    
-    private String tipo;
+    private Long utilizadorId;
 
-    @Column(name = "data_envio")
+    // 🔹 Título da notificação
+    @Column(nullable = false, length = 100)
+    private String titulo;
+
+    // 🔹 Mensagem completa
+    @Column(nullable = false, length = 255)
+    private String mensagem;
+
+    // 🔹 Data e hora de envio
+    @Column(nullable = false)
     private LocalDateTime dataEnvio;
 
-    private String estado;
+    // 🔹 Indica se o utilizador já viu a notificação
+    private boolean lida = false;
 
-    // Getters e Setters
-    public Long getNotificacaoId() {
-        return notificacaoId;
+    public Noti() {}
+
+    public Noti(Long utilizadorId, String titulo, String mensagem) {
+        this.utilizadorId = utilizadorId;
+        this.titulo = titulo;
+        this.mensagem = mensagem;
+        this.dataEnvio = LocalDateTime.now();
     }
 
-    public void setNotificacaoId(Long notificacaoId) {
-        this.notificacaoId = notificacaoId;
+    // ======================
+    // 🔹 GETTERS e SETTERS
+    // ======================
+
+    public Long getId() {
+        return id;
     }
 
-    public Utilizador getUtilizador() {
-        return utilizador;
+    public Long getUtilizadorId() {
+        return utilizadorId;
     }
 
-    public void setUtilizador(Utilizador utilizador) {
-        this.utilizador = utilizador;
+    public void setUtilizadorId(Long utilizadorId) {
+        this.utilizadorId = utilizadorId;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getMensagem() {
@@ -52,14 +71,6 @@ public class Noti {
         this.mensagem = mensagem;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
     public LocalDateTime getDataEnvio() {
         return dataEnvio;
     }
@@ -68,11 +79,11 @@ public class Noti {
         this.dataEnvio = dataEnvio;
     }
 
-    public String getEstado() {
-        return estado;
+    public boolean isLida() {
+        return lida;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setLida(boolean lida) {
+        this.lida = lida;
     }
 }
