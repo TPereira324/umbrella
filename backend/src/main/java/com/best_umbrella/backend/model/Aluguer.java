@@ -1,82 +1,71 @@
 package com.best_umbrella.backend.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
-import java.time.temporal.Temporal;
 
 @Entity
-@Table(name = "Aluguer")
+@Table(name = "aluguer")
 public class Aluguer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "aluguer_id")
-    private Long aluguerId;
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "utilizador_id")
-    private Utilizador utilizador;
+    // 🔹 Identifica o utilizador que fez o aluguer
+    @Column(nullable = false)
+    private Long utilizadorId;
 
-    @ManyToOne
-    @JoinColumn(name = "guarda_chuva_id")
-    private GuardaChuva guardaChuva;
+    // 🔹 Identifica o guarda-chuva alugado
+    @Column(nullable = false)
+    private Long guardaChuvaId;
 
-    @ManyToOne
-    @JoinColumn(name = "ponto_inicio_id")
-    private PontodeAluguer pontoInicio;
-
-    @ManyToOne
-    @JoinColumn(name = "ponto_fim_id")
-    private PontodeAluguer pontoFim;
-
-    @Column(name = "data_inicio")
+    // 🔹 Data e hora em que o aluguer começou
+    @Column(nullable = false)
     private LocalDateTime dataInicio;
 
-    @Column(name = "data_fim")
+    // 🔹 Data e hora em que o guarda-chuva foi devolvido (pode ser null)
     private LocalDateTime dataFim;
 
-    private Double custo;
-    private String estado;
+    // 🔹 Indica se já foi aplicada uma multa por atraso
+    private boolean multado = false;
 
-    // Getters e Setters
-    public Long getAluguerId() {
-        return aluguerId;
+    // 🔹 Valor da multa, se existir
+    private double valorMulta = 0.0;
+
+    // 🔹 Estado do aluguer
+    @Column(length = 50)
+    private String estado = "Ativo"; // pode ser "Ativo", "Concluído" ou "Multado"
+
+    public Aluguer() {}
+
+    public Aluguer(Long utilizadorId, Long guardaChuvaId) {
+        this.utilizadorId = utilizadorId;
+        this.guardaChuvaId = guardaChuvaId;
+        this.dataInicio = LocalDateTime.now();
     }
 
-    public void setAluguerId(Long aluguerId) {
-        this.aluguerId = aluguerId;
+    // ======================
+    // 🔹 GETTERS e SETTERS
+    // ======================
+
+    public Long getId() {
+        return id;
     }
 
-    public Utilizador getUtilizador() {
-        return utilizador;
+    public Long getUtilizadorId() {
+        return utilizadorId;
     }
 
-    public void setUtilizador(Utilizador utilizador) {
-        this.utilizador = utilizador;
+    public void setUtilizadorId(Long utilizadorId) {
+        this.utilizadorId = utilizadorId;
     }
 
-    public GuardaChuva getGuardaChuva() {
-        return guardaChuva;
+    public Long getGuardaChuvaId() {
+        return guardaChuvaId;
     }
 
-    public void setGuardaChuva(GuardaChuva guardaChuva) {
-        this.guardaChuva = guardaChuva;
-    }
-
-    public PontodeAluguer getPontoInicio() {
-        return pontoInicio;
-    }
-
-    public void setPontoInicio(PontodeAluguer pontoInicio) {
-        this.pontoInicio = pontoInicio;
-    }
-
-    public PontodeAluguer getPontoFim() {
-        return pontoFim;
-    }
-
-    public void setPontoFim(PontodeAluguer pontoFim) {
-        this.pontoFim = pontoFim;
+    public void setGuardaChuvaId(Long guardaChuvaId) {
+        this.guardaChuvaId = guardaChuvaId;
     }
 
     public LocalDateTime getDataInicio() {
@@ -95,12 +84,20 @@ public class Aluguer {
         this.dataFim = dataFim;
     }
 
-    public Double getCusto() {
-        return custo;
+    public boolean isMultado() {
+        return multado;
     }
 
-    public void setCusto(Double custo) {
-        this.custo = custo;
+    public void setMultado(boolean multado) {
+        this.multado = multado;
+    }
+
+    public double getValorMulta() {
+        return valorMulta;
+    }
+
+    public void setValorMulta(double valorMulta) {
+        this.valorMulta = valorMulta;
     }
 
     public String getEstado() {
@@ -111,14 +108,21 @@ public class Aluguer {
         this.estado = estado;
     }
 
-    public Temporal getDataDevolucao() {
-        return null;
+    // ======================
+    // 🔹 Métodos úteis
+    // ======================
+
+    public boolean precisaDeMulta() {
+        if (dataFim == null) {
+            LocalDateTime agora = LocalDateTime.now();
+            return dataInicio.plusHours(24).isBefore(agora);
+        }
+        return false;
     }
 
-    public Temporal getDataAluguer() {
-        return null;
-    }
-
-    public void setMulta(double v) {
+    public void aplicarMulta() {
+        this.multado = true;
+        this.valorMulta = 100.0;
+        this.estado = "Multado";
     }
 }
