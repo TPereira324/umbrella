@@ -1,90 +1,65 @@
 package com.best_umbrella.backend.model;
 
 import jakarta.persistence.*;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "Guarda_chuva")
+@Table(name = "guarda_chuvas")
 public class GuardaChuva {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "guarda_chuva_id")
-    private Long guardaChuvaId;
+    private Long id;
 
-    @Column(name = "codigo_qr", unique = true, nullable = false)
-    private String codigoQr;
-
-    private String estado;
-    private String cor;
-    private String tipo;
-
-    @Column(name = "data_registo")
-    private LocalDateTime dataRegisto;
+    private String codigo;
+    private boolean disponivel = true;
 
     @ManyToOne
     @JoinColumn(name = "ponto_id")
-    private PontodeAluguer pontodeAluguer;
-    
-    @OneToMany(mappedBy = "guardaChuva")
+    private PontodeAluguer pontoAluguer;
+
+    @OneToMany(mappedBy = "guardaChuva", cascade = CascadeType.ALL)
     private List<Aluguer> alugueres;
 
-    // Getters e Setters
-    public Long getGuardaChuvaId() {
-        return guardaChuvaId;
+    public GuardaChuva() {
     }
 
-    public void setGuardaChuvaId(Long guardaChuvaId) {
-        this.guardaChuvaId = guardaChuvaId;
+    public GuardaChuva(String codigo, PontodeAluguer pontoAluguer) {
+        this.codigo = codigo;
+        this.pontoAluguer = pontoAluguer;
     }
 
-    public String getCodigoQr() {
-        return codigoQr;
+    // ========= GETTERS & SETTERS =========
+    public Long getId() {
+        return id;
     }
 
-    public void setCodigoQr(String codigoQr) {
-        this.codigoQr = codigoQr;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getEstado() {
-        return estado;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    public String getCor() {
-        return cor;
+    public boolean isDisponivel() {
+        return disponivel;
     }
 
-    public void setCor(String cor) {
-        this.cor = cor;
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
     }
 
-    public String getTipo() {
-        return tipo;
+    public PontodeAluguer getPontoAluguer() {
+        return pontoAluguer;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public LocalDateTime getDataRegisto() {
-        return dataRegisto;
-    }
-
-    public void setDataRegisto(LocalDateTime dataRegisto) {
-        this.dataRegisto = dataRegisto;
-    }
-
-    public PontodeAluguer getPontodeAluguer() {
-        return pontodeAluguer;
-    }
-
-    public void setPontodeAluguer(PontodeAluguer pontodeAluguer) {
-        this.pontodeAluguer = pontodeAluguer;
+    public void setPontoAluguer(PontodeAluguer pontoAluguer) {
+        this.pontoAluguer = pontoAluguer;
     }
 
     public List<Aluguer> getAlugueres() {
