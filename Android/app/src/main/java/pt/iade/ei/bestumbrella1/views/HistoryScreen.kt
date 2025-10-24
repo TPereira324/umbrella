@@ -50,6 +50,12 @@ fun HistoryScreen(navController: NavController) {
                     label = { Text("Scanner") }
                 )
                 NavigationBarItem(
+                    selected = false,
+                    onClick = { navController.navigate("weather") },
+                    icon = { Icon(Icons.Default.Cloud, contentDescription = null) },
+                    label = { Text("Tempo") }
+                )
+                NavigationBarItem(
                     selected = true,
                     onClick = {},
                     icon = { Icon(Icons.Default.History, null) },

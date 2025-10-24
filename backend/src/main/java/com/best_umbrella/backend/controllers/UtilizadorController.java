@@ -44,7 +44,7 @@ public class UtilizadorController {
         if (!utilizadorService.findById(id).isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        utilizador.setUtilizadorId(id);
+        utilizador.setUtilizadorId(Math.toIntExact(id));
         return ResponseEntity.ok(utilizadorService.save(utilizador));
     }
 

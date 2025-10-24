@@ -8,9 +8,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import pt.iade.ei.bestumbrella1.navigation.MainNavigation
-import pt.iade.ei.bestumbrella1.ui.theme.BestUmbrella1Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,4 +34,14 @@ fun BestUmbrella1App() {
             MainNavigation(navController = navController)
         }
     }
+}
+
+@Composable
+fun MainNavigation(navController: NavHostController) {
+    TODO("Not yet implemented")
+}
+
+@Composable
+fun BestUmbrella1Theme(content: @Composable () -> Unit) {
+    TODO("Not yet implemented")
 }

@@ -36,6 +36,12 @@ fun ProfileScreen(navController: NavController) {
                 )
                 NavigationBarItem(
                     selected = false,
+                    onClick = { navController.navigate("weather") },
+                    icon = { Icon(Icons.Default.Cloud, contentDescription = null) },
+                    label = { Text("Tempo") }
+                )
+                NavigationBarItem(
+                    selected = false,
                     onClick = { navController.navigate("history") },
                     icon = { Icon(Icons.Default.History, null) },
                     label = { Text("Histórico") }

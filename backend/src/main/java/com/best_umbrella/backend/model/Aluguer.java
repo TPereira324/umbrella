@@ -34,6 +34,8 @@ public class Aluguer {
     @Column(name = "data_fim")
     private LocalDateTime dataFim;
 
+
+    // return Date
     private Double custo;
     private String estado;
 

@@ -82,6 +82,12 @@ fun MapScreenWithMarkers(navController: NavController) {
                 )
                 NavigationBarItem(
                     selected = false,
+                    onClick = { navController.navigate("weather") },
+                    icon = { Icon(Icons.Default.Cloud, contentDescription = null) },
+                    label = { Text("Tempo") }
+                )
+                NavigationBarItem(
+                    selected = false,
                     onClick = { navController.navigate("history") },
                     icon = { Icon(Icons.Default.History, contentDescription = "Histórico") },
                     label = { Text("Histórico") }

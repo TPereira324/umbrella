@@ -26,7 +26,7 @@ public class Utilizador {
     @Column(unique = true)
     private String email;
 
-    
+    //cumpridor
     private String password;
 
     private String telefone;

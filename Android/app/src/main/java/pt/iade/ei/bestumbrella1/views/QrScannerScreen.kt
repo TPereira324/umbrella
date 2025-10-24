@@ -26,6 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 
@@ -33,6 +35,7 @@ import com.google.mlkit.vision.common.InputImage
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalGetImage::class)
 @Composable
 fun QrScannerScreen(
+    navController: NavController = rememberNavController(),
     onCodeScanned: (String) -> Unit = {}
 ) {
     val context = LocalContext.current
@@ -58,10 +61,45 @@ fun QrScannerScreen(
     Scaffold(
         bottomBar = {
             NavigationBar {
-                NavigationBarItem(selected = false, onClick = {}, icon = { Icon(Icons.Default.Map, null) }, label = { Text("Mapa") })
-                NavigationBarItem(selected = true, onClick = {}, icon = { Icon(Icons.Default.QrCodeScanner, null) }, label = { Text("Scanner") })
-                NavigationBarItem(selected = false, onClick = {}, icon = { Icon(Icons.Default.History, null) }, label = { Text("Histórico") })
-                NavigationBarItem(selected = false, onClick = {}, icon = { Icon(Icons.Default.Person, null) }, label = { Text("Perfil") })
+                // 🗺️ Mapa
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { navController.navigate("map") },
+                    icon = { Icon(Icons.Default.Map, contentDescription = null) },
+                    label = { Text("Mapa") }
+                )
+
+                // 📷 Scanner (atual)
+                NavigationBarItem(
+                    selected = true,
+                    onClick = {},
+                    icon = { Icon(Icons.Default.QrCodeScanner, contentDescription = null) },
+                    label = { Text("Scanner") }
+                )
+
+                // 🌦️ Tempo
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { navController.navigate("weather") },
+                    icon = { Icon(Icons.Default.Cloud, contentDescription = null) },
+                    label = { Text("Tempo") }
+                )
+
+                // 🕓 Histórico
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { navController.navigate("history") },
+                    icon = { Icon(Icons.Default.History, contentDescription = null) },
+                    label = { Text("Histórico") }
+                )
+
+                // 👤 Perfil
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { navController.navigate("profile") },
+                    icon = { Icon(Icons.Default.Person, contentDescription = null) },
+                    label = { Text("Perfil") }
+                )
             }
         }
     ) { padding ->
@@ -72,8 +110,8 @@ fun QrScannerScreen(
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
-                            Color(0xFF90CAF9), // Azul claro
-                            Color.White       // Branco
+                            Color(0xFF90CAF9),
+                            Color.White
                         )
                     )
                 )
