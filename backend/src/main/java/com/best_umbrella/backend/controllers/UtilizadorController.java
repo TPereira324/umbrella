@@ -18,6 +18,7 @@ public class UtilizadorController {
 
     @Autowired
     public UtilizadorController(UtilizadorService utilizadorService) {
+
         this.utilizadorService = utilizadorService;
     }
 
@@ -40,11 +41,11 @@ public class UtilizadorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Utilizador> updateUtilizador(@PathVariable Integer id, @RequestBody Utilizador utilizador) {
+    public ResponseEntity<Utilizador> updateUtilizador(@PathVariable Long id, @RequestBody Utilizador utilizador) {
         if (!utilizadorService.findById(id).isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        utilizador.setUtilizadorId(id);
+        utilizador.setUtilizadorId(Math.toIntExact(id));
         return ResponseEntity.ok(utilizadorService.save(utilizador));
     }
 
