@@ -1,13 +1,15 @@
 package com.best_umbrella.backend.service;
 
-import com.best_umbrella.backend.model.Utilizador;
-import com.best_umbrella.backend.repository.UtilizadorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.best_umbrella.backend.model.Utilizador;
+import com.best_umbrella.backend.repository.UtilizadorRepository;
 
 @Service
 public class UtilizadorService {

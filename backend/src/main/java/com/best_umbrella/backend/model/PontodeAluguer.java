@@ -9,7 +9,8 @@ public class PontodeAluguer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "ponto_id")
+    private Integer pontoId;
 
     private String nome;
     private double latitude;
@@ -18,24 +19,20 @@ public class PontodeAluguer {
 
     @OneToMany(mappedBy = "pontoAluguer", cascade = CascadeType.ALL)
     private List<GuardaChuva> guardaChuvas;
+    
+    @OneToMany(mappedBy = "pontoInicio")
+    private List<Aluguer> alugueresInicio;
+    
+    @OneToMany(mappedBy = "pontoFim")
+    private List<Aluguer> alugueresTermino;
 
-    public PontodeAluguer() {
+    // Getters e Setters
+    public Integer getPontoId() {
+        return pontoId;
     }
 
-    public PontodeAluguer(String nome, double latitude, double longitude, int totalGuardaChuvas) {
-        this.nome = nome;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.totalGuardaChuvas = totalGuardaChuvas;
-    }
-
-    // ========= GETTERS & SETTERS =========
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setPontoId(Integer pontoId) {
+        this.pontoId = pontoId;
     }
 
     public String getNome() {

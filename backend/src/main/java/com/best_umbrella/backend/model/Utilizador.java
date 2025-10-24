@@ -1,41 +1,54 @@
 package com.best_umbrella.backend.model;
 
-import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "utilizadores")
-public class Utilizador {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "Utilizador")
+public class Utilizador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "utilizador_id")
+    private Integer utilizadorId;
 
+    @Column(name = "nome")
     private String nome;
-    private String email;
-    private String password;
-    private double saldo = 0.0;
-    private int pontosFidelizacao = 0;
 
-    @OneToMany(mappedBy = "utilizador", cascade = CascadeType.ALL)
+    
+    @Column(unique = true)
+    private String email;
+
+    
+    private String password;
+
+    private String telefone;
+
+    @Column(name = "data_registo")
+    private LocalDateTime dataRegisto;
+
+    private Double rating;
+
+    @OneToMany(mappedBy = "utilizador")
     private List<Aluguer> alugueres;
 
-    public Utilizador() {
+    @OneToMany(mappedBy = "utilizador")
+    private List<Noti> notificacoes;
+
+    // Getters e Setters
+    public Integer getUtilizadorId() {
+        return utilizadorId;
     }
 
-    public Utilizador(String nome, String email, String password) {
-        this.nome = nome;
-        this.email = email;
-        this.password = password;
-    }
-
-    // ========= GETTERS & SETTERS =========
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setUtilizadorId(Integer utilizadorId) {
+        this.utilizadorId = utilizadorId;
     }
 
     public String getNome() {
@@ -62,20 +75,28 @@ public class Utilizador {
         this.password = password;
     }
 
-    public double getSaldo() {
-        return saldo;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
-    public int getPontosFidelizacao() {
-        return pontosFidelizacao;
+    public LocalDateTime getDataRegisto() {
+        return dataRegisto;
     }
 
-    public void setPontosFidelizacao(int pontosFidelizacao) {
-        this.pontosFidelizacao = pontosFidelizacao;
+    public void setDataRegisto(LocalDateTime dataRegisto) {
+        this.dataRegisto = dataRegisto;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 
     public List<Aluguer> getAlugueres() {
@@ -84,5 +105,13 @@ public class Utilizador {
 
     public void setAlugueres(List<Aluguer> alugueres) {
         this.alugueres = alugueres;
+    }
+
+    public List<Noti> getNotificacoes() {
+        return notificacoes;
+    }
+
+    public void setNotificacoes(List<Noti> notificacoes) {
+        this.notificacoes = notificacoes;
     }
 }

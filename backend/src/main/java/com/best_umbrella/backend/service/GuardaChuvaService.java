@@ -21,7 +21,7 @@ public class GuardaChuvaService {
         return guardaChuvaRepository.findAll();
     }
 
-    public Optional<GuardaChuva> findById(Long id) {
+    public Optional<GuardaChuva> findById(Integer id) {
         return guardaChuvaRepository.findById(id);
     }
 
@@ -33,7 +33,7 @@ public class GuardaChuvaService {
         return guardaChuvaRepository.save(guardaChuva);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(Integer id) {
         guardaChuvaRepository.deleteById(id);
     }
 }
