@@ -23,5 +23,6 @@
             "username": "root",
             "database": "best_umbrella"
         }
-    ]
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

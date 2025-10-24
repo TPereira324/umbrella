@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/utilizadores")
+@RequestMapping("/api/Utilizador")
 public class UtilizadorController {
 
     private final UtilizadorService utilizadorService;
@@ -28,7 +28,7 @@ public class UtilizadorController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Utilizador> getUtilizadorById(@PathVariable Long id) {
-        Optional<Utilizador> utilizador = utilizadorService.findById(id);
+        Optional<Utilizador> utilizador = utilizadorService.findById(Long.valueOf(id));
         return utilizador.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -50,7 +50,7 @@ public class UtilizadorController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUtilizador(@PathVariable Long id) {
-        if (!utilizadorService.findById(id).isPresent()) {
+        if (!utilizadorService.findById(Long.valueOf(id)).isPresent()) {
             return ResponseEntity.notFound().build();
         }
         utilizadorService.deleteById(id);

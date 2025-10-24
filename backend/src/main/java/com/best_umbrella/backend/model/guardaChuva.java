@@ -1,9 +1,17 @@
 package com.best_umbrella.backend.model;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Guarda_chuva")
@@ -11,7 +19,7 @@ public class GuardaChuva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "guarda_chuva_id")
-    private Long guardaChuvaId;
+    private Integer guardaChuvaId;
 
     @Column(name = "codigo_qr", unique = true, nullable = false)
     private String codigoQr;
@@ -31,11 +39,11 @@ public class GuardaChuva {
     private List<Aluguer> alugueres;
 
     // Getters e Setters
-    public Long getGuardaChuvaId() {
+    public Integer getGuardaChuvaId() {
         return guardaChuvaId;
     }
 
-    public void setGuardaChuvaId(Long guardaChuvaId) {
+    public void setGuardaChuvaId(Integer guardaChuvaId) {
         this.guardaChuvaId = guardaChuvaId;
     }
 

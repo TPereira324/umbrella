@@ -35,7 +35,7 @@ public class GuardaChuvaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GuardaChuva> getGuardaChuvaById(@PathVariable Long id) {
+    public ResponseEntity<GuardaChuva> getGuardaChuvaById(@PathVariable Integer id) {
         Optional<GuardaChuva> guardaChuva = guardaChuvaService.findById(id);
         return guardaChuva.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -58,7 +58,7 @@ public class GuardaChuvaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GuardaChuva> updateGuardaChuva(@PathVariable Long id, @RequestBody GuardaChuva guardaChuva) {
+    public ResponseEntity<GuardaChuva> updateGuardaChuva(@PathVariable Integer id, @RequestBody GuardaChuva guardaChuva) {
         if (!guardaChuvaService.findById(id).isPresent()) {
             return ResponseEntity.notFound().build();
         }
@@ -67,7 +67,7 @@ public class GuardaChuvaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGuardaChuva(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteGuardaChuva(@PathVariable Integer id) {
         Optional<GuardaChuva> guardaChuva = guardaChuvaService.findById(id);
         if (guardaChuva.isEmpty()) {
             return ResponseEntity.notFound().build();
