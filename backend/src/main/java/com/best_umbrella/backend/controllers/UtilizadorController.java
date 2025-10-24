@@ -40,7 +40,7 @@ public class UtilizadorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Utilizador> updateUtilizador(@PathVariable Long id, @RequestBody Utilizador utilizador) {
+    public ResponseEntity<Utilizador> updateUtilizador(@PathVariable Integer id, @RequestBody Utilizador utilizador) {
         if (!utilizadorService.findById(id).isPresent()) {
             return ResponseEntity.notFound().build();
         }
