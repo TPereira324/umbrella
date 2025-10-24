@@ -1,4 +1,4 @@
-package pt.iade.ei.bestumbrella1.navigation
+package pt.iade.ei.bestumbrella1.MainNavigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -7,30 +7,22 @@ import androidx.navigation.compose.composable
 import pt.iade.ei.bestumbrella1.views.*
 
 @Composable
-fun MainNavigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "map") {
+fun MainNavigation(
+    navController: NavHostController
+) {
 
-        composable("map") {
-            MapScreen(navController)
-        }
 
-        composable("qrscanner") {
-            QrScannerScreen(navController)
-        }
-
-        composable("weather") {
-            WeatherScreen(navController)
-        }
-
-        composable("history") {
-            HistoryScreen(navController)
-        }
-
-        composable("profile") {
-            ProfileScreen(navController)
+        NavHost(navController, startDestination = "profile") {
+            composable("profile") { ProfileScreen(navController) }
+            composable("payment") { }
+            composable("map") { /* TODO */ }
+            composable("qrscanner") { /* TODO */ }
+            composable("weather") { /* TODO */ }
+            composable("history") { /* TODO */ }
         }
     }
-}
+
+
 
 @Composable
 fun MapScreen(x0: NavHostController) {
