@@ -8,40 +8,31 @@ import pt.iade.ei.bestumbrella1.views.*
 
 @Composable
 fun MainNavigation(navController: NavHostController) {
-    NavHost(
-        navController = navController,
-        startDestination = "map" // Tela inicial
-    ) {
-        // 🌍 Tela principal do mapa
+    NavHost(navController = navController, startDestination = "map") {
+
         composable("map") {
-            MapScreenWithMarkers(navController)
+            MapScreen(navController)
         }
 
-        // 📷 Scanner de QR Code
         composable("qrscanner") {
-            QrScannerScreen(navController as (String) -> Unit)
+            QrScannerScreen(navController)
         }
 
-        // 📄 Detalhes do Aluguer (exemplo com argumento de QR code)
-        composable("rental/{qrCode}") { backStackEntry ->
-            val qrCode = backStackEntry.arguments?.getString("qrCode") ?: "N/A"
-            RentalDetailsScreen(navController, qrCode)
+        composable("weather") {
+            WeatherScreen(navController)
         }
 
-        // 💳 Pagamento
-        composable("payment/{qrCode}") { backStackEntry ->
-            val qrCode = backStackEntry.arguments?.getString("qrCode") ?: "N/A"
-            PaymentScreen(navController, qrCode)
-        }
-
-        // 🕓 Histórico
         composable("history") {
             HistoryScreen(navController)
         }
 
-        // 👤 Perfil
         composable("profile") {
             ProfileScreen(navController)
         }
     }
+}
+
+@Composable
+fun MapScreen(x0: NavHostController) {
+    TODO("Not yet implemented")
 }
