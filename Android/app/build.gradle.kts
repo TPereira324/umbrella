@@ -1,3 +1,4 @@
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -51,7 +52,6 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.runtime.ktx)
@@ -70,6 +70,14 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+    implementation(libs.retrofit.v290)
+    implementation(libs.converter.gson.v290)
+    implementation(libs.firebase.appdistribution.gradle)
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

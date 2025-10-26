@@ -1,31 +1,18 @@
 package pt.iade.ei.bestumbrella1.models
 
+import pt.iade.ei.bestumbrella1.data.RetrofitClient
+import pt.iade.ei.bestumbrella1.data.UserRequest
+import pt.iade.ei.bestumbrella1.data.UserResponse
+
 class UserRepository {
 
-    private val users = mutableListOf<User>()
-    private var loggedInUser: User? = null
-
-    fun register(name: String, email: String, password: String): Boolean {
-        if (users.any { it.email == email }) return false
-        users.add(User(name, email, password))
-        return true
+    suspend fun register(name: String, email: String, password: String): UserResponse {
+        val api = RetrofitClient.instance
+        return api.registerUser(UserRequest(name = name, email = email, password = password))
     }
 
-    fun login(email: String, password: String): Boolean {
-        val user = users.find { it.email == email && it.password == password }
-        return if (user != null) {
-            loggedInUser = user
-            true
-        } else {
-            false
-        }
+    suspend fun login(email: String, password: String): UserResponse {
+        val api = RetrofitClient.instance
+        return api.loginUser(UserRequest(email = email, password = password))
     }
-
-    fun getLoggedInUser(): User? = loggedInUser
-
-    fun logout() {
-        loggedInUser = null
-    }
-
-    fun isLoggedIn(): Boolean = loggedInUser != null
 }

@@ -22,15 +22,14 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import pt.iade.ei.bestumbrella1.R
+import pt.iade.ei.bestumbrella1.network.RetrofitClient
+import pt.iade.ei.bestumbrella1.data.UserRequest
 import pt.iade.ei.bestumbrella1.models.SessionManager
 import pt.iade.ei.bestumbrella1.models.UserRepository
-import pt.iade.ei.bestumbrella1.utils.isValidEmail
-import pt.iade.ei.bestumbrella1.utils.isValidPassword
 
 @Composable
 fun LoginScreen(
     navController: NavController,
-    userRepository: UserRepository,
     onLoginSuccess: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
@@ -46,10 +45,7 @@ fun LoginScreen(
             .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFF1976D2), // Azul topo
-                        Color.White        // Branco em baixo
-                    )
+                    colors = listOf(Color(0xFF1976D2), Color.White)
                 )
             )
             .padding(24.dp),
@@ -65,15 +61,7 @@ fun LoginScreen(
             Image(
                 painter = painterResource(id = R.mipmap.ic_launcher_foreground),
                 contentDescription = "Logo",
-                modifier = Modifier
-                    .size(300.dp)
-                    .padding(bottom = 24.dp)
-            )
-
-            Text(
-                "Entrar",
-                style = MaterialTheme.typography.headlineMedium,
-                color = Color(0xFF1976D2)
+                modifier = Modifier.size(200.dp)
             )
 
             Spacer(Modifier.height(24.dp))
@@ -83,13 +71,7 @@ fun LoginScreen(
                 onValueChange = { email = it },
                 label = { Text("Email") },
                 leadingIcon = { Icon(Icons.Default.MailOutline, contentDescription = null) },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF1976D2),
-                    focusedLabelColor = Color(0xFF1976D2),
-                    cursorColor = Color(0xFF1976D2)
-                )
+                modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(Modifier.height(16.dp))
@@ -99,43 +81,31 @@ fun LoginScreen(
                 onValueChange = { password = it },
                 label = { Text("Senha") },
                 leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
-                singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF1976D2),
-                    focusedLabelColor = Color(0xFF1976D2),
-                    cursorColor = Color(0xFF1976D2)
-                )
+                modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(Modifier.height(24.dp))
 
             Button(
                 onClick = {
-                    if (!isValidEmail(email)) {
-                        error = "Email inválido"
-                        return@Button
-                    }
-                    if (!isValidPassword(password)) {
-                        error = "Senha deve ter pelo menos 6 caracteres"
-                        return@Button
-                    }
-
-                    val success = userRepository.login(email, password)
-                    if (success) {
-                        error = null
-                        coroutineScope.launch {
-                            sessionManager.saveEmail(email)
-                            onLoginSuccess()
+                    coroutineScope.launch {
+                        try {
+                            val response = RetrofitClient.api.loginUser(
+                                UserRequest(email = email, password = password)
+                            )
+                            if (response.success) {
+                                sessionManager.saveEmail(email)
+                                onLoginSuccess()
+                            } else {
+                                error = response.message
+                            }
+                        } catch (e: Exception) {
+                            error = "Erro ao conectar ao servidor"
                         }
-                    } else {
-                        error = "Email ou senha incorretos"
                     }
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
+                modifier = Modifier.fillMaxWidth().height(50.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1976D2))
             ) {
                 Text("Entrar", color = Color.White)
@@ -154,16 +124,8 @@ fun LoginScreen(
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
-fun LoginScreenPreview() {
-    val navController = rememberNavController()
-    val fakeRepository = UserRepository()
-
-    LoginScreen(
-        navController = navController,
-        userRepository = fakeRepository,
-        onLoginSuccess = {}
-    )
-}
+fun LoginScreenPreview(){
+val navController = rememberNavController()
+val fakeRepository = UserRepository()}
