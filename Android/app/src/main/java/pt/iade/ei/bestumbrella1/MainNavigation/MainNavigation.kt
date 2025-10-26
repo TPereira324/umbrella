@@ -49,6 +49,11 @@ fun MainNavigation(navController: NavHostController) {
 }
 
 @Composable
+fun UserRepository() {
+    TODO("Not yet implemented")
+}
+
+@Composable
 fun MapScreen(navController: NavHostController) {
     TODO("Not yet implemented")
 }

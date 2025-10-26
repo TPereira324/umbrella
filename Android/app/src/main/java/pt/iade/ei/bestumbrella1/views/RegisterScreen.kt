@@ -25,7 +25,9 @@ import pt.iade.ei.bestumbrella1.network.RetrofitClient
 
 @Composable
 fun RegisterScreen(
-    navController: NavController
+    navController: NavController,
+    userRepository: Any,
+    onRegisterSuccess: () -> Unit
 ) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }

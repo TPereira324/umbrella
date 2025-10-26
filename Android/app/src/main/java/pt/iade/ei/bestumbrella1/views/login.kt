@@ -16,10 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import pt.iade.ei.bestumbrella1.R
 import pt.iade.ei.bestumbrella1.network.RetrofitClient
@@ -29,7 +27,8 @@ import pt.iade.ei.bestumbrella1.models.SessionManager
 @Composable
 fun LoginScreen(
     navController: NavController,
-    onLoginSuccess: () -> Unit
+    onLoginSuccess: () -> Unit,
+    userRepository: Any
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
