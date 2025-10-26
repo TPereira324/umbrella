@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import pt.iade.ei.bestumbrella1.models.UserRepository
 import pt.iade.ei.bestumbrella1.views.LoginScreen
 import pt.iade.ei.bestumbrella1.views.RegisterScreen
 

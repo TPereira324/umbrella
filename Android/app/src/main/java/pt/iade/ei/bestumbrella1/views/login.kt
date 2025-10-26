@@ -25,7 +25,6 @@ import pt.iade.ei.bestumbrella1.R
 import pt.iade.ei.bestumbrella1.network.RetrofitClient
 import pt.iade.ei.bestumbrella1.data.UserRequest
 import pt.iade.ei.bestumbrella1.models.SessionManager
-import pt.iade.ei.bestumbrella1.models.UserRepository
 
 @Composable
 fun LoginScreen(
@@ -124,8 +123,3 @@ fun LoginScreen(
         }
     }
 }
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview(){
-val navController = rememberNavController()
-val fakeRepository = UserRepository()}
