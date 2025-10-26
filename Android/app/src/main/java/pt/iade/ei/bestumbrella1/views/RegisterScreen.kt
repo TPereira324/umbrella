@@ -16,8 +16,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import pt.iade.ei.bestumbrella1.R
 import pt.iade.ei.bestumbrella1.data.UserRequest
@@ -26,7 +28,6 @@ import pt.iade.ei.bestumbrella1.network.RetrofitClient
 @Composable
 fun RegisterScreen(
     navController: NavController,
-    userRepository: Any,
     onRegisterSuccess: () -> Unit
 ) {
     var name by remember { mutableStateOf("") }
@@ -101,7 +102,7 @@ fun RegisterScreen(
                                 UserRequest(name = name, email = email, password = password)
                             )
                             if (response.success) {
-                                navController.navigate("login")
+                                onRegisterSuccess()
                             } else {
                                 error = response.message
                             }
@@ -110,7 +111,9 @@ fun RegisterScreen(
                         }
                     }
                 },
-                modifier = Modifier.fillMaxWidth().height(50.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1976D2))
             ) {
                 Text("Registrar", color = Color.White)
@@ -128,4 +131,12 @@ fun RegisterScreen(
             }
         }
     }
+}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun RegisterScreenPreview() {
+    RegisterScreen(
+        navController = rememberNavController(),
+        onRegisterSuccess = {}
+    )
 }

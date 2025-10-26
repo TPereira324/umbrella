@@ -61,39 +61,30 @@ fun QrScannerScreen(
     Scaffold(
         bottomBar = {
             NavigationBar {
-                // 🗺️ Mapa
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("map") },
                     icon = { Icon(Icons.Default.Map, contentDescription = null) },
                     label = { Text("Mapa") }
                 )
-
-                // 📷 Scanner (atual)
                 NavigationBarItem(
                     selected = true,
                     onClick = {},
                     icon = { Icon(Icons.Default.QrCodeScanner, contentDescription = null) },
                     label = { Text("Scanner") }
                 )
-
-                // 🌦️ Tempo
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("weather") },
                     icon = { Icon(Icons.Default.Cloud, contentDescription = null) },
                     label = { Text("Tempo") }
                 )
-
-                // 🕓 Histórico
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("history") },
                     icon = { Icon(Icons.Default.History, contentDescription = null) },
                     label = { Text("Histórico") }
                 )
-
-                // 👤 Perfil
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("profile") },
@@ -109,10 +100,7 @@ fun QrScannerScreen(
                 .padding(padding)
                 .background(
                     Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFF90CAF9),
-                            Color.White
-                        )
+                        colors = listOf(Color(0xFF90CAF9), Color.White)
                     )
                 )
         ) {
@@ -129,19 +117,16 @@ fun QrScannerScreen(
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(Modifier.height(50.dp))
-
                 Icon(Icons.Default.QrCodeScanner, contentDescription = null, modifier = Modifier.size(96.dp))
                 Spacer(Modifier.height(16.dp))
                 Text("Pronto para escanear", style = MaterialTheme.typography.titleMedium)
                 Text("Toque no botão abaixo para ativar a câmera", style = MaterialTheme.typography.bodySmall)
                 Spacer(Modifier.height(35.dp))
-
                 Button(onClick = { startScanner = true }) {
                     Icon(Icons.Default.CameraAlt, contentDescription = null)
                     Spacer(Modifier.width(8.dp))
                     Text("Iniciar Scanner")
                 }
-
                 Spacer(Modifier.height(50.dp))
                 Card(modifier = Modifier.fillMaxWidth()) {
                     Column(modifier = Modifier.padding(16.dp)) {
@@ -155,7 +140,6 @@ fun QrScannerScreen(
                 }
             }
 
-            // Mostra a câmara quando o scanner é ativado
             if (startScanner && hasCameraPermission) {
                 AndroidView(factory = { ctx ->
                     val previewView = PreviewView(ctx)
@@ -171,24 +155,31 @@ fun QrScannerScreen(
                             it.setAnalyzer(ContextCompat.getMainExecutor(ctx)) { imageProxy ->
                                 val mediaImage = imageProxy.image
                                 if (mediaImage != null) {
-                                    val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
-                                    val scanner = BarcodeScanning.getClient()
-                                    scanner.process(image)
-                                        .addOnSuccessListener { barcodes ->
-                                            for (barcode in barcodes) {
-                                                barcode.rawValue?.let { code ->
-                                                    onCodeScanned(code)
-                                                    Toast.makeText(ctx, "Código: $code", Toast.LENGTH_SHORT).show()
-                                                    startScanner = false
+                                    try {
+                                        val image = InputImage.fromMediaImage(
+                                            mediaImage,
+                                            imageProxy.imageInfo.rotationDegrees
+                                        )
+                                        val scanner = BarcodeScanning.getClient()
+                                        scanner.process(image)
+                                            .addOnSuccessListener { barcodes ->
+                                                for (barcode in barcodes) {
+                                                    barcode.rawValue?.let { code ->
+                                                        onCodeScanned(code)
+                                                        Toast.makeText(ctx, "Código: $code", Toast.LENGTH_SHORT).show()
+                                                    }
                                                 }
                                             }
-                                        }
-                                        .addOnFailureListener {
-                                            Log.e("QR", "Erro ao ler QR: ${it.message}")
-                                        }
-                                        .addOnCompleteListener {
-                                            imageProxy.close()
-                                        }
+                                            .addOnFailureListener {
+                                                Log.e("QR", "Erro ao ler QR: ${it.message}")
+                                            }
+                                            .addOnCompleteListener {
+                                                imageProxy.close()
+                                            }
+                                    } catch (e: Exception) {
+                                        Log.e("QR", "Erro no processamento da imagem: ${e.message}")
+                                        imageProxy.close()
+                                    }
                                 } else {
                                     imageProxy.close()
                                 }

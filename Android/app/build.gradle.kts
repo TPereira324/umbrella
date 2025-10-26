@@ -76,6 +76,11 @@ dependencies {
     implementation(libs.retrofit.v290)
     implementation(libs.converter.gson.v290)
     implementation(libs.firebase.appdistribution.gradle)
+    implementation (libs.androidx.camera.core)
+    implementation (libs.androidx.camera.camera2.v130)
+    implementation (libs.androidx.camera.lifecycle.v130)
+    implementation (libs.androidx.camera.view.v130)
+    implementation (libs.guava)
 
 
     testImplementation(libs.junit)

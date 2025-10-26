@@ -7,19 +7,17 @@ import androidx.navigation.compose.composable
 import pt.iade.ei.bestumbrella1.views.LoginScreen
 import pt.iade.ei.bestumbrella1.views.RegisterScreen
 
+import pt.iade.ei.bestumbrella1.views.CameraPreviewScreen
+
 @Composable
 fun MainNavigation(navController: NavHostController) {
-    val userRepository = UserRepository()
-
     NavHost(
         navController = navController,
         startDestination = "login"
     ) {
-        // Tela de Login
         composable("login") {
             LoginScreen(
                 navController = navController,
-                userRepository = userRepository,
                 onLoginSuccess = {
                     navController.navigate("map") {
                         popUpTo("login") { inclusive = true }
@@ -28,11 +26,9 @@ fun MainNavigation(navController: NavHostController) {
             )
         }
 
-        // Tela de Registro
         composable("register") {
             RegisterScreen(
                 navController = navController,
-                userRepository = userRepository,
                 onRegisterSuccess = {
                     navController.navigate("login") {
                         popUpTo("register") { inclusive = true }
@@ -41,16 +37,14 @@ fun MainNavigation(navController: NavHostController) {
             )
         }
 
-        // Tela principal do mapa (após login)
         composable("map") {
             MapScreen(navController = navController)
         }
-    }
-}
 
-@Composable
-fun UserRepository() {
-    TODO("Not yet implemented")
+        composable("cameraPreview") {
+            CameraPreviewScreen()
+        }
+    }
 }
 
 @Composable

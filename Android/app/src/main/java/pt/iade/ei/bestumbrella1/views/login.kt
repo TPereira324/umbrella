@@ -16,19 +16,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import pt.iade.ei.bestumbrella1.R
-import pt.iade.ei.bestumbrella1.network.RetrofitClient
+import pt.iade.ei.bestumbrella1.data.RetrofitClient
 import pt.iade.ei.bestumbrella1.data.UserRequest
 import pt.iade.ei.bestumbrella1.models.SessionManager
 
 @Composable
 fun LoginScreen(
     navController: NavController,
-    onLoginSuccess: () -> Unit,
-    userRepository: Any
+    onLoginSuccess: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -90,7 +91,7 @@ fun LoginScreen(
                     coroutineScope.launch {
                         try {
                             val response = RetrofitClient.api.loginUser(
-                                UserRequest(email = email, password = password)
+                                UserRequest(name = null, email = email, password = password)
                             )
                             if (response.success) {
                                 sessionManager.saveEmail(email)
@@ -103,7 +104,9 @@ fun LoginScreen(
                         }
                     }
                 },
-                modifier = Modifier.fillMaxWidth().height(50.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1976D2))
             ) {
                 Text("Entrar", color = Color.White)
@@ -121,4 +124,12 @@ fun LoginScreen(
             }
         }
     }
+}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun LoginScreenPreview() {
+    LoginScreen(
+        navController = rememberNavController(),
+        onLoginSuccess = {}
+    )
 }

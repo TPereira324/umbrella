@@ -1,6 +1,5 @@
 package pt.iade.ei.bestumbrella1.network
 
-import com.google.firebase.appdistribution.gradle.ApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -14,6 +13,4 @@ object RetrofitClient {
             .build()
             .create(ApiService::class.java)
     }
-
 }
-
