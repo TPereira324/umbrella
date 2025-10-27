@@ -66,3 +66,8 @@ data class UpdateProfileRequest(
     val name: String? = null,
     val preferences: UserPreferences? = null
 )
+data class UserRequest(
+    val name: String? = null,
+    val email: String,
+    val password: String
+)
