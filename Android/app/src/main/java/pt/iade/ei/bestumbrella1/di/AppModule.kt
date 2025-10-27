@@ -1,7 +1,7 @@
 package pt.iade.ei.bestumbrella1.di
 
 import android.content.Context
-import pt.iade.ei.bestumbrella1.data.ApiService
+import pt.iade.ei.bestumbrella1.network.ApiService
 import pt.iade.ei.bestumbrella1.data.Repository
 import pt.iade.ei.bestumbrella1.models.SessionManager
 import pt.iade.ei.bestumbrella1.network.RetrofitClient
@@ -35,7 +35,10 @@ object AppModule {
     }
     
     fun provideAuthViewModel(context: Context): AuthViewModel {
-        return authViewModel ?: AuthViewModel(provideRepository(context)).also {
+        return authViewModel ?: AuthViewModel(
+            provideRepository(context),
+            provideSessionManager(context)
+        ).also {
             authViewModel = it
         }
     }

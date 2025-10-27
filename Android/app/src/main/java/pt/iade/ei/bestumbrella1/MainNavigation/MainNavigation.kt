@@ -4,6 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.compose.material3.Text
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
 import pt.iade.ei.bestumbrella1.views.LoginScreen
 import pt.iade.ei.bestumbrella1.views.RegisterScreen
 
@@ -48,6 +51,10 @@ fun MainNavigation(navController: NavHostController) {
 }
 
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
 fun MapScreen(navController: NavHostController) {
-    TODO("Not yet implemented")
+    Scaffold {
+        Text(text = "Mapa (em construção)")
+    }
 }

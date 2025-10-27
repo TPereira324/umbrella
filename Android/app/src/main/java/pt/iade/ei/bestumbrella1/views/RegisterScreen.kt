@@ -22,10 +22,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import pt.iade.ei.bestumbrella1.R
-import pt.iade.ei.bestumbrella1.data.UserRequest
-import pt.iade.ei.bestumbrella1.models.UserResponse
-import pt.iade.ei.bestumbrella1.network.RetrofitClient
-import retrofit2.Response
+import androidx.compose.runtime.livedata.observeAsState
+import pt.iade.ei.bestumbrella1.di.AppModule
+import pt.iade.ei.bestumbrella1.viewmodels.AuthViewModel
 
 
 
@@ -39,6 +38,11 @@ fun RegisterScreen(
     var password by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
 
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val authViewModel = remember { AppModule.provideAuthViewModel(context) }
+    val registerResult by authViewModel.registerResult.observeAsState()
+    val isLoading by authViewModel.isLoading.observeAsState(false)
+    val errorState by authViewModel.error.observeAsState()
     val coroutineScope = rememberCoroutineScope()
 
     Box(
@@ -99,28 +103,13 @@ fun RegisterScreen(
             Spacer(Modifier.height(24.dp))
 
             Button(
-                onClick = {
-                    coroutineScope.launch {
-                        try {
-                            val response = RetrofitClient.api.registerUser(
-                                UserRequest(name = name, email = email, password = password)
-                            )
-                            if (response.success) {
-                                onRegisterSuccess()
-                            } else {
-                                error = response.message()
-                            }
-                        } catch (e: Exception) {
-                            error = "Erro ao conectar ao servidor"
-                        }
-                    }
-                },
+                onClick = { authViewModel.register(name, email, password) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1976D2))
             ) {
-                Text("Registrar", color = Color.White)
+                Text(if (isLoading) "Registrando..." else "Registrar", color = Color.White)
             }
 
             Spacer(Modifier.height(8.dp))
@@ -129,7 +118,16 @@ fun RegisterScreen(
                 Text("Já tem conta? Entrar", color = Color(0xFF1976D2))
             }
 
-            error?.let {
+            registerResult?.let { result ->
+                if (result.success) {
+                    onRegisterSuccess()
+                } else if (result.message?.isNotEmpty() == true) {
+                    error = result.message
+                }
+            }
+
+            val displayedError = errorState ?: error
+            displayedError?.let {
                 Spacer(Modifier.height(8.dp))
                 Text(it, color = MaterialTheme.colorScheme.error)
             }

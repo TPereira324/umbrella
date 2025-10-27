@@ -22,9 +22,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import pt.iade.ei.bestumbrella1.R
-import pt.iade.ei.bestumbrella1.data.RetrofitClient
-import pt.iade.ei.bestumbrella1.data.UserRequest
-import pt.iade.ei.bestumbrella1.models.SessionManager
+import androidx.compose.runtime.livedata.observeAsState
+import pt.iade.ei.bestumbrella1.di.AppModule
+import pt.iade.ei.bestumbrella1.viewmodels.AuthViewModel
 
 @Composable
 fun LoginScreen(
@@ -36,8 +36,11 @@ fun LoginScreen(
     var error by remember { mutableStateOf<String?>(null) }
 
     val context = LocalContext.current
-    val sessionManager = remember { SessionManager(context) }
+    val authViewModel = remember { AppModule.provideAuthViewModel(context) }
     val coroutineScope = rememberCoroutineScope()
+    val loginResult by authViewModel.loginResult.observeAsState()
+    val isLoading by authViewModel.isLoading.observeAsState(false)
+    val errorState by authViewModel.error.observeAsState()
 
     Box(
         modifier = Modifier
@@ -88,28 +91,14 @@ fun LoginScreen(
 
             Button(
                 onClick = {
-                    coroutineScope.launch {
-                        try {
-                            val response = RetrofitClient.api.loginUser(
-                                UserRequest(name = null, email = email, password = password)
-                            )
-                            if (response.success) {
-                                sessionManager.saveEmail(email)
-                                onLoginSuccess()
-                            } else {
-                                error = response.message
-                            }
-                        } catch (e: Exception) {
-                            error = "Erro ao conectar ao servidor"
-                        }
-                    }
+                    authViewModel.login(email, password)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1976D2))
             ) {
-                Text("Entrar", color = Color.White)
+                Text(if (isLoading) "Entrando..." else "Entrar", color = Color.White)
             }
 
             Spacer(Modifier.height(8.dp))
@@ -118,7 +107,18 @@ fun LoginScreen(
                 Text("Criar conta", color = Color(0xFF1976D2))
             }
 
-            error?.let {
+            // Navega quando loginResult indica sucesso
+            loginResult?.let { result ->
+                if (result.success) {
+                    onLoginSuccess()
+                } else if (result.message?.isNotEmpty() == true) {
+                    error = result.message
+                }
+            }
+
+            // Exibe erro do ViewModel
+            val displayedError = errorState ?: error
+            displayedError?.let {
                 Spacer(Modifier.height(8.dp))
                 Text(it, color = MaterialTheme.colorScheme.error)
             }

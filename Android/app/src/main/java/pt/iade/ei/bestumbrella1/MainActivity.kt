@@ -9,7 +9,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import pt.iade.ei.bestumbrella1.navigation.MainNavigation
+import pt.iade.ei.bestumbrella1.MainNavigation.MainNavigation
 import pt.iade.ei.bestumbrella1.ui.theme.BestUmbrella1Theme
 
 class MainActivity : ComponentActivity() {
