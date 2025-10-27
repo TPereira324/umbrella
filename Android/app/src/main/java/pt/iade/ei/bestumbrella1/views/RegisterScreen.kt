@@ -20,12 +20,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import kotlinx.coroutines.launch
 import pt.iade.ei.bestumbrella1.R
 import androidx.compose.runtime.livedata.observeAsState
 import pt.iade.ei.bestumbrella1.di.AppModule
-import pt.iade.ei.bestumbrella1.viewmodels.AuthViewModel
-
 
 
 @Composable
