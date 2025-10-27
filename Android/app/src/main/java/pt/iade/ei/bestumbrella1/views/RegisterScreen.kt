@@ -23,7 +23,11 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import pt.iade.ei.bestumbrella1.R
 import pt.iade.ei.bestumbrella1.data.UserRequest
+import pt.iade.ei.bestumbrella1.models.UserResponse
 import pt.iade.ei.bestumbrella1.network.RetrofitClient
+import retrofit2.Response
+
+
 
 @Composable
 fun RegisterScreen(
@@ -104,7 +108,7 @@ fun RegisterScreen(
                             if (response.success) {
                                 onRegisterSuccess()
                             } else {
-                                error = response.message
+                                error = response.message()
                             }
                         } catch (e: Exception) {
                             error = "Erro ao conectar ao servidor"

@@ -1,6 +1,7 @@
 package pt.iade.ei.bestumbrella1.di
 
 import android.content.Context
+import pt.iade.ei.bestumbrella1.data.ApiService
 import pt.iade.ei.bestumbrella1.data.Repository
 import pt.iade.ei.bestumbrella1.models.SessionManager
 import pt.iade.ei.bestumbrella1.network.RetrofitClient
@@ -26,7 +27,7 @@ object AppModule {
     
     fun provideRepository(context: Context): Repository {
         return repository ?: Repository(
-            RetrofitClient.api,
+            RetrofitClient.api as ApiService,
             provideSessionManager(context)
         ).also {
             repository = it
@@ -45,7 +46,7 @@ object AppModule {
         }
     }
     
-    // Método para limpar as instâncias quando necessário (por exemplo, ao fazer logout)
+
     fun clearInstances() {
         repository = null
         authViewModel = null
