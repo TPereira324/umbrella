@@ -43,6 +43,10 @@ class SessionManager(context: Context) {
     suspend fun getToken(): String? {
         return getValue(TOKEN_KEY)
     }
+    
+    suspend fun getAuthToken(): String? {
+        return getToken()
+    }
 
     suspend fun clearSession() {
         dataStore.edit { it.clear() }
