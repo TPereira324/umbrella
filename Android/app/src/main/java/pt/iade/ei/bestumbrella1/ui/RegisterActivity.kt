@@ -12,25 +12,29 @@ import pt.iade.ei.bestumbrella1.R
 import pt.iade.ei.bestumbrella1.di.AppModule
 import pt.iade.ei.bestumbrella1.viewmodels.AuthViewModel
 
-class LoginActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
 
+    private lateinit var nameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
-    private lateinit var loginButton: Button
+    private lateinit var confirmPasswordEditText: EditText
     private lateinit var registerButton: Button
+    private lateinit var backToLoginButton: Button
 
     // Obtém o ViewModel através do módulo de injeção de dependência
     private val authViewModel by lazy { AppModule.provideAuthViewModel(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_register)
 
         // Inicializa as views
+        nameEditText = findViewById(R.id.nameEditText)
         emailEditText = findViewById(R.id.emailEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
-        loginButton = findViewById(R.id.loginButton)
+        confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText)
         registerButton = findViewById(R.id.registerButton)
+        backToLoginButton = findViewById(R.id.backToLoginButton)
 
         // Configura os observadores para os dados do ViewModel
         setupObservers()
@@ -40,15 +44,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        // Observa o resultado do login
-        authViewModel.loginResult.observe(this, Observer { response ->
+        // Observa o resultado do registro
+        authViewModel.registerResult.observe(this, Observer { response ->
             if (response.success) {
-                // Login bem-sucedido, navega para a tela principal
-                Toast.makeText(this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show()
+                // Registro bem-sucedido, navega para a tela principal
+                Toast.makeText(this, "Registro realizado com sucesso!", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {
-                // Login falhou, mostra mensagem de erro
+                // Registro falhou, mostra mensagem de erro
                 Toast.makeText(this, response.message, Toast.LENGTH_LONG).show()
             }
         })
@@ -56,8 +60,8 @@ class LoginActivity : AppCompatActivity() {
         // Observa o estado de carregamento
         authViewModel.isLoading.observe(this, Observer { isLoading ->
             // Atualiza a UI para mostrar ou esconder o indicador de carregamento
-            loginButton.isEnabled = !isLoading
             registerButton.isEnabled = !isLoading
+            backToLoginButton.isEnabled = !isLoading
         })
 
         // Observa erros
@@ -67,24 +71,30 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupClickListeners() {
-        loginButton.setOnClickListener {
+        registerButton.setOnClickListener {
+            val name = nameEditText.text.toString().trim()
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
+            val confirmPassword = confirmPasswordEditText.text.toString().trim()
 
-            if (validateInput(email, password)) {
-
-                authViewModel.login(email, password)
+            if (validateInput(name, email, password, confirmPassword)) {
+                authViewModel.register(name, email, password)
             }
         }
 
-        registerButton.setOnClickListener {
-            // Navega para a tela de registro
-            startActivity(Intent(this, RegisterActivity::class.java))
+        backToLoginButton.setOnClickListener {
+            // Volta para a tela de login
+            finish()
         }
     }
 
-    private fun validateInput(email: String, password: String): Boolean {
+    private fun validateInput(name: String, email: String, password: String, confirmPassword: String): Boolean {
         var isValid = true
+
+        if (name.isEmpty()) {
+            nameEditText.error = "Nome é obrigatório"
+            isValid = false
+        }
 
         if (email.isEmpty()) {
             emailEditText.error = "Email é obrigatório"
@@ -93,6 +103,16 @@ class LoginActivity : AppCompatActivity() {
 
         if (password.isEmpty()) {
             passwordEditText.error = "Senha é obrigatória"
+            isValid = false
+        }
+
+        if (confirmPassword.isEmpty()) {
+            confirmPasswordEditText.error = "Confirmação de senha é obrigatória"
+            isValid = false
+        }
+
+        if (password != confirmPassword) {
+            confirmPasswordEditText.error = "As senhas não coincidem"
             isValid = false
         }
 

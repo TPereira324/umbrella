@@ -1,4 +1,4 @@
-package pt.iade.ei.bestumbrella1.navigation
+package pt.iade.ei.bestumbrella1.MainNavigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController

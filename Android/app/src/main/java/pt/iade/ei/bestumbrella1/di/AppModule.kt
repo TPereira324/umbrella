@@ -5,8 +5,8 @@ import pt.iade.ei.bestumbrella1.data.ApiService
 import pt.iade.ei.bestumbrella1.data.Repository
 import pt.iade.ei.bestumbrella1.models.SessionManager
 import pt.iade.ei.bestumbrella1.network.RetrofitClient
-import pt.iade.ei.bestumbrella1.ui.viewmodels.AuthViewModel
-import pt.iade.ei.bestumbrella1.ui.viewmodels.WeatherViewModel
+import pt.iade.ei.bestumbrella1.viewmodels.AuthViewModel
+import pt.iade.ei.bestumbrella1.viewmodels.WeatherViewModel
 
 /**
  * Classe responsável por fornecer as dependências necessárias para o aplicativo.

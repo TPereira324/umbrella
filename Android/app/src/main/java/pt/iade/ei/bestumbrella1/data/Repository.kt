@@ -3,7 +3,13 @@ package pt.iade.ei.bestumbrella1.data
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import pt.iade.ei.bestumbrella1.models.SessionManager
-import pt.iade.ei.bestumbrella1.network.*
+import pt.iade.ei.bestumbrella1.network.ApiService
+import pt.iade.ei.bestumbrella1.network.UpdateProfileRequest
+import pt.iade.ei.bestumbrella1.network.UserPreferences
+import pt.iade.ei.bestumbrella1.network.UserProfileResponse
+import pt.iade.ei.bestumbrella1.network.UserRequest
+import pt.iade.ei.bestumbrella1.network.UserResponse
+import pt.iade.ei.bestumbrella1.network.WeatherResponse
 import retrofit2.Response
 
 class Repository(private val apiService: ApiService, private val sessionManager: SessionManager) {
