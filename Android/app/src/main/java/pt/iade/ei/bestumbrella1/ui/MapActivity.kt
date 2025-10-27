@@ -97,9 +97,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun addRentalStationsToMap() {
+        Log.d("MapActivity", "Adicionando ${rentalStations.size} estações ao mapa")
         // Adicionar marcadores apenas para as estações de aluguer
         rentalStations.forEach { station ->
             val position = LatLng(station.latitude, station.longitude)
+            Log.d("MapActivity", "Estação: ${station.name}, Posição: ${station.latitude}, ${station.longitude}, Guarda-chuvas: ${station.availableUmbrellas}/${station.totalCapacity}")
             
             // Adicionar marcador para a estação
             map.addMarker(
@@ -110,6 +112,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_rental_station))
             )
         }
+        Log.d("MapActivity", "Todas as estações foram adicionadas ao mapa")
     }
 
     override fun onRequestPermissionsResult(
