@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -28,20 +27,39 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         compose = true
+    }
+
+    // ⚠️ ESSENCIAL para resolver o erro META-INF/INDEX.LIST
+    packaging {
+        resources {
+            excludes += setOf(
+                "META-INF/DEPENDENCIES",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.txt",
+                "META-INF/license.txt",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt",
+                "META-INF/notice.txt",
+                "META-INF/ASL2.0",
+                "META-INF/INDEX.LIST"
+            )
+        }
     }
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -76,12 +94,11 @@ dependencies {
     implementation(libs.retrofit.v290)
     implementation(libs.converter.gson.v290)
     implementation(libs.firebase.appdistribution.gradle)
-    implementation (libs.androidx.camera.core)
-    implementation (libs.androidx.camera.camera2.v130)
-    implementation (libs.androidx.camera.lifecycle.v130)
-    implementation (libs.androidx.camera.view.v130)
-    implementation (libs.guava)
-
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2.v130)
+    implementation(libs.androidx.camera.lifecycle.v130)
+    implementation(libs.androidx.camera.view.v130)
+    implementation(libs.guava)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
