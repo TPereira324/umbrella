@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -41,7 +43,7 @@ fun CameraPreviewScreen() {
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Text("Visualização da Câmera", style = MaterialTheme.typography.headlineMedium)
+        Text("Visualização da Câmera", style = MaterialTheme.typography.headlineMedium, color = Color.Black, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(16.dp))
 
         if (hasCameraPermission) {
@@ -75,7 +77,7 @@ fun CameraPreviewScreen() {
                 }
             )
         } else {
-            Text("Permissão de câmera não concedida.")
+            Text("Permissão de câmera não concedida.", color = Color.Black, fontWeight = FontWeight.Bold)
         }
     }
 }

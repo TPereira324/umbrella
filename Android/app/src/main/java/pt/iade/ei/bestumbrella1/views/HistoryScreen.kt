@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -41,31 +42,31 @@ fun HistoryScreen(navController: NavController) {
                     selected = false,
                     onClick = { navController.navigate("map") },
                     icon = { Icon(Icons.Default.Map, null) },
-                    label = { Text("Mapa") }
+                    label = { Text("Mapa", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("qrscanner") },
                     icon = { Icon(Icons.Default.QrCodeScanner, null) },
-                    label = { Text("Scanner") }
+                    label = { Text("Scanner", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("weather") },
                     icon = { Icon(Icons.Default.Cloud, contentDescription = null) },
-                    label = { Text("Tempo") }
+                    label = { Text("Tempo", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 NavigationBarItem(
                     selected = true,
                     onClick = {},
                     icon = { Icon(Icons.Default.History, null) },
-                    label = { Text("Histórico") }
+                    label = { Text("Histórico", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("profile") },
                     icon = { Icon(Icons.Default.Person, null) },
-                    label = { Text("Perfil") }
+                    label = { Text("Perfil", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
             }
         }
@@ -91,7 +92,8 @@ fun HistoryScreen(navController: NavController) {
                 Text(
                     "Histórico",
                     style = MaterialTheme.typography.headlineMedium,
-                    color = Color.White
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold
                 )
                 Spacer(Modifier.height(16.dp))
 
@@ -106,16 +108,16 @@ fun HistoryScreen(navController: NavController) {
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text("7", style = MaterialTheme.typography.titleLarge)
-                            Text("Usos", style = MaterialTheme.typography.bodySmall)
+                            Text("7", style = MaterialTheme.typography.titleLarge, color = Color.Black, fontWeight = FontWeight.Bold)
+                            Text("Usos", style = MaterialTheme.typography.bodySmall, color = Color.Black, fontWeight = FontWeight.Bold)
                         }
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text("5h 45min", style = MaterialTheme.typography.titleLarge)
-                            Text("Tempo Total", style = MaterialTheme.typography.bodySmall)
+                            Text("5h 45min", style = MaterialTheme.typography.titleLarge, color = Color.Black, fontWeight = FontWeight.Bold)
+                            Text("Tempo Total", style = MaterialTheme.typography.bodySmall, color = Color.Black, fontWeight = FontWeight.Bold)
                         }
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text("€2.88", style = MaterialTheme.typography.titleLarge)
-                            Text("Gasto Total", style = MaterialTheme.typography.bodySmall)
+                            Text("€2.88", style = MaterialTheme.typography.titleLarge, color = Color.Black, fontWeight = FontWeight.Bold)
+                            Text("Gasto Total", style = MaterialTheme.typography.bodySmall, color = Color.Black, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -138,7 +140,8 @@ fun HistoryScreen(navController: NavController) {
                                 Text(
                                     "${entry.date} — Concluído",
                                     style = MaterialTheme.typography.titleMedium,
-                                    color = Color(0xFF1565C0)
+                                    color = Color.Black,
+                                    fontWeight = FontWeight.Bold
                                 )
                                 Spacer(Modifier.height(4.dp))
                                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -148,7 +151,7 @@ fun HistoryScreen(navController: NavController) {
                                         contentDescription = null
                                     )
                                     Spacer(Modifier.width(4.dp))
-                                    Text("De: ${entry.from}", style = MaterialTheme.typography.bodyMedium)
+                                    Text("De: ${entry.from}", style = MaterialTheme.typography.bodyMedium, color = Color.Black, fontWeight = FontWeight.Bold)
                                 }
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     Icon(
@@ -157,18 +160,19 @@ fun HistoryScreen(navController: NavController) {
                                         contentDescription = null
                                     )
                                     Spacer(Modifier.width(4.dp))
-                                    Text("Para: ${entry.to}", style = MaterialTheme.typography.bodyMedium)
+                                    Text("Para: ${entry.to}", style = MaterialTheme.typography.bodyMedium, color = Color.Black, fontWeight = FontWeight.Bold)
                                 }
                                 Spacer(Modifier.height(4.dp))
-                                Text("Duração: ${entry.duration}", style = MaterialTheme.typography.bodyMedium)
-                                Text("Custo base: €${"%.2f".format(entry.cost)}", style = MaterialTheme.typography.bodyMedium)
+                                Text("Duração: ${entry.duration}", style = MaterialTheme.typography.bodyMedium, color = Color.Black, fontWeight = FontWeight.Bold)
+                                Text("Custo base: €${"%.2f".format(entry.cost)}", style = MaterialTheme.typography.bodyMedium, color = Color.Black, fontWeight = FontWeight.Bold)
 
                                 if (multa > 0) {
                                     Spacer(Modifier.height(4.dp))
                                     Text(
                                         "⚠️ Multa aplicada: €100 — Guarda-chuva não devolvido após 24h!",
                                         color = Color.Red,
-                                        style = MaterialTheme.typography.bodySmall
+                                        style = MaterialTheme.typography.bodySmall,
+                                        fontWeight = FontWeight.Bold
                                     )
                                 }
 
@@ -176,8 +180,9 @@ fun HistoryScreen(navController: NavController) {
 
                                 Text(
                                     "💰 Total: €${"%.2f".format(totalCost)}",
-                                    color = Color(0xFF1565C0),
-                                    style = MaterialTheme.typography.bodyLarge
+                                    color = Color.Black,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    fontWeight = FontWeight.Bold
                                 )
                             }
                         }

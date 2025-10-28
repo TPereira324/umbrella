@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.maps.model.CameraPosition
@@ -47,7 +46,7 @@ fun MapScreenWithMarkers(navController: NavController) {
     Scaffold(
         topBar = {
             Column {
-                TopAppBar(title = { Text("Best Umbrella ☂️") })
+                TopAppBar(title = { Text("Best Umbrella ☂️", color = Color.Black, fontWeight = FontWeight.Bold) })
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -55,14 +54,16 @@ fun MapScreenWithMarkers(navController: NavController) {
                         .padding(horizontal = 16.dp, vertical = 8.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    FilterChip(selected = true, onClick = {}, label = { Text("Todas") })
-                    FilterChip(selected = false, onClick = {}, label = { Text("Disponíveis") })
-                    FilterChip(selected = false, onClick = {}, label = { Text("Próximas") })
+                    FilterChip(selected = true, onClick = {}, label = { Text("Todas", color = Color.Black, fontWeight = FontWeight.Bold) })
+                    FilterChip(selected = false, onClick = {}, label = { Text("Disponíveis", color = Color.Black, fontWeight = FontWeight.Bold) })
+                    FilterChip(selected = false, onClick = {}, label = { Text("Próximas", color = Color.Black, fontWeight = FontWeight.Bold) })
                 }
                 Text(
                     text = "🟢 Localização ativa",
                     modifier = Modifier.padding(start = 16.dp, bottom = 8.dp),
-                    style = MaterialTheme.typography.labelMedium
+                    style = MaterialTheme.typography.labelMedium,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold
                 )
             }
         },
@@ -72,31 +73,31 @@ fun MapScreenWithMarkers(navController: NavController) {
                     selected = true,
                     onClick = {},
                     icon = { Icon(Icons.Default.Map, contentDescription = "Mapa") },
-                    label = { Text("Mapa") }
+                    label = { Text("Mapa", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("qrscanner") },
                     icon = { Icon(Icons.Default.QrCodeScanner, contentDescription = "Scanner") },
-                    label = { Text("Scanner") }
+                    label = { Text("Scanner", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("weather") },
                     icon = { Icon(Icons.Default.Cloud, contentDescription = null) },
-                    label = { Text("Tempo") }
+                    label = { Text("Tempo", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("history") },
                     icon = { Icon(Icons.Default.History, contentDescription = "Histórico") },
-                    label = { Text("Histórico") }
+                    label = { Text("Histórico", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("profile") },
                     icon = { Icon(Icons.Default.Person, contentDescription = "Perfil") },
-                    label = { Text("Perfil") }
+                    label = { Text("Perfil", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
             }
         }
@@ -127,49 +128,21 @@ fun MapScreenWithMarkers(navController: NavController) {
                     )
                 }
             }
-
-
-            Row(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 20.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Caixa das estações (à esquerda)
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .background(Color(0x66000000))
-                        .padding(12.dp)
-                ) {
-                    stations.take(3).forEach {
-                        Text(
-                            text = "☂️ ${it.name} — ${it.available}/${it.total} disp.",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = Color.White
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.width(12.dp))
-
-                // Botão (à direita)
                 ExtendedFloatingActionButton(
                     onClick = { navController.navigate("qrscanner") },
                     containerColor = Color(0xFF1976D2),
                     contentColor = Color.White,
-                    icon = { Icon(Icons.Default.QrCodeScanner, contentDescription = "Desbloquear") },
-                    text = { Text("Desbloquear") },
+                    icon = { Icon(Icons.Default.QrCodeScanner, contentDescription = "Scanner") },
+                    text = { Text("Scanner") },
                     modifier = Modifier
-                        .height(56.dp)
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 24.dp)
                         .shadow(8.dp, shape = MaterialTheme.shapes.medium)
                 )
             }
         }
     }
-}
+
 
 @Preview(showBackground = true)
 @Composable

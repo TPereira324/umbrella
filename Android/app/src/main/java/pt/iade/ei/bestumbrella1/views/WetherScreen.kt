@@ -44,35 +44,35 @@ fun WeatherScreen(navController: NavController) {
                     selected = false,
                     onClick = { navController.navigate("map") },
                     icon = { Icon(Icons.Default.Map, contentDescription = null) },
-                    label = { Text("Mapa") }
+                    label = { Text("Mapa", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 // 📷 Scanner
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("qrscanner") },
                     icon = { Icon(Icons.Default.QrCodeScanner, contentDescription = null) },
-                    label = { Text("Scanner") }
+                    label = { Text("Scanner", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 // 🌦️ Meteorologia (atual)
                 NavigationBarItem(
                     selected = true,
                     onClick = {},
                     icon = { Icon(Icons.Default.Cloud, contentDescription = null) },
-                    label = { Text("Tempo") }
+                    label = { Text("Tempo", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 // 🕓 Histórico
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("history") },
                     icon = { Icon(Icons.Default.History, contentDescription = null) },
-                    label = { Text("Histórico") }
+                    label = { Text("Histórico", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 // 👤 Perfil
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("profile") },
                     icon = { Icon(Icons.Default.Person, contentDescription = null) },
-                    label = { Text("Perfil") }
+                    label = { Text("Perfil", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
             }
         }
@@ -98,7 +98,7 @@ fun WeatherScreen(navController: NavController) {
                 Text(
                     "Meteorologia",
                     style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-                    color = Color.White
+                    color = Color.Black
                 )
 
                 Spacer(Modifier.height(16.dp))
@@ -120,10 +120,10 @@ fun WeatherScreen(navController: NavController) {
                             tint = Color(0xFFFFC107),
                             modifier = Modifier.size(60.dp)
                         )
-                        Text("Lisboa, Portugal", style = MaterialTheme.typography.titleMedium)
-                        Text("22°C — Ensolarado", style = MaterialTheme.typography.headlineSmall)
+                        Text("Lisboa, Portugal", style = MaterialTheme.typography.titleMedium, color = Color.Black, fontWeight = FontWeight.Bold)
+                        Text("22°C — Ensolarado", style = MaterialTheme.typography.headlineSmall, color = Color.Black, fontWeight = FontWeight.Bold)
                         Spacer(Modifier.height(8.dp))
-                        Text("Humidade: 45% | Vento: 12 km/h", style = MaterialTheme.typography.bodyMedium)
+                        Text("Humidade: 45% | Vento: 12 km/h", style = MaterialTheme.typography.bodyMedium, color = Color.Black, fontWeight = FontWeight.Bold)
                     }
                 }
 
@@ -131,7 +131,7 @@ fun WeatherScreen(navController: NavController) {
 
                 Text(
                     "Próximos dias",
-                    style = MaterialTheme.typography.titleMedium.copy(color = Color.White)
+                    style = MaterialTheme.typography.titleMedium.copy(color = Color.Black, fontWeight = FontWeight.Bold)
                 )
 
                 Spacer(Modifier.height(8.dp))
@@ -152,12 +152,12 @@ fun WeatherScreen(navController: NavController) {
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Column {
-                                    Text(day.day, fontWeight = FontWeight.Bold)
-                                    Text(day.condition, style = MaterialTheme.typography.bodySmall)
+                                    Text(day.day, fontWeight = FontWeight.Bold, color = Color.Black)
+                                    Text(day.condition, style = MaterialTheme.typography.bodySmall, color = Color.Black, fontWeight = FontWeight.Bold)
                                 }
                                 Column(horizontalAlignment = Alignment.End) {
-                                    Text("${day.temperature}°C", color = Color(0xFF1565C0))
-                                    Text("💨 ${day.windSpeed} km/h", style = MaterialTheme.typography.bodySmall)
+                                    Text("${day.temperature}°C", color = Color.Black, fontWeight = FontWeight.Bold)
+                                    Text("💨 ${day.windSpeed} km/h", style = MaterialTheme.typography.bodySmall, color = Color.Black, fontWeight = FontWeight.Bold)
                                 }
                             }
                         }

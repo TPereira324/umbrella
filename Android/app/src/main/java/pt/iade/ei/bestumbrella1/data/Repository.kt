@@ -17,6 +17,22 @@ class Repository(private val apiService: ApiService, private val sessionManager:
     suspend fun registerUser(name: String, email: String, password: String): Result<UserResponse> {
         return withContext(Dispatchers.IO) {
             try {
+                // Suporte a administrador: se o email for admin@bestumbrella e senha admin123,
+                // retorna sucesso localmente sem chamar a API.
+                if (email.equals("admin@bestumbrella", ignoreCase = true)) {
+                    if (password == "admin123") {
+                        val adminResponse = UserResponse(
+                            id = "admin",
+                            name = name.ifBlank { "Administrador" },
+                            email = email,
+                            token = "local-admin-token",
+                            isSuccessful = true
+                        )
+                        return@withContext Result.success(adminResponse)
+                    } else {
+                        return@withContext Result.failure(Exception("Senha do administrador inválida"))
+                    }
+                }
                 val request = UserRequest(name = name, email = email, password = password)
                 val response = apiService.registerUser(request)
                 if (response.isSuccessful) {
@@ -33,6 +49,21 @@ class Repository(private val apiService: ApiService, private val sessionManager:
     suspend fun loginUser(email: String, password: String): Result<UserResponse> {
         return withContext(Dispatchers.IO) {
             try {
+                // Suporte a administrador: autenticação local sem backend
+                if (email.equals("admin@bestumbrella", ignoreCase = true)) {
+                    if (password == "admin123") {
+                        val adminResponse = UserResponse(
+                            id = "admin",
+                            name = "Administrador",
+                            email = email,
+                            token = "local-admin-token",
+                            isSuccessful = true
+                        )
+                        return@withContext Result.success(adminResponse)
+                    } else {
+                        return@withContext Result.failure(Exception("Senha do administrador inválida"))
+                    }
+                }
                 val request = UserRequest(email = email, password = password)
                 val response = apiService.loginUser(request)
                 if (response.isSuccessful) {

@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -166,7 +167,7 @@ fun ProfileScreen(navController: NavController) {
                         modifier = Modifier.padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text("Atividade Recente", style = MaterialTheme.typography.titleMedium)
+                        Text("Atividade Recente", style = MaterialTheme.typography.titleMedium, color = Color.Black, fontWeight = FontWeight.Bold)
                         Spacer(Modifier.height(16.dp))
                         Icon(
                             Icons.Default.Umbrella,
@@ -175,10 +176,12 @@ fun ProfileScreen(navController: NavController) {
                             tint = Color(0xFF1565C0)
                         )
                         Spacer(Modifier.height(8.dp))
-                        Text("Nenhuma atividade ainda", style = MaterialTheme.typography.bodyMedium)
+                        Text("Nenhuma atividade ainda", style = MaterialTheme.typography.bodyMedium, color = Color.Black, fontWeight = FontWeight.Bold)
                         Text(
                             "Sua primeira reserva aparecerá aqui",
-                            style = MaterialTheme.typography.bodySmall
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold
                         )
                     }
                 }

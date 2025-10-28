@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,31 +31,31 @@ fun PaymentScreen(navController: NavController, qrCode: String) {
                     selected = false,
                     onClick = { navController.navigate("map") },
                     icon = { Icon(Icons.Default.Map, null) },
-                    label = { Text("Mapa") }
+                    label = { Text("Mapa", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("qrscanner") },
                     icon = { Icon(Icons.Default.QrCodeScanner, null) },
-                    label = { Text("Scanner") }
+                    label = { Text("Scanner", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("weather") },
                     icon = { Icon(Icons.Default.Cloud, contentDescription = null) },
-                    label = { Text("Tempo") }
+                    label = { Text("Tempo", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("history") },
                     icon = { Icon(Icons.Default.History, null) },
-                    label = { Text("Histórico") }
+                    label = { Text("Histórico", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("profile") },
                     icon = { Icon(Icons.Default.Person, null) },
-                    label = { Text("Perfil") }
+                    label = { Text("Perfil", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
             }
         }
@@ -82,7 +83,8 @@ fun PaymentScreen(navController: NavController, qrCode: String) {
                 Text(
                     "Pagamento via PayPal",
                     style = MaterialTheme.typography.headlineMedium,
-                    color = Color.White
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold
                 )
 
                 Spacer(Modifier.height(16.dp))
@@ -97,11 +99,12 @@ fun PaymentScreen(navController: NavController, qrCode: String) {
                             .padding(24.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text("Saldo atual:", style = MaterialTheme.typography.bodyMedium)
+                        Text("Saldo atual:", style = MaterialTheme.typography.bodyMedium, color = Color.Black, fontWeight = FontWeight.Bold)
                         Text(
                             "€${"%.2f".format(balance)}",
                             style = MaterialTheme.typography.titleLarge,
-                            color = Color(0xFF1565C0)
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold
                         )
 
                         Spacer(Modifier.height(24.dp))
@@ -109,7 +112,7 @@ fun PaymentScreen(navController: NavController, qrCode: String) {
                         OutlinedTextField(
                             value = amountText,
                             onValueChange = { amountText = it },
-                            label = { Text("Valor a pagar (€)") },
+                            label = { Text("Valor a pagar (€)", color = Color.Black, fontWeight = FontWeight.Bold) },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth()
                         )
@@ -132,7 +135,7 @@ fun PaymentScreen(navController: NavController, qrCode: String) {
                         ) {
                             Icon(Icons.Default.Payment, contentDescription = null, tint = Color.White)
                             Spacer(Modifier.width(8.dp))
-                            Text("Pagar com PayPal", color = Color.White)
+                            Text("Pagar com PayPal", color = Color.White, fontWeight = FontWeight.Bold)
                         }
 
                         Spacer(Modifier.height(16.dp))
@@ -141,7 +144,8 @@ fun PaymentScreen(navController: NavController, qrCode: String) {
                             Text(
                                 "Pagamento efetuado com sucesso via PayPal!",
                                 color = Color(0xFF4CAF50),
-                                style = MaterialTheme.typography.bodyMedium
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.Bold
                             )
                         }
                     }
