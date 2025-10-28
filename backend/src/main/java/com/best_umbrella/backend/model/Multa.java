@@ -20,7 +20,7 @@ public class Multa {
     private Aluguer aluguer;
 
     private Double valor;
-    private String moeda;
+    private String  moeda;
     private String estado; // PENDENTE, PAGO, CANCELADO
     private String motivo; // ATRASO, DANO, PERDA
     private String descricao;
