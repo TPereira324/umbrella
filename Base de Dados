@@ -1,1 +1,192 @@
+ InformáticLicenciatura em EngenhariaUC | Projeto de Desenvolvimento Móvel 
+Docentes | Pedro Rosa, Nathan Campos, Fábio Guilherme, Miguel Boavida, Luiza Campos e Paulo Velho.a | LEIF02| 25-26 
+
+                   ## Best Umbrella
+                    ## Base de Dados
+
+
+##Curso: Engenharia Informática
+##Ano: 2025/2026 
+
+##•	Feliciano Barata - 202040722
+##•	Márcio Quintas - 20241499
+##•	Fábio Teixeira- 20241821
+##•	Joybeth Mateus-20241419
+##•	Taha-Wur Pereira - 20241694 
+
+
+
+
+
+##Modelo Entidade Diagrama
+
+
+
+ 
+
+##•	Utilizador:
+Representa o cliente que utiliza o sistema para alugar guarda-chuvas. Cada utilizador pode receber notificações e enviar alertas ao sistema.
+•	UP (Unidade Principal):
+É o centro de controlo do sistema, responsável pela comunicação entre o utilizador, o ponto de aluguer e os processos de aluguer.
+
+
+##•	Aluguer:
+Regista as operações de aluguer realizadas pelo utilizador, associando o guarda-chuva alugado, o tempo de utilização e o ponto de devolução.
+•	Ponto de Aluguer:
+Locais físicos onde os guarda-chuvas estão disponíveis para aluguer e devolução. Estão conectados diretamente à Unidade Principal (UP) para controlo e monitorização.
+•	Guarda-chuva:
+Objeto central do sistema, podendo variar conforme o tipo (ex: dobrável, automático, resistente ao vento) e a cor.
+•	Tipo e Cor:
+Atributos que caracterizam cada guarda-chuva, permitindo a identificação e categorização dos produtos disponíveis.
+•	Alerta do Utilizador:
+Função que permite ao utilizador reportar problemas ou situações específicas (por exemplo, guarda-chuva danificado ou ponto de aluguer inativo).
+•	Notificação:
+Sistema de aviso automático que envia informações importantes ao utilizador, como lembretes de devolução ou confirmação de aluguer.
+
+Funcionamento Geral do Sistema
+O utilizador interage com o sistema através da Unidade Principal (UP), onde realiza o processo de aluguer.
+A UP comunica com os pontos de aluguer para verificar a disponibilidade de guarda-chuvas e regista todas as transações.
+Além disso, o utilizador pode receber notificações automáticas e enviar alertas, garantindo um serviço eficiente e atualizado em tempo real.
+
+
+
+
+##Guarda Chuva
+Nome	Tipo de Dados	Observação
+guarda_chuva_id	int	ID Guarda Chuva
+codigo_qr	varchar	Código QR Guarda Chuva
+estado	varchar	Estado Guarda Chuva
+cor	varchar	Cor Guarda Chuva
+tipo	varchar	Tipo Guarda Chuva
+ponto_id	varchar	ID Ponto de Aluguer
+data_registo	datetime	Data de Registo Guarda Chuva
+
+##Ponto de Aluguer
+Nome	Tipo de Dados	Observação
+ponto_id	int	ID Ponto de Aluguer
+nome	varchar	Nome Ponto de Aluguer
+latitude	decimal	Latitude Ponto de Aluguer
+longitude	decimal	Longitude Ponto de Aluguer
+capacidade	int	Capacidade Ponto de Aluguer
+tipo	varchar	Tipo Ponto de Alguuer
+
+
+
+##Notificação
+Nome	Tipo de Dados	Observação
+notificacao_id	int	ID Notificação
+utilizador_id	int	ID Utilizador
+mensagem	varchar	Mensagem Notificação
+tipo	varchar	Tipo Notificação
+data_envio	datetime	Data Envio Notificação
+estado	varchar	Estado Notificação
+
+
+##Multa
+Nome	Tipo de Dados	Observação
+multa_id	int	ID Multa
+aluguer_id	int	ID Aluguer
+utilizador_id	int	ID Utilizador
+motivo	varchar	Motivo Multa
+valor	decimal	Valor Multa
+data_multa	datetime	Data Multa
+estado	varchar	Estado Aluguer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Classe
+ Utilizador
+Nome	Tipo de Dados	Observação
+utilizador_id	INT	Identificador do utilizador (PK)
+nome	VARCHAR(100)	Nome completo
+email	VARCHAR(100)	Email único de login
+password	VARCHAR(255)	Palavra-passe encriptada
+telefone	VARCHAR(20)	Número de contacto
+data_registo	DATETIME	Data de registo no sistema
+rating	DECIMAL(3,2)	Avaliação do utilizador
+
+Ponto_de_aluguer
+Nome	Tipo de Dados	Observação
+ponto_id	INT	Identificador do ponto (PK)
+nome	VARCHAR(100)	Nome do ponto de aluguer
+latitude	DECIMAL(10,7)	Coordenada geográfica
+longitude	DECIMAL(10,7)	Coordenada geográfica
+capacidade	INT	Número máximo de guarda-chuvas
+tipo	VARCHAR(50)	Tipo de ponto (ex: estação, loja, terminal)
+
+
+
+
+
+
+
+
+
+
+ Guarda_chuva
+Nome	Tipo de Dados	Observação
+guarda_chuva_id	INT	Identificador do guarda-chuva (PK)
+codigo_qr	VARCHAR(100)	Código QR único para identificação
+estado	VARCHAR(50)	Estado atual (disponível, em uso, manutenção)
+cor	VARCHAR(50)	Cor do guarda-chuva
+tipo	VARCHAR(50)	Tipo (dobrável, automático, resistente ao vento)
+ponto_id	INT	FK para Ponto_de_aluguer
+data_registo	DATETIME	Data de inclusão no sistema
+________________________________________
+ Aluguer
+Nome	Tipo de Dados	Observação
+aluguer_id	INT	Identificador do aluguer (PK)
+utilizador_id	INT	FK para Utilizador
+guarda_chuva_id	INT	FK para Guarda_chuva
+ponto_inicio_id	INT	FK para Ponto_de_aluguer (início)
+ponto_fim_id	INT	FK para Ponto_de_aluguer (fim)
+data_inicio	DATETIME	Data e hora de início
+data_fim	DATETIME	Data e hora de devolução
+custo	DECIMAL(6,2)	Custo total do aluguer
+estado	VARCHAR(50)	Estado (em andamento, concluído, atrasado)
+
+
+
+
+
+
+
+ Notificacao
+Nome	Tipo de Dados	Observação
+notificacao_id	INT	Identificador da notificação (PK)
+utilizador_id	INT	FK para Utilizador
+mensagem	TEXT	Conteúdo da notificação
+tipo	VARCHAR(50)	Tipo (lembrete, alerta, multa, etc.)
+data_envio	DATETIME	Data e hora do envio
+estado	VARCHAR(50)	Estado (enviada, lida, pendente)
+
+ Multa
+Nome	Tipo de Dados	Observação
+multa_id	INT	Identificador da multa (PK)
+aluguer_id	INT	FK para Aluguer
+utilizador_id	INT	FK para Utilizador
+motivo	VARCHAR(255)	Motivo da penalização (ex: atraso, dano, perda)
+valor	DECIMAL(6,2)	Valor da multa (padrão: 100.00 €)
+data_multa	DATETIME	Data de emissão da multa
+estado	VARCHAR(50)	Estado (pendente, pago, cancelado)
 
