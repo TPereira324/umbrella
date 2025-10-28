@@ -26,7 +26,7 @@ fun PaymentScreen(navController: NavController, qrCode: String) {
 
     Scaffold(
         bottomBar = {
-            NavigationBar {
+            NavigationBar(containerColor = Color.White, contentColor = Color.Black) {
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("map") },

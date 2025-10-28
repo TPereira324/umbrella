@@ -45,12 +45,15 @@ fun MapScreenWithMarkers(navController: NavController) {
 
     Scaffold(
         topBar = {
-            Column {
-                TopAppBar(title = { Text("Best Umbrella ☂️", color = Color.Black, fontWeight = FontWeight.Bold) })
+            Column(modifier = Modifier.background(Color.White)) {
+                TopAppBar(
+                    title = { Text("Best Umbrella ☂️", color = Color.Black, fontWeight = FontWeight.Bold) },
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
+                )
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.surfaceVariant)
+                        .background(Color.White)
                         .padding(horizontal = 16.dp, vertical = 8.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
@@ -68,7 +71,7 @@ fun MapScreenWithMarkers(navController: NavController) {
             }
         },
         bottomBar = {
-            NavigationBar {
+            NavigationBar(containerColor = Color.White, contentColor = Color.Black) {
                 NavigationBarItem(
                     selected = true,
                     onClick = {},

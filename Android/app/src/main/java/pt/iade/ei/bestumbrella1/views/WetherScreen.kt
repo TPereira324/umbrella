@@ -38,7 +38,7 @@ fun WeatherScreen(navController: NavController) {
 
     Scaffold(
         bottomBar = {
-            NavigationBar {
+            NavigationBar(containerColor = Color.White, contentColor = Color.Black) {
                 // 🗺️ Mapa primeiro
                 NavigationBarItem(
                     selected = false,

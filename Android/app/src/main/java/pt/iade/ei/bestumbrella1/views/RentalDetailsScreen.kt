@@ -25,9 +25,9 @@ fun RentalDetailsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Detalhes do Aluguer", color = Color.White, fontWeight = FontWeight.Bold) },
+                title = { Text("Detalhes do Aluguer", color = Color.Black, fontWeight = FontWeight.Bold) },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF2196F3)
+                    containerColor = Color.White
                 )
             )
         }
