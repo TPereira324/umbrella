@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import java.util.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -33,10 +34,10 @@ fun MapScreenWithMarkers(navController: NavController) {
     val lisboaCenter = LatLng(38.7682, -9.0985)
 
     val stations = listOf(
-        Station("Metro Moscavide", LatLng(38.7687, -9.0974), 8, 10),
-        Station("Metro Oriente", LatLng(38.7689, -9.0942), 4, 8),
-        Station("Parque das Nações Norte", LatLng(38.7715, -9.0980), 6, 10),
-        Station("IADE", LatLng(38.7633, -9.0941), 3, 6),
+        Station("IADE", LatLng(38.7818, -9.10251), 3, 6),
+        Station("Parque das Nações", LatLng(38.76800, -9.09400), 6, 10),
+        Station("Metro Moscavide", LatLng(38.77639, -9.10169), 8, 10),
+        Station("Metro Oriente", LatLng(38.76784, -9.09935), 4, 8),
     )
 
     val cameraPositionState = rememberCameraPositionState {
@@ -124,10 +125,17 @@ fun MapScreenWithMarkers(navController: NavController) {
                 cameraPositionState = cameraPositionState
             ) {
                 stations.forEach { station ->
+                    val snippet = "Disponíveis: ${station.available}/${station.total}\n" +
+                            String.format(
+                                Locale.US,
+                                "Lat: %.5f | Lng: %.5f",
+                                station.location.latitude,
+                                station.location.longitude
+                            )
                     Marker(
                         state = MarkerState(position = station.location),
                         title = station.name,
-                        snippet = "${station.available}/${station.total} disponíveis ☂️"
+                        snippet = snippet
                     )
                 }
             }
