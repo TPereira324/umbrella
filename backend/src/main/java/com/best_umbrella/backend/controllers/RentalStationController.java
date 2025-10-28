@@ -16,10 +16,10 @@ public class RentalStationController {
     @GetMapping
     public ResponseEntity<List<RentalStationDto>> listStations() {
         List<RentalStationDto> rentalStations = Arrays.asList(
-            new RentalStationDto(1, "Metro Moscavide", 38.7687, -9.0974, 8, 10),
-            new RentalStationDto(2, "Metro Oriente", 38.7689, -9.0942, 4, 8),
-            new RentalStationDto(3, "Parque das Nações Norte", 38.7715, -9.0980, 6, 10),
-            new RentalStationDto(4, "IADE", 38.7633, -9.0941, 3, 6)
+            new RentalStationDto(1, "Metro Moscavide", 38.77639, -9.10169, 8, 10),
+            new RentalStationDto(2, "Metro Oriente", 38.76784, -9.09935, 4, 8),
+            new RentalStationDto(3, "Parque das Nações Norte", 38.76800, -9.09400, 6, 10),
+            new RentalStationDto(4, "IADE", 38.7818, -9.10251, 3, 6)
         );
         return ResponseEntity.ok(rentalStations);
     }
