@@ -130,7 +130,10 @@ fun QrScannerScreen(
                     Text("Iniciar Scanner", color = Color.Black)
                 }
                 Spacer(Modifier.height(50.dp))
-                Card(modifier = Modifier.fillMaxWidth()) {
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(containerColor = Color.White)
+                ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text("Como usar:", style = MaterialTheme.typography.titleMedium, color = Color.Black)
                         Spacer(Modifier.height(8.dp))
