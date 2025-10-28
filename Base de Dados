@@ -1,36 +1,16 @@
- InformáticLicenciatura em EngenhariaUC | Projeto de Desenvolvimento Móvel 
-Docentes | Pedro Rosa, Nathan Campos, Fábio Guilherme, Miguel Boavida, Luiza Campos e Paulo Velho.a | LEIF02| 25-26 
-
-                   ## Best Umbrella
-                    ## Base de Dados
-
-
-##Curso: Engenharia Informática
-##Ano: 2025/2026 
-
-##•	Feliciano Barata - 202040722
-##•	Márcio Quintas - 20241499
-##•	Fábio Teixeira- 20241821
-##•	Joybeth Mateus-20241419
-##•	Taha-Wur Pereira - 20241694 
 
 
 
+                               # Best Umbrella
+                                #Base de Dados
 
-
-##Modelo Entidade Diagrama
-
-
-
- 
-
-##•	Utilizador:
+•	Utilizador:
 Representa o cliente que utiliza o sistema para alugar guarda-chuvas. Cada utilizador pode receber notificações e enviar alertas ao sistema.
 •	UP (Unidade Principal):
 É o centro de controlo do sistema, responsável pela comunicação entre o utilizador, o ponto de aluguer e os processos de aluguer.
 
 
-##•	Aluguer:
+•	Aluguer:
 Regista as operações de aluguer realizadas pelo utilizador, associando o guarda-chuva alugado, o tempo de utilização e o ponto de devolução.
 •	Ponto de Aluguer:
 Locais físicos onde os guarda-chuvas estão disponíveis para aluguer e devolução. Estão conectados diretamente à Unidade Principal (UP) para controlo e monitorização.
@@ -51,7 +31,7 @@ Além disso, o utilizador pode receber notificações automáticas e enviar aler
 
 
 
-##Guarda Chuva
+Guarda Chuva
 Nome	Tipo de Dados	Observação
 guarda_chuva_id	int	ID Guarda Chuva
 codigo_qr	varchar	Código QR Guarda Chuva
@@ -61,7 +41,7 @@ tipo	varchar	Tipo Guarda Chuva
 ponto_id	varchar	ID Ponto de Aluguer
 data_registo	datetime	Data de Registo Guarda Chuva
 
-##Ponto de Aluguer
+Ponto de Aluguer
 Nome	Tipo de Dados	Observação
 ponto_id	int	ID Ponto de Aluguer
 nome	varchar	Nome Ponto de Aluguer
@@ -71,8 +51,7 @@ capacidade	int	Capacidade Ponto de Aluguer
 tipo	varchar	Tipo Ponto de Alguuer
 
 
-
-##Notificação
+Notificação
 Nome	Tipo de Dados	Observação
 notificacao_id	int	ID Notificação
 utilizador_id	int	ID Utilizador
@@ -81,8 +60,7 @@ tipo	varchar	Tipo Notificação
 data_envio	datetime	Data Envio Notificação
 estado	varchar	Estado Notificação
 
-
-##Multa
+Multa
 Nome	Tipo de Dados	Observação
 multa_id	int	ID Multa
 aluguer_id	int	ID Aluguer
@@ -93,28 +71,7 @@ data_multa	datetime	Data Multa
 estado	varchar	Estado Aluguer
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Classe
+##Classe
  Utilizador
 Nome	Tipo de Dados	Observação
 utilizador_id	INT	Identificador do utilizador (PK)
