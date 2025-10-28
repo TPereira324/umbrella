@@ -12,6 +12,7 @@ import pt.iade.ei.bestumbrella1.views.WeatherScreen
 import pt.iade.ei.bestumbrella1.views.HistoryScreen
 import pt.iade.ei.bestumbrella1.views.ProfileScreen
 import pt.iade.ei.bestumbrella1.views.CameraPreviewScreen
+import pt.iade.ei.bestumbrella1.views.PaymentScreen
 
 @Composable
 fun MainNavigation(navController: NavHostController) {
@@ -47,5 +48,6 @@ fun MainNavigation(navController: NavHostController) {
         composable("history") { HistoryScreen(navController) }
         composable("profile") { ProfileScreen(navController) }
         composable("cameraPreview") { CameraPreviewScreen() }
+        composable("payment") { PaymentScreen(navController, qrCode = "") }
     }
 }

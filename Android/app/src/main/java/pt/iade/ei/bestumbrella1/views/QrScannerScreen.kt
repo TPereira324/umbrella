@@ -111,32 +111,33 @@ fun QrScannerScreen(
                     .padding(30.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Scanner QR", style = MaterialTheme.typography.headlineMedium)
+                Text("Scanner QR", style = MaterialTheme.typography.headlineMedium, color = Color.Black)
                 Spacer(Modifier.height(50.dp))
                 Text(
                     "Escaneie o código QR do guarda-chuva para desbloquear",
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Black
                 )
                 Spacer(Modifier.height(50.dp))
-                Icon(Icons.Default.QrCodeScanner, contentDescription = null, modifier = Modifier.size(96.dp))
+                Icon(Icons.Default.QrCodeScanner, contentDescription = null, modifier = Modifier.size(96.dp), tint = Color.Black)
                 Spacer(Modifier.height(16.dp))
-                Text("Pronto para escanear", style = MaterialTheme.typography.titleMedium)
-                Text("Toque no botão abaixo para ativar a câmera", style = MaterialTheme.typography.bodySmall)
+                Text("Pronto para escanear", style = MaterialTheme.typography.titleMedium, color = Color.Black)
+                Text("Toque no botão abaixo para ativar a câmera", style = MaterialTheme.typography.bodySmall, color = Color.Black)
                 Spacer(Modifier.height(35.dp))
                 Button(onClick = { startScanner = true }) {
-                    Icon(Icons.Default.CameraAlt, contentDescription = null)
+                    Icon(Icons.Default.CameraAlt, contentDescription = null, tint = Color.Black)
                     Spacer(Modifier.width(8.dp))
-                    Text("Iniciar Scanner")
+                    Text("Iniciar Scanner", color = Color.Black)
                 }
                 Spacer(Modifier.height(50.dp))
                 Card(modifier = Modifier.fillMaxWidth()) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Como usar:", style = MaterialTheme.typography.titleMedium)
+                        Text("Como usar:", style = MaterialTheme.typography.titleMedium, color = Color.Black)
                         Spacer(Modifier.height(8.dp))
-                        Text("1. Dirija-se a uma estação Best Umbrella")
-                        Text("2. Toque em \"Iniciar Scanner\"")
-                        Text("3. Aponte a câmera para o código QR")
-                        Text("4. Aguarde o desbloqueio automático")
+                        Text("1. Dirija-se a uma estação Best Umbrella", color = Color.Black)
+                        Text("2. Toque em \"Iniciar Scanner\"", color = Color.Black)
+                        Text("3. Aponte a câmera para o código QR", color = Color.Black)
+                        Text("4. Aguarde o desbloqueio automático", color = Color.Black)
                     }
                 }
             }

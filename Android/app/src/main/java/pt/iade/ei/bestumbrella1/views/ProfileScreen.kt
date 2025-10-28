@@ -27,31 +27,31 @@ fun ProfileScreen(navController: NavController) {
                     selected = false,
                     onClick = { navController.navigate("map") },
                     icon = { Icon(Icons.Default.Map, null) },
-                    label = { Text("Mapa") }
+                    label = { Text("Mapa", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("qrscanner") },
                     icon = { Icon(Icons.Default.QrCodeScanner, null) },
-                    label = { Text("Scanner") }
+                    label = { Text("Scanner", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("weather") },
                     icon = { Icon(Icons.Default.Cloud, contentDescription = null) },
-                    label = { Text("Tempo") }
+                    label = { Text("Tempo", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("history") },
                     icon = { Icon(Icons.Default.History, null) },
-                    label = { Text("Histórico") }
+                    label = { Text("Histórico", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
                 NavigationBarItem(
                     selected = true,
                     onClick = {},
                     icon = { Icon(Icons.Default.Person, null) },
-                    label = { Text("Perfil") }
+                    label = { Text("Perfil", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
             }
         }
@@ -78,7 +78,8 @@ fun ProfileScreen(navController: NavController) {
                 Text(
                     "Perfil",
                     style = MaterialTheme.typography.headlineMedium,
-                    color = Color.White
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold
                 )
                 Spacer(Modifier.height(16.dp))
 
@@ -89,14 +90,15 @@ fun ProfileScreen(navController: NavController) {
                     tint = Color.White
                 )
                 Text(
-                    "tahawurpereira1@gmail.com",
+                    "admin@bestumbrella",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color.White
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold
                 )
 
                 AssistChip(
                     onClick = {},
-                    label = { Text("Eco Warrior") },
+                    label = { Text("Eco Warrior", color = Color.Black, fontWeight = FontWeight.Bold) },
                     modifier = Modifier.padding(top = 6.dp)
                 )
 
@@ -115,15 +117,15 @@ fun ProfileScreen(navController: NavController) {
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text("0", fontSize = 22.sp, color = Color(0xFF1565C0))
-                            Text("Usos", style = MaterialTheme.typography.bodySmall)
+                            Text("Usos", style = MaterialTheme.typography.bodySmall, color = Color.Black, fontWeight = FontWeight.Bold)
                         }
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text("50", fontSize = 22.sp, color = Color(0xFF1565C0))
-                            Text("Pontos", style = MaterialTheme.typography.bodySmall)
+                            Text("Pontos", style = MaterialTheme.typography.bodySmall, color = Color.Black, fontWeight = FontWeight.Bold)
                         }
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text("€0.28", fontSize = 22.sp, color = Color(0xFF1565C0))
-                            Text("Poupado", style = MaterialTheme.typography.bodySmall)
+                            Text("Poupado", style = MaterialTheme.typography.bodySmall, color = Color.Black, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -136,14 +138,14 @@ fun ProfileScreen(navController: NavController) {
                     colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.95f))
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Saldo", style = MaterialTheme.typography.titleMedium)
+                        Text("Saldo", style = MaterialTheme.typography.titleMedium, color = Color.Black, fontWeight = FontWeight.Bold)
                         Spacer(Modifier.height(8.dp))
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text("€0.00", color = Color(0xFFD32F2F), fontSize = 20.sp)
+                            Text("€0.00", color = Color(0xFFD32F2F), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                             Button(onClick = { navController.navigate("payment") }) {
                                 Text("Recarregar")
                             }
@@ -151,7 +153,9 @@ fun ProfileScreen(navController: NavController) {
                         Spacer(Modifier.height(8.dp))
                         Text(
                             "Recarregue para começar a usar guarda-chuvas",
-                            style = MaterialTheme.typography.bodySmall
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold
                         )
                     }
                 }
