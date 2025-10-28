@@ -30,8 +30,9 @@ class AuthViewModel(private val repository: Repository, private val sessionManag
                 val result = repository.loginUser(email, password)
                 result.fold(
                     onSuccess = { response ->
-                        sessionManager.saveAuthToken(response.token)
-                        sessionManager.saveUserInfo(response.id, response.name, response.email)
+                        response.token?.let { sessionManager.saveToken(it) }
+                        sessionManager.saveName(response.name)
+                        sessionManager.saveEmail(response.email)
                         _loginResult.value = AuthResponse(
                             success = true,
                             message = "Login realizado com sucesso",
@@ -67,8 +68,9 @@ class AuthViewModel(private val repository: Repository, private val sessionManag
                 val result = repository.registerUser(name, email, password)
                 result.fold(
                     onSuccess = { response ->
-                        sessionManager.saveAuthToken(response.token)
-                        sessionManager.saveUserInfo(response.id, response.name, response.email)
+                        response.token?.let { sessionManager.saveToken(it) }
+                        sessionManager.saveName(response.name)
+                        sessionManager.saveEmail(response.email)
                         _registerResult.value = AuthResponse(
                             success = true,
                             message = "Registro realizado com sucesso",
@@ -105,7 +107,8 @@ class AuthViewModel(private val repository: Repository, private val sessionManag
                 result.fold(
                     onSuccess = { response ->
                         // Atualiza as informações do usuário no SessionManager
-                        sessionManager.saveUserInfo(response.id, response.name, response.email)
+                        sessionManager.saveName(response.name)
+                        sessionManager.saveEmail(response.email)
                     },
                     onFailure = { exception ->
                         _error.value = exception.message ?: "Erro ao obter perfil do usuário"

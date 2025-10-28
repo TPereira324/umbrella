@@ -57,6 +57,11 @@ android {
                 "META-INF/ASL2.0",
                 "META-INF/INDEX.LIST"
             )
+            // Corrige conflito: 11 files found with path 'META-INF/io.netty.versions.properties'
+            // Mantém apenas um arquivo para evitar falha no mergeJavaResource
+            pickFirsts += setOf(
+                "META-INF/io.netty.versions.properties"
+            )
         }
     }
 }
@@ -101,6 +106,7 @@ dependencies {
     implementation(libs.androidx.camera.lifecycle.v130)
     implementation(libs.androidx.camera.view.v130)
     implementation(libs.guava)
+    implementation(libs.androidx.compose.runtime.livedata)
     testImplementation(libs.junit)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

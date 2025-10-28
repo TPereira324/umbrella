@@ -1,5 +1,6 @@
 package pt.iade.ei.bestumbrella1.MainNavigation
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -50,9 +51,9 @@ fun MainNavigation(navController: NavHostController) {
     }
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-@Composable
 fun MapScreen(navController: NavHostController) {
     Scaffold {
         Text(text = "Mapa (em construção)")

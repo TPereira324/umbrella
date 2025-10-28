@@ -172,7 +172,7 @@ fun HistoryScreen(navController: NavController) {
                                     )
                                 }
 
-                                Divider(modifier = Modifier.padding(vertical = 8.dp))
+
 
                                 Text(
                                     "💰 Total: €${"%.2f".format(totalCost)}",
