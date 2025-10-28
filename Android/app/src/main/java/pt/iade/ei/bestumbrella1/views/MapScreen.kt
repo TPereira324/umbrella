@@ -119,7 +119,7 @@ fun MapScreenWithMarkers(navController: NavController) {
                     )
                 )
         ) {
-            // 🗺️ Google Map com marcadores
+            //  Google Map com marcadores
             GoogleMap(
                 modifier = Modifier.fillMaxSize(),
                 cameraPositionState = cameraPositionState
