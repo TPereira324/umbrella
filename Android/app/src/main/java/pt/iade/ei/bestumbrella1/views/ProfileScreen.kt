@@ -6,20 +6,28 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.launch
+import pt.iade.ei.bestumbrella1.di.AppModule
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(navController: NavController) {
+    val context = LocalContext.current
+    val sessionManager = AppModule.provideSessionManager(context)
+    val coroutineScope = rememberCoroutineScope()
+
     Scaffold(
         bottomBar = {
             NavigationBar {
@@ -188,6 +196,33 @@ fun ProfileScreen(navController: NavController) {
                             fontWeight = FontWeight.Bold
                         )
                     }
+                }
+
+                Spacer(Modifier.height(5.dp))
+
+                
+                Button(
+                    onClick = {
+                        coroutineScope.launch {
+                            sessionManager.clearSession()
+                            navController.navigate("login") {
+                                popUpTo(0) { inclusive = true }
+                            }
+                        }
+                    },
+                    modifier = Modifier
+                        .height(50.dp)
+                    ,
+                    colors = ButtonDefaults.buttonColors(
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(
+                        "logout",
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.ExtraBold
+                    )
                 }
             }
         }
