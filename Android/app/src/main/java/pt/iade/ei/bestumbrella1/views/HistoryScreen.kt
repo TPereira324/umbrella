@@ -99,7 +99,7 @@ fun HistoryScreen(navController: NavController) {
 
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.9f))
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFBBDEFB))
                 ) {
                     Row(
                         modifier = Modifier
@@ -134,7 +134,7 @@ fun HistoryScreen(navController: NavController) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.95f))
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFFBBDEFB))
                         ) {
                             Column(modifier = Modifier.padding(16.dp)) {
                                 Text(
@@ -206,3 +206,4 @@ fun PreviewHistoryScreen() {
     val navController = rememberNavController()
     HistoryScreen(navController)
 }
+
