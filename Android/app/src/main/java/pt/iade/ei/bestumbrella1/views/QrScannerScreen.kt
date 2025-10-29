@@ -30,6 +30,8 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions
+import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 
 @androidx.annotation.OptIn(ExperimentalGetImage::class)
@@ -165,7 +167,10 @@ fun QrScannerScreen(
                                             mediaImage,
                                             imageProxy.imageInfo.rotationDegrees
                                         )
-                                        val scanner = BarcodeScanning.getClient()
+                                        val options = BarcodeScannerOptions.Builder()
+                                            .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
+                                            .build()
+                                        val scanner = BarcodeScanning.getClient(options)
                                         scanner.process(image)
                                             .addOnSuccessListener { barcodes ->
                                                 for (barcode in barcodes) {
