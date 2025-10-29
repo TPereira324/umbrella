@@ -1,9 +1,16 @@
 package pt.iade.ei.bestumbrella1.MainNavigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import pt.iade.ei.bestumbrella1.di.AppModule
 import pt.iade.ei.bestumbrella1.views.LoginScreen
 import pt.iade.ei.bestumbrella1.views.RegisterScreen
 import pt.iade.ei.bestumbrella1.views.MapScreenWithMarkers
@@ -16,10 +23,24 @@ import pt.iade.ei.bestumbrella1.views.PaymentScreen
 
 @Composable
 fun MainNavigation(navController: NavHostController) {
-    NavHost(
-        navController = navController,
-        startDestination = "login"
-    ) {
+    val context = LocalContext.current
+    val sessionManager = remember { AppModule.provideSessionManager(context) }
+    var startDestination by remember { mutableStateOf("login") }
+    var isCheckingLogin by remember { mutableStateOf(true) }
+
+    // Verifica se o usuário já está logado
+    LaunchedEffect(Unit) {
+        val isLoggedIn = sessionManager.isLoggedIn()
+        startDestination = if (isLoggedIn) "map" else "login"
+        isCheckingLogin = false
+    }
+
+    // Só mostra a navegação depois de verificar o login
+    if (!isCheckingLogin) {
+        NavHost(
+            navController = navController,
+            startDestination = startDestination
+        ) {
         composable("login") {
             LoginScreen(
                 navController = navController,
@@ -49,5 +70,6 @@ fun MainNavigation(navController: NavHostController) {
         composable("profile") { ProfileScreen(navController) }
         composable("cameraPreview") { CameraPreviewScreen() }
         composable("payment") { PaymentScreen(navController, qrCode = "") }
+        }
     }
 }
