@@ -77,15 +77,8 @@ fun LoginScreen(
                 onValueChange = { email = it },
                 label = { Text("Email", color = Color.Black, fontWeight = FontWeight.Bold) },
                 leadingIcon = { Icon(Icons.Default.MailOutline, contentDescription = null) },
-                colors = TextFieldDefaults.colors(
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.Black,
-                    cursorColor = Color.Black,
-                    focusedIndicatorColor = Color.Black,
-                    unfocusedIndicatorColor = Color.Gray,
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White
-                ),
+                colors = TextFieldDefaults.colors(focusedTextColor = Color.Black, unfocusedTextColor = Color.Black, cursorColor = Color.Black, focusedIndicatorColor = Color.Black, unfocusedIndicatorColor = Color.Gray, focusedContainerColor = Color(0xFFBBDEFB), unfocusedContainerColor = Color(0xFFBBDEFB))
+                ,
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -106,15 +99,8 @@ fun LoginScreen(
                     }
                 },
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                colors = TextFieldDefaults.colors(
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.Black,
-                    cursorColor = Color.Black,
-                    focusedIndicatorColor = Color.Black,
-                    unfocusedIndicatorColor = Color.Gray,
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White
-                ),
+                colors = TextFieldDefaults.colors(focusedTextColor = Color.Black, unfocusedTextColor = Color.Black, cursorColor = Color.Black, focusedIndicatorColor = Color.Black, unfocusedIndicatorColor = Color.Gray, focusedContainerColor = Color(0xFFBBDEFB), unfocusedContainerColor = Color(0xFFBBDEFB))
+                ,
                 modifier = Modifier.fillMaxWidth()
             )
 
