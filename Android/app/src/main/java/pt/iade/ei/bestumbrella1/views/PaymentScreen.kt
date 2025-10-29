@@ -91,7 +91,7 @@ fun PaymentScreen(navController: NavController, qrCode: String) {
 
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.95f))
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFBBDEFB))
                 ) {
                     Column(
                         modifier = Modifier
@@ -162,3 +162,4 @@ fun PreviewPaymentScreen() {
     val qrCode = ""
     PaymentScreen(navController, qrCode)
 }
+

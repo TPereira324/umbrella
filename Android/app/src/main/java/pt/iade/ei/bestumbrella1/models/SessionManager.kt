@@ -48,6 +48,11 @@ class SessionManager(context: Context) {
         return getToken()
     }
 
+    suspend fun isLoggedIn(): Boolean {
+        val token = getToken()
+        return !token.isNullOrEmpty()
+    }
+
     suspend fun clearSession() {
         dataStore.edit { it.clear() }
     }

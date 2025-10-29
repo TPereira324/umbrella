@@ -106,7 +106,7 @@ fun WeatherScreen(navController: NavController) {
                 // Estado atual
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.95f))
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFBBDEFB))
                 ) {
                     Column(
                         modifier = Modifier
@@ -142,7 +142,7 @@ fun WeatherScreen(navController: NavController) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 6.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.95f))
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFFBBDEFB))
                         ) {
                             Row(
                                 modifier = Modifier
@@ -174,3 +174,4 @@ fun PreviewWeatherScreen() {
     val navController = rememberNavController()
     WeatherScreen(navController)
 }
+
