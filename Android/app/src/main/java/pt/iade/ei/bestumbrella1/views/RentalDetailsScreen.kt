@@ -26,10 +26,8 @@ fun RentalDetailsScreen(
         topBar = {
             TopAppBar(
                 title = { Text("Detalhes do Aluguer", color = Color.Black, fontWeight = FontWeight.Bold) },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.White
                 )
-            )
+
         }
     ) { padding ->
         Box(

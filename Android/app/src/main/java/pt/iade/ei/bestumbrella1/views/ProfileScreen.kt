@@ -22,7 +22,7 @@ import androidx.navigation.compose.rememberNavController
 fun ProfileScreen(navController: NavController) {
     Scaffold(
         bottomBar = {
-            NavigationBar(containerColor = Color.White, contentColor = Color.Black) {
+            NavigationBar {
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("map") },

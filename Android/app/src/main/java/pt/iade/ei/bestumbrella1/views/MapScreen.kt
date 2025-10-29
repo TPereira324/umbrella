@@ -46,10 +46,10 @@ fun MapScreenWithMarkers(navController: NavController) {
 
     Scaffold(
         topBar = {
-            Column(modifier = Modifier.background(Color.White)) {
+            Column {
                 TopAppBar(
                     title = { Text("Best Umbrella ☂️", color = Color.Black, fontWeight = FontWeight.Bold) },
-                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
+
                 )
                 Row(
                     modifier = Modifier

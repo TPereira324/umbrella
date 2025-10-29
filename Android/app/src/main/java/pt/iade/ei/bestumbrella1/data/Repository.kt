@@ -68,8 +68,6 @@ class Repository(private val apiService: ApiService, private val sessionManager:
                 val response = apiService.loginUser(request)
                 if (response.isSuccessful) {
                     val userResponse = response.body()!!
-                    // Aqui você pode salvar o token de autenticação se o back-end retornar
-                    // sessionManager.saveAuthToken(userResponse.token)
                     Result.success(userResponse)
                 } else {
                     Result.failure(Exception("Falha no login: ${response.errorBody()?.string()}"))
