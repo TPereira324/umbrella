@@ -32,7 +32,7 @@ fun HistoryScreen(navController: NavController) {
     val entries = listOf(
         RentalEntry("Hoje, 14:30", "Metro Moscavide", "Parque das Nações", 0.29, "35 min"),
         RentalEntry("Ontem, 09:16", "Vasco da Gama Shopping", "Metro Oriente", 1.00, "1h 15min"),
-        RentalEntry("Há 2 dias", "IADE", "Metro Oriente", 2.50, "27h 40min") // > 24h → multa
+        RentalEntry("Há 2 dias", "IADE", "Metro Oriente", 2.50, "27h 40min")
     )
 
     Scaffold(
@@ -78,8 +78,8 @@ fun HistoryScreen(navController: NavController) {
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
-                            Color(0xFF2196F3).copy(alpha = 0.6f), // Azul topo
-                            Color(0xFFE3F2FD)                      // Branco azulado
+                            Color(0xFF2196F3).copy(alpha = 0.6f),
+                            Color(0xFFE3F2FD)
                         )
                     )
                 )

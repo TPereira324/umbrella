@@ -20,6 +20,9 @@ import pt.iade.ei.bestumbrella1.views.HistoryScreen
 import pt.iade.ei.bestumbrella1.views.ProfileScreen
 import pt.iade.ei.bestumbrella1.views.CameraPreviewScreen
 import pt.iade.ei.bestumbrella1.views.PaymentScreen
+import pt.iade.ei.bestumbrella1.views.AlbumScreen
+import pt.iade.ei.bestumbrella1.viewmodels.AlbumViewModel
+import pt.iade.ei.bestumbrella1.views.RentalDetailsScreen
 
 @Composable
 fun MainNavigation(navController: NavHostController) {
@@ -28,14 +31,12 @@ fun MainNavigation(navController: NavHostController) {
     var startDestination by remember { mutableStateOf("login") }
     var isCheckingLogin by remember { mutableStateOf(true) }
 
-    // Verifica se o usuário já está logado
     LaunchedEffect(Unit) {
         val isLoggedIn = sessionManager.isLoggedIn()
         startDestination = if (isLoggedIn) "map" else "login"
         isCheckingLogin = false
     }
 
-    // Só mostra a navegação depois de verificar o login
     if (!isCheckingLogin) {
         NavHost(
             navController = navController,
@@ -64,12 +65,26 @@ fun MainNavigation(navController: NavHostController) {
         }
 
         composable("map") { MapScreenWithMarkers(navController) }
-        composable("qrscanner") { QrScannerScreen(navController) }
+        composable("qrscanner") {
+            QrScannerScreen(
+                navController = navController,
+                onCodeScanned = { code -> navController.navigate("rentalDetails/$code") }
+            )
+        }
         composable("weather") { WeatherScreen(navController) }
         composable("history") { HistoryScreen(navController) }
         composable("profile") { ProfileScreen(navController) }
         composable("cameraPreview") { CameraPreviewScreen() }
         composable("payment") { PaymentScreen(navController, qrCode = "") }
+        composable("payment/{qrCode}") { backStackEntry ->
+            val qrCode = backStackEntry.arguments?.getString("qrCode") ?: ""
+            PaymentScreen(navController, qrCode)
+        }
+        composable("rentalDetails/{qrCode}") { backStackEntry ->
+            val qrCode = backStackEntry.arguments?.getString("qrCode") ?: ""
+            RentalDetailsScreen(navController, qrCode)
+        }
+        composable("album") { AlbumScreen(viewModel = AlbumViewModel(), onBackClick = { navController.popBackStack() }) }
         }
     }
 }

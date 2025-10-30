@@ -29,7 +29,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
     
-    // Lista de estações de aluguer de guarda-chuva
     private val rentalStations = listOf(
         RentalStation(4, "IADE", 38.7818, -9.10251, 3, 6),
         RentalStation(3, "Parque das Nações", 38.76800, -9.09400, 6, 10),
@@ -41,15 +40,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
 
-        // Inicializar o mapa
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        // Inicializar o provedor de localização
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        // Configurar o botão de localização
         findViewById<FloatingActionButton>(R.id.fab_my_location).setOnClickListener {
             getDeviceLocation()
         }
@@ -59,11 +55,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
 
-        // Configurar o mapa
         map.uiSettings.isZoomControlsEnabled = true
         map.uiSettings.isCompassEnabled = true
         
-        // Verificar permissões de localização
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {
             map.isMyLocationEnabled = true
@@ -76,7 +70,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             )
         }
 
-        // Adicionar marcadores para estações de aluguer
         addRentalStationsToMap()
     }
 
@@ -90,7 +83,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                         val currentLatLng = LatLng(it.latitude, it.longitude)
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
                     } ?: run {
-                        // Se a localização não estiver disponível, centralizar em Lisboa
                         val lisbonLatLng = LatLng(38.7223, -9.1393)
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(lisbonLatLng, 12f))
                     }
@@ -103,12 +95,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun addRentalStationsToMap() {
         Log.d("MapActivity", "Adicionando ${rentalStations.size} estações ao mapa")
-        // Adicionar marcadores apenas para as estações de aluguer
         rentalStations.forEach { station ->
             val position = LatLng(station.latitude, station.longitude)
             Log.d("MapActivity", "Estação: ${station.name}, Posição: ${station.latitude}, ${station.longitude}, Guarda-chuvas: ${station.availableUmbrellas}/${station.totalCapacity}")
             
-            // Adicionar marcador para a estação
             val snippet = "Disponíveis: ${station.availableUmbrellas}/${station.totalCapacity}\n" +
                     String.format(Locale.US, "Lat: %.5f | Lng: %.5f", station.latitude, station.longitude)
             map.addMarker(
@@ -137,7 +127,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             } else {
                 Toast.makeText(this, "Permissão de localização negada", Toast.LENGTH_SHORT).show()
-                // Centralizar em Lisboa como fallback
                 val lisbonLatLng = LatLng(38.7223, -9.1393)
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(lisbonLatLng, 12f))
             }

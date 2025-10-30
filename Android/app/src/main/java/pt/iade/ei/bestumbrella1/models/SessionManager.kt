@@ -57,7 +57,16 @@ class SessionManager(context: Context) {
         dataStore.edit { it.clear() }
     }
 
-    // 🔁 Funções genéricas para reuso
+    suspend fun isAdmin(): Boolean {
+        val email = getEmail()
+        return UserRole.fromEmail(email) == UserRole.ADMIN
+    }
+
+    suspend fun getUserRole(): UserRole {
+        val email = getEmail()
+        return UserRole.fromEmail(email)
+    }
+
     private suspend fun saveValue(key: Preferences.Key<String>, value: String) {
         dataStore.edit { prefs -> prefs[key] = value }
     }

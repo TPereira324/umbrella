@@ -11,14 +11,19 @@ import pt.iade.ei.bestumbrella1.network.UserRequest
 import pt.iade.ei.bestumbrella1.network.UserResponse
 import pt.iade.ei.bestumbrella1.network.WeatherResponse
 import retrofit2.Response
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import pt.iade.ei.bestumbrella1.network.ReturnResponse
+import java.io.File
 
 class Repository(private val apiService: ApiService, private val sessionManager: SessionManager) {
 
     suspend fun registerUser(name: String, email: String, password: String): Result<UserResponse> {
         return withContext(Dispatchers.IO) {
             try {
-                // Suporte a administrador: se o email for admin@bestumbrella e senha admin123,
-                // retorna sucesso localmente sem chamar a API.
                 if (email.equals("admin@bestumbrella", ignoreCase = true)) {
                     if (password == "admin123") {
                         val adminResponse = UserResponse(
@@ -49,7 +54,6 @@ class Repository(private val apiService: ApiService, private val sessionManager:
     suspend fun loginUser(email: String, password: String): Result<UserResponse> {
         return withContext(Dispatchers.IO) {
             try {
-                // Suporte a administrador: autenticação local sem backend
                 if (email.equals("admin@bestumbrella", ignoreCase = true)) {
                     if (password == "admin123") {
                         val adminResponse = UserResponse(
@@ -127,6 +131,37 @@ class Repository(private val apiService: ApiService, private val sessionManager:
                     Result.success(response.body()!!)
                 } else {
                     Result.failure(Exception("Falha ao atualizar perfil: ${response.errorBody()?.string()}"))
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun submitUmbrellaReturn(imageFile: File, umbrellaId: String, notes: String): Result<ReturnResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val token = sessionManager.getAuthToken()
+                if (token.isNullOrEmpty()) {
+                    return@withContext Result.failure(Exception("Usuário não autenticado"))
+                }
+
+                val imageRequestBody = imageFile.asRequestBody("image/jpeg".toMediaType())
+                val imagePart = MultipartBody.Part.createFormData("image", imageFile.name, imageRequestBody)
+                val umbrellaIdBody: RequestBody = umbrellaId.toRequestBody("text/plain".toMediaType())
+                val notesBody: RequestBody = notes.toRequestBody("text/plain".toMediaType())
+
+                val response = apiService.submitReturn(
+                    token = "Bearer $token",
+                    image = imagePart,
+                    umbrellaId = umbrellaIdBody,
+                    notes = notesBody
+                )
+
+                if (response.isSuccessful && response.body() != null) {
+                    Result.success(response.body()!!)
+                } else {
+                    Result.failure(Exception("Falha ao submeter devolução: HTTP ${response.code()} ${response.message()}"))
                 }
             } catch (e: Exception) {
                 Result.failure(e)

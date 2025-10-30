@@ -20,7 +20,7 @@ import androidx.navigation.compose.rememberNavController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaymentScreen(navController: NavController, qrCode: String) {
-    var balance by remember { mutableStateOf(5.00) } // saldo inicial fictício
+    var balance by remember { mutableStateOf(5.00) }
     var amountText by remember { mutableStateOf(TextFieldValue("")) }
     var showConfirmation by remember { mutableStateOf(false) }
 
@@ -130,7 +130,7 @@ fun PaymentScreen(navController: NavController, qrCode: String) {
                             },
                             modifier = Modifier.fillMaxWidth(),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFF003087) // Azul PayPal
+                                containerColor = Color(0xFF003087)
                             )
                         ) {
                             Icon(Icons.Default.Payment, contentDescription = null, tint = Color.White)

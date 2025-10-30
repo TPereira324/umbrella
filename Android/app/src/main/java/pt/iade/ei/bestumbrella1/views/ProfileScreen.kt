@@ -27,6 +27,10 @@ fun ProfileScreen(navController: NavController) {
     val context = LocalContext.current
     val sessionManager = AppModule.provideSessionManager(context)
     val coroutineScope = rememberCoroutineScope()
+    var isAdmin by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf<Boolean?>(null) }
+    androidx.compose.runtime.LaunchedEffect(Unit) {
+        isAdmin = try { sessionManager.isAdmin() } catch (e: Exception) { false }
+    }
 
     Scaffold(
         bottomBar = {
@@ -55,6 +59,14 @@ fun ProfileScreen(navController: NavController) {
                     icon = { Icon(Icons.Default.History, null) },
                     label = { Text("Histórico", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
+                if (isAdmin == true) {
+                    NavigationBarItem(
+                        selected = false,
+                        onClick = { navController.navigate("album") },
+                        icon = { Icon(Icons.Default.Photo, null) },
+                        label = { Text("Álbum", color = Color.Black, fontWeight = FontWeight.Bold) }
+                    )
+                }
                 NavigationBarItem(
                     selected = true,
                     onClick = {},
