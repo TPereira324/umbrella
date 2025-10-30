@@ -77,8 +77,14 @@ fun RegisterScreen(
                 onValueChange = { name = it },
                 label = { Text("Nome", color = Color.Black, fontWeight = FontWeight.Bold) },
                 leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
-                colors = TextFieldDefaults.colors(focusedTextColor = Color.Black, unfocusedTextColor = Color.Black, cursorColor = Color.Black, focusedIndicatorColor = Color.Black, unfocusedIndicatorColor = Color.Gray, focusedContainerColor = Color(0xFFBBDEFB), unfocusedContainerColor = Color(0xFFBBDEFB))
-                ,
+                colors = TextFieldDefaults.colors(focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
+                    cursorColor = Color.Black,
+                    focusedIndicatorColor = Color.Black,
+                    unfocusedIndicatorColor = Color.Gray,
+                    focusedContainerColor = Color(0xFFBBDEFB),
+                    unfocusedContainerColor = Color(0xFFBBDEFB)
+                ),
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -89,8 +95,14 @@ fun RegisterScreen(
                 onValueChange = { email = it },
                 label = { Text("Email", color = Color.Black, fontWeight = FontWeight.Bold) },
                 leadingIcon = { Icon(Icons.Default.MailOutline, contentDescription = null) },
-                colors = TextFieldDefaults.colors(focusedTextColor = Color.Black, unfocusedTextColor = Color.Black, cursorColor = Color.Black, focusedIndicatorColor = Color.Black, unfocusedIndicatorColor = Color.Gray, focusedContainerColor = Color(0xFFBBDEFB), unfocusedContainerColor = Color(0xFFBBDEFB))
-                ,
+                colors = TextFieldDefaults.colors(focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
+                    cursorColor = Color.Black,
+                    focusedIndicatorColor = Color.Black,
+                    unfocusedIndicatorColor = Color.Gray,
+                    focusedContainerColor = Color(0xFFBBDEFB),
+                    unfocusedContainerColor = Color(0xFFBBDEFB)
+                ),
                 modifier = Modifier.fillMaxWidth()
             )
 

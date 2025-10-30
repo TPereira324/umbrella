@@ -124,7 +124,7 @@ fun LoginScreen(
                 Text("Criar conta", color = Color(0xFF1976D2), fontWeight = FontWeight.Bold)
             }
 
-            // Navega quando loginResult indica sucesso
+
             loginResult?.let { result ->
                 if (result.success) {
                     onLoginSuccess()
@@ -133,7 +133,7 @@ fun LoginScreen(
                 }
             }
 
-            // Exibe erro do ViewModel
+
             val displayedError = errorState ?: error
             displayedError?.let {
                 Spacer(Modifier.height(8.dp))

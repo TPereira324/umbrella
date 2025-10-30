@@ -176,8 +176,6 @@ fun HistoryScreen(navController: NavController) {
                                     )
                                 }
 
-
-
                                 Text(
                                     "💰 Total: €${"%.2f".format(totalCost)}",
                                     color = Color.Black,

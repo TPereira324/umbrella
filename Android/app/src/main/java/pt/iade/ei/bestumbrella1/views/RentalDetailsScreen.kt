@@ -63,7 +63,6 @@ fun RentalDetailsScreen(
                     thickness = 2.dp,
                     color = Color(0xFF90CAF9)
                 )
-
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.9f)),

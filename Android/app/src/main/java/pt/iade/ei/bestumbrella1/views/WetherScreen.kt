@@ -39,35 +39,33 @@ fun WeatherScreen(navController: NavController) {
     Scaffold(
         bottomBar = {
             NavigationBar {
-                // 🗺️ Mapa primeiro
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("map") },
                     icon = { Icon(Icons.Default.Map, contentDescription = null) },
                     label = { Text("Mapa", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
-                // 📷 Scanner
+
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("qrscanner") },
                     icon = { Icon(Icons.Default.QrCodeScanner, contentDescription = null) },
                     label = { Text("Scanner", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
-                // 🌦️ Meteorologia (atual)
+
                 NavigationBarItem(
                     selected = true,
                     onClick = {},
                     icon = { Icon(Icons.Default.Cloud, contentDescription = null) },
                     label = { Text("Tempo", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
-                // 🕓 Histórico
+
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("history") },
                     icon = { Icon(Icons.Default.History, contentDescription = null) },
                     label = { Text("Histórico", color = Color.Black, fontWeight = FontWeight.Bold) }
                 )
-                // 👤 Perfil
                 NavigationBarItem(
                     selected = false,
                     onClick = { navController.navigate("profile") },
@@ -103,7 +101,7 @@ fun WeatherScreen(navController: NavController) {
 
                 Spacer(Modifier.height(16.dp))
 
-                // Estado atual
+
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFFBBDEFB))

@@ -67,8 +67,8 @@ fun PaymentScreen(navController: NavController, qrCode: String) {
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
-                            Color(0xFF2196F3).copy(alpha = 0.8f), // Azul topo
-                            Color(0xFFE3F2FD)                      // Branco azulado
+                            Color(0xFF2196F3).copy(alpha = 0.8f),
+                            Color(0xFFE3F2FD)
                         )
                     )
                 )

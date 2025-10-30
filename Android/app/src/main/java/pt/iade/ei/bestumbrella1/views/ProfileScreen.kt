@@ -71,8 +71,8 @@ fun ProfileScreen(navController: NavController) {
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
-                            Color(0xFF2196F3).copy(alpha = 0.7f), // Azul topo
-                            Color(0xFFE3F2FD)                      // Branco azulado
+                            Color(0xFF2196F3).copy(alpha = 0.7f),
+                            Color(0xFFE3F2FD)
                         )
                     )
                 )
@@ -112,7 +112,7 @@ fun ProfileScreen(navController: NavController) {
 
                 Spacer(Modifier.height(24.dp))
 
-                // Estatísticas do utilizador
+
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.95f))
@@ -140,7 +140,7 @@ fun ProfileScreen(navController: NavController) {
 
                 Spacer(Modifier.height(24.dp))
 
-                // Cartão de Saldo
+
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.95f))
@@ -170,7 +170,7 @@ fun ProfileScreen(navController: NavController) {
 
                 Spacer(Modifier.height(24.dp))
 
-                // Atividade recente
+
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.95f))
