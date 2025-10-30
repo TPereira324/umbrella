@@ -29,10 +29,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.google.mlkit.vision.barcode.BarcodeScanning
-import com.google.mlkit.vision.barcode.BarcodeScannerOptions
-import com.google.mlkit.vision.barcode.common.Barcode
-import com.google.mlkit.vision.common.InputImage
+import java.util.concurrent.Executors
 
 @androidx.annotation.OptIn(ExperimentalGetImage::class)
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalGetImage::class)
@@ -44,6 +41,10 @@ fun QrScannerScreen(
     val context = LocalContext.current
     val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
     var startScanner by remember { mutableStateOf(false) }
+    val cameraExecutor = remember { Executors.newSingleThreadExecutor() }
+    DisposableEffect(Unit) {
+        onDispose { cameraExecutor.shutdown() }
+    }
 
     var hasCameraPermission by remember {
         mutableStateOf(
@@ -159,41 +160,10 @@ fun QrScannerScreen(
                         }
 
                         val imageAnalyzer = ImageAnalysis.Builder().build().also {
-                            it.setAnalyzer(ContextCompat.getMainExecutor(ctx)) { imageProxy ->
-                                val mediaImage = imageProxy.image
-                                if (mediaImage != null) {
-                                    try {
-                                        val image = InputImage.fromMediaImage(
-                                            mediaImage,
-                                            imageProxy.imageInfo.rotationDegrees
-                                        )
-                                        val options = BarcodeScannerOptions.Builder()
-                                            .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
-                                            .build()
-                                        val scanner = BarcodeScanning.getClient(options)
-                                        scanner.process(image)
-                                            .addOnSuccessListener { barcodes ->
-                                                for (barcode in barcodes) {
-                                                    barcode.rawValue?.let { code ->
-                                                        onCodeScanned(code)
-                                                        Toast.makeText(ctx, "Código: $code", Toast.LENGTH_SHORT).show()
-                                                    }
-                                                }
-                                            }
-                                            .addOnFailureListener {
-                                                Log.e("QR", "Erro ao ler QR: ${it.message}")
-                                            }
-                                            .addOnCompleteListener {
-                                                imageProxy.close()
-                                            }
-                                    } catch (e: Exception) {
-                                        Log.e("QR", "Erro no processamento da imagem: ${e.message}")
-                                        imageProxy.close()
-                                    }
-                                } else {
-                                    imageProxy.close()
-                                }
-                            }
+                            it.setAnalyzer(cameraExecutor, BarcodeAnalyser { code ->
+                                onCodeScanned(code)
+                                Toast.makeText(ctx, "Código: $code", Toast.LENGTH_SHORT).show()
+                            })
                         }
 
                         try {
