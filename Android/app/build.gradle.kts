@@ -67,6 +67,10 @@ dependencies {
     implementation(libs.androidx.room.common.jvm)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.compose.foundation)
+
+    
+    implementation("com.braintreepayments.api:core:5.2.1")
+    implementation("com.braintreepayments.api:paypal:5.2.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
