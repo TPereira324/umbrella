@@ -20,6 +20,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -43,7 +47,7 @@ android {
         compose = true
     }
 
-    // ⚠️ ESSENCIAL para resolver o erro META-INF/INDEX.LIST
+   
     packaging {
         resources {
             excludes += setOf(
@@ -57,8 +61,7 @@ android {
                 "META-INF/ASL2.0",
                 "META-INF/INDEX.LIST"
             )
-            // Corrige conflito: 11 files found with path 'META-INF/io.netty.versions.properties'
-            // Mantém apenas um arquivo para evitar falha no mergeJavaResource
+           
             pickFirsts += setOf(
                 "META-INF/io.netty.versions.properties"
             )
