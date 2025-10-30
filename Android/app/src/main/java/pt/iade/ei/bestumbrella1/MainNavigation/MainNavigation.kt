@@ -20,8 +20,6 @@ import pt.iade.ei.bestumbrella1.views.HistoryScreen
 import pt.iade.ei.bestumbrella1.views.ProfileScreen
 import pt.iade.ei.bestumbrella1.views.CameraPreviewScreen
 import pt.iade.ei.bestumbrella1.views.PaymentScreen
-import pt.iade.ei.bestumbrella1.views.AlbumScreen
-import pt.iade.ei.bestumbrella1.viewmodels.AlbumViewModel
 import pt.iade.ei.bestumbrella1.views.RentalDetailsScreen
 
 @Composable
@@ -84,7 +82,6 @@ fun MainNavigation(navController: NavHostController) {
             val qrCode = backStackEntry.arguments?.getString("qrCode") ?: ""
             RentalDetailsScreen(navController, qrCode)
         }
-        composable("album") { AlbumScreen(viewModel = AlbumViewModel(), onBackClick = { navController.popBackStack() }) }
         }
     }
 }
