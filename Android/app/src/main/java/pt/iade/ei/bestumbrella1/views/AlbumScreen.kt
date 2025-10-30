@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,9 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
-import pt.iade.ei.bestumbrella1.di.AppModule
-import pt.iade.ei.bestumbrella1.models.UserRole
 import pt.iade.ei.bestumbrella1.viewmodels.AlbumViewState
 import pt.iade.ei.bestumbrella1.viewmodels.AlbumViewModel
 import pt.iade.ei.bestumbrella1.viewmodels.Intent
@@ -37,45 +33,6 @@ fun AlbumScreen(
     val viewState: AlbumViewState by viewModel.viewStateFlow.collectAsState()
     
     val currentContext = LocalContext.current
-    val sessionManager = remember { AppModule.provideSessionManager(currentContext) }
-    val coroutineScope = rememberCoroutineScope()
-    
-    // Estado para controlar se o usuário é admin
-    var isAdmin by remember { mutableStateOf<Boolean?>(null) }
-    var isLoading by remember { mutableStateOf(true) }
-    
-    // Verifica se o usuário é administrador
-    LaunchedEffect(Unit) {
-        coroutineScope.launch {
-            try {
-                isAdmin = sessionManager.isAdmin()
-            } catch (e: Exception) {
-                isAdmin = false
-            } finally {
-                isLoading = false
-            }
-        }
-    }
-    
-
-    if (isLoading) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
-        }
-        return
-    }
-    
-
-    if (isAdmin != true) {
-        AccessDeniedScreen(
-            modifier = modifier,
-            onBackClick = onBackClick
-        )
-        return
-    }
 
 
     val pickImageFromAlbumLauncher = rememberLauncherForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) { urls ->
@@ -120,17 +77,9 @@ fun AlbumScreen(
     ) {
 
         Text(
-            text = "Área do Administrador",
+            text = "Álbum",
             style = androidx.compose.material3.MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 8.dp)
-        )
-        
-        Text(
-            text = "Registre fotos de devoluções de guarda-chuvas para controle e verificação",
-            style = androidx.compose.material3.MaterialTheme.typography.bodyMedium,
-            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-            modifier = Modifier.padding(bottom = 24.dp),
-            color = androidx.compose.ui.graphics.Color.Gray
         )
         
         Row {

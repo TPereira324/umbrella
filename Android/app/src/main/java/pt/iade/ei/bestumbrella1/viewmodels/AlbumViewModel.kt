@@ -37,13 +37,11 @@ class AlbumViewModel: ViewModel() {
             }
 
             is Intent.OnPermissionDenied -> {
-                
                 println("User did not grant permission to use the camera")
             }
 
             is Intent.OnFinishPickingImagesWith -> {
                 if (intent.imageUrls.isNotEmpty()) {
-                    
                     val newImages = mutableListOf<ImageBitmap>()
                     for (eachImageUrl in intent.imageUrls) {
                         val inputStream = intent.compositionContext.contentResolver.openInputStream(eachImageUrl)
@@ -56,7 +54,6 @@ class AlbumViewModel: ViewModel() {
                             val bitmap: Bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bitmapOptions)
                             newImages.add(bitmap.asImageBitmap())
                         } else {
-                            
                             println("The image that was picked could not be read from the device at this url: $eachImageUrl")
                         }
                     }
@@ -68,7 +65,6 @@ class AlbumViewModel: ViewModel() {
                     )
                     _albumViewState.value = newCopy
                 } else {
-                    
                 }
             }
 
