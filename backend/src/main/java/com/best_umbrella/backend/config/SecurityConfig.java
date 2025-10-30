@@ -25,3 +25,6 @@ public class SecurityConfig {
         return http.build();
     }
 }
+
+//SecurityConfig
+// liberar TUDO para a apresentação beta
