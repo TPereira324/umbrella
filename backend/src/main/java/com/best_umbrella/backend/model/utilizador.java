@@ -1,44 +1,117 @@
 package com.best_umbrella.backend.model;
 
-
-import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
-
-import javax.management.Notification;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 @Entity
-@Table
-public class utilizador
-{
+@Table(name = "Utilizador")
+public class Utilizador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Utilizador")
-    private Long utilizadorId;
+    @Column(name = "utilizador_id")
+    private Integer utilizadorId;
 
-    private String Nome;
+    @Column(name = "nome")
+    private String nome;
 
-    @NotNull
+    
+    @Column(unique = true)
     private String email;
 
-    @NotNull
+    
     private String password;
+
     private String telefone;
 
-    @Column(name = "date_registro")
+    @Column(name = "data_registo")
     private LocalDateTime dataRegisto;
 
     private Double rating;
 
     @OneToMany(mappedBy = "utilizador")
-    private List<Aluguer> alugures;
+    private List<Aluguer> alugueres;
 
     @OneToMany(mappedBy = "utilizador")
-    private List<Notification> notifications;
+    private List<Noti> notificacoes;
 
-    //Getters e Setters
+    // Getters e Setters
+    public Integer getUtilizadorId() {
+        return utilizadorId;
+    }
 
+    public void setUtilizadorId(Integer utilizadorId) {
+        this.utilizadorId = utilizadorId;
+    }
 
+    public String getNome() {
+        return nome;
+    }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public LocalDateTime getDataRegisto() {
+        return dataRegisto;
+    }
+
+    public void setDataRegisto(LocalDateTime dataRegisto) {
+        this.dataRegisto = dataRegisto;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public List<Aluguer> getAlugueres() {
+        return alugueres;
+    }
+
+    public void setAlugueres(List<Aluguer> alugueres) {
+        this.alugueres = alugueres;
+    }
+
+    public List<Noti> getNotificacoes() {
+        return notificacoes;
+    }
+
+    public void setNotificacoes(List<Noti> notificacoes) {
+        this.notificacoes = notificacoes;
+    }
 }

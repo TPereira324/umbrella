@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.runtime.ktx)
@@ -67,10 +68,15 @@ dependencies {
     implementation(libs.androidx.room.common.jvm)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.compose.foundation)
+<<<<<<< HEAD
 
     
     implementation("com.braintreepayments.api:core:5.2.1")
     implementation("com.braintreepayments.api:paypal:5.2.1")
+=======
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.datastore.preferences)
+>>>>>>> ff9f8cf87e3db0aa3ce82e42ebf66ca8bcb32da7
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
