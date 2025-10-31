@@ -1,10 +1,5 @@
 package pt.iade.ei.bestumbrella1.views
 
-import android.annotation.SuppressLint
-import android.webkit.JavascriptInterface
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -19,18 +14,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import pt.iade.ei.bestumbrella1.BuildConfig
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaymentScreen(navController: NavController, qrCode: String) {
     var balance by remember { mutableStateOf(5.00) }
     var amountText by remember { mutableStateOf(TextFieldValue("")) }
-    var showCheckout by remember { mutableStateOf(false) }
-    var paymentMessage by remember { mutableStateOf<String?>(null) }
+    var showConfirmation by remember { mutableStateOf(false) }
 
     Scaffold(
         bottomBar = {
@@ -131,10 +123,9 @@ fun PaymentScreen(navController: NavController, qrCode: String) {
                             onClick = {
                                 val value = amountText.text.toDoubleOrNull()
                                 if (value != null && value > 0) {
-                                    showCheckout = true
-                                    paymentMessage = null
-                                } else {
-                                    paymentMessage = "Insira um valor válido para pagar."
+                                    balance -= value
+                                    amountText = TextFieldValue("")
+                                    showConfirmation = true
                                 }
                             },
                             modifier = Modifier.fillMaxWidth(),
@@ -149,34 +140,12 @@ fun PaymentScreen(navController: NavController, qrCode: String) {
 
                         Spacer(Modifier.height(16.dp))
 
-                        if (paymentMessage != null) {
+                        if (showConfirmation) {
                             Text(
-                                paymentMessage!!,
-                                color = if (paymentMessage!!.contains("sucesso", ignoreCase = true)) Color(0xFF4CAF50) else MaterialTheme.colorScheme.error,
+                                "Pagamento efetuado com sucesso via PayPal!",
+                                color = Color(0xFF4CAF50),
                                 style = MaterialTheme.typography.bodyMedium,
                                 fontWeight = FontWeight.Bold
-                            )
-                        }
-
-                        if (showCheckout) {
-                            Spacer(Modifier.height(16.dp))
-                            PayPalCheckoutWebView(
-                                amount = amountText.text.toDoubleOrNull() ?: 0.0,
-                                onResult = { result ->
-                                    when (result.status) {
-                                        "success" -> {
-                                            paymentMessage = "Pagamento efetuado com sucesso via PayPal!"
-                                            showCheckout = false
-                                            // Opcional: navegar ou atualizar saldo
-                                            val value = amountText.text.toDoubleOrNull()
-                                            if (value != null) balance -= value
-                                            amountText = TextFieldValue("")
-                                        }
-                                        "error" -> {
-                                            paymentMessage = "Erro no pagamento: ${'$'}{result.message ?: "desconhecido"}"
-                                        }
-                                    }
-                                }
                             )
                         }
                     }
@@ -184,90 +153,6 @@ fun PaymentScreen(navController: NavController, qrCode: String) {
             }
         }
     }
-}
-
-private data class PayPalResult(val status: String, val orderID: String? = null, val message: String? = null)
-
-@SuppressLint("SetJavaScriptEnabled")
-@Composable
-private fun PayPalCheckoutWebView(amount: Double, onResult: (PayPalResult) -> Unit) {
-    val html = remember(amount) {
-        val valueStr = String.format("%.2f", amount)
-        """
-        <html>
-        <head>
-          <meta name=viewport content="width=device-width, initial-scale=1" />
-          <script src="https://www.paypal.com/sdk/js?client-id=${BuildConfig.PAYPAL_CLIENT_ID}&currency=EUR"></script>
-          <style> body { font-family: sans-serif; margin: 0; padding: 16px; } </style>
-        </head>
-        <body>
-          <div id="paypal-button-container"></div>
-          <script>
-            const amount = '${valueStr}';
-            paypal.Buttons({
-              style: { shape: 'pill', color: 'blue', layout: 'vertical', label: 'paypal' },
-              createOrder: function(data, actions) {
-                return actions.order.create({
-                  purchase_units: [{ amount: { value: amount } }]
-                });
-              },
-              onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                  PayPalAndroid.postMessage(JSON.stringify({ status: 'success', orderID: data.orderID }));
-                });
-              },
-              onError: function(err) {
-                PayPalAndroid.postMessage(JSON.stringify({ status: 'error', message: String(err) }));
-              }
-            }).render('#paypal-button-container');
-          </script>
-        </body>
-        </html>
-        """.trimIndent()
-    }
-
-    AndroidView(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(420.dp),
-        factory = { ctx ->
-            WebView(ctx).apply {
-                settings.javaScriptEnabled = true
-                settings.domStorageEnabled = true
-                webChromeClient = WebChromeClient()
-                addJavascriptInterface(object {
-                    @JavascriptInterface
-                    fun postMessage(message: String) {
-                        try {
-                            val json = org.json.JSONObject(message)
-                            val status = json.optString("status")
-                            val orderID = json.optString("orderID")
-                            val msg = json.optString("message")
-                            onResult(PayPalResult(status = status, orderID = orderID, message = msg))
-                        } catch (e: Exception) {
-                            onResult(PayPalResult(status = "error", message = e.message))
-                        }
-                    }
-                }, "PayPalAndroid")
-                loadDataWithBaseURL(
-                    "https://www.paypal.com/",
-                    html,
-                    "text/html",
-                    "utf-8",
-                    null
-                )
-            }
-        },
-        update = { webView ->
-            webView.loadDataWithBaseURL(
-                "https://www.paypal.com/",
-                html,
-                "text/html",
-                "utf-8",
-                null
-            )
-        }
-    )
 }
 
 @Preview(showBackground = true)
