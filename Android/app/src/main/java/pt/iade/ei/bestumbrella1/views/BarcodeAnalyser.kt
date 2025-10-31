@@ -1,5 +1,6 @@
 package pt.iade.ei.bestumbrella1.views
 
+import android.util.Log
 import androidx.annotation.OptIn
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
@@ -28,12 +29,14 @@ class BarcodeAnalyser(
 
             scanner.process(image)
                 .addOnSuccessListener { barcodes ->
+                    Log.d("QR", "Barcodes detectados: ${barcodes.size}")
                     val value = barcodes.firstOrNull()?.rawValue
                     if (!value.isNullOrEmpty()) {
                         callback(value)
                     }
                 }
                 .addOnFailureListener {
+                    Log.e("QR", "Falha na detecção", it)
                 }
                 .addOnCompleteListener {
                     imageProxy.close()

@@ -92,9 +92,6 @@ dependencies {
     implementation(libs.maps.compose)
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
-    implementation(libs.androidx.camera.camera2)
-    implementation(libs.androidx.camera.lifecycle)
-    implementation(libs.androidx.camera.view)
     implementation(libs.barcode.scanning)
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.room.common.jvm)
@@ -115,11 +112,12 @@ dependencies {
     implementation(libs.guava)
     implementation(libs.androidx.compose.runtime.livedata)
     testImplementation(libs.junit)
-    testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    // Ensure IDE resolves MockWebServer correctly without relying on version catalog accessors
+    androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

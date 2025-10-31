@@ -12,6 +12,7 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -26,10 +27,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import java.util.concurrent.Executors
+import android.util.Size
+import androidx.activity.result.PickVisualMediaRequest
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions
+import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.common.Barcode
+import com.google.mlkit.vision.common.InputImage
 
 @androidx.annotation.OptIn(ExperimentalGetImage::class)
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalGetImage::class)
@@ -41,6 +49,9 @@ fun QrScannerScreen(
     val context = LocalContext.current
     val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
     var startScanner by remember { mutableStateOf(false) }
+    var cameraProviderRef by remember { mutableStateOf<ProcessCameraProvider?>(null) }
+    var cameraRef by remember { mutableStateOf<androidx.camera.core.Camera?>(null) }
+    var torchEnabled by remember { mutableStateOf(false) }
     val cameraExecutor = remember { Executors.newSingleThreadExecutor() }
     DisposableEffect(Unit) {
         onDispose { cameraExecutor.shutdown() }
@@ -57,6 +68,40 @@ fun QrScannerScreen(
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted -> hasCameraPermission = granted }
+
+    val scannerOptions = remember {
+        BarcodeScannerOptions.Builder().setBarcodeFormats(Barcode.FORMAT_QR_CODE).build()
+    }
+    val galleryScanner = remember { BarcodeScanning.getClient(scannerOptions) }
+
+    val pickImageLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        if (uri != null) {
+            try {
+                val image = InputImage.fromFilePath(context, uri)
+                galleryScanner.process(image)
+                    .addOnSuccessListener { barcodes ->
+                        val value = barcodes.firstOrNull()?.rawValue
+                        if (!value.isNullOrEmpty()) {
+                            startScanner = false
+                            onCodeScanned(value)
+                            Toast.makeText(context, "Código: $value", Toast.LENGTH_SHORT).show()
+                            cameraProviderRef?.unbindAll()
+                        } else {
+                            Toast.makeText(context, "Nenhum QR na imagem", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("QR", "Erro ao processar imagem: ${e.message}", e)
+                        Toast.makeText(context, "Erro ao processar imagem", Toast.LENGTH_SHORT).show()
+                    }
+            } catch (e: Exception) {
+                Log.e("QR", "Falha ao abrir imagem: ${e.message}", e)
+                Toast.makeText(context, "Falha ao abrir imagem", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     LaunchedEffect(Unit) {
         if (!hasCameraPermission) launcher.launch(Manifest.permission.CAMERA)
@@ -108,6 +153,7 @@ fun QrScannerScreen(
                     )
                 )
         ) {
+            if (!startScanner || !hasCameraPermission) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -132,6 +178,14 @@ fun QrScannerScreen(
                     Spacer(Modifier.width(8.dp))
                     Text("Iniciar Scanner", color = Color.Black)
                 }
+                Spacer(Modifier.height(12.dp))
+                OutlinedButton(onClick = {
+                    pickImageLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                }) {
+                    Icon(Icons.Default.Image, contentDescription = null, tint = Color.Black)
+                    Spacer(Modifier.width(8.dp))
+                    Text("Ler da galeria", color = Color.Black)
+                }
                 Spacer(Modifier.height(50.dp))
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -147,40 +201,93 @@ fun QrScannerScreen(
                     }
                 }
             }
+            }
 
             if (startScanner && hasCameraPermission) {
-                AndroidView(factory = { ctx ->
-                    val previewView = PreviewView(ctx)
-                    val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
+                Box(modifier = Modifier.fillMaxSize()) {
+                    AndroidView(
+                        modifier = Modifier.fillMaxSize(),
+                        factory = { ctx ->
+                            val previewView = PreviewView(ctx)
+                            val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
 
-                    cameraProviderFuture.addListener({
-                        val cameraProvider = cameraProviderFuture.get()
-                        val preview = androidx.camera.core.Preview.Builder().build().also {
-                            it.setSurfaceProvider(previewView.surfaceProvider)
+                            cameraProviderFuture.addListener({
+                                val provider = cameraProviderFuture.get()
+                                cameraProviderRef = provider
+                                val preview = androidx.camera.core.Preview.Builder().build().also {
+                                    it.setSurfaceProvider(previewView.surfaceProvider)
+                                }
+
+                                val imageAnalyzer = ImageAnalysis.Builder()
+                                    .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                                    .setTargetResolution(Size(1280, 720))
+                                    .build().also {
+                                        it.setAnalyzer(cameraExecutor, BarcodeAnalyser { code ->
+                                            startScanner = false
+                                            onCodeScanned(code)
+                                            Toast.makeText(ctx, "Código: $code", Toast.LENGTH_SHORT).show()
+                                            cameraProviderRef?.unbindAll()
+                                        })
+                                    }
+
+                                try {
+                                    provider.unbindAll()
+                                    val cam = provider.bindToLifecycle(
+                                        lifecycleOwner,
+                                        CameraSelector.DEFAULT_BACK_CAMERA,
+                                        preview,
+                                        imageAnalyzer
+                                    )
+                                    cameraRef = cam
+                                } catch (e: Exception) {
+                                    Log.e("QR", "Erro na câmara: ${e.message}")
+                                }
+                            }, ContextCompat.getMainExecutor(ctx))
+
+                            previewView
                         }
+                    )
 
-                        val imageAnalyzer = ImageAnalysis.Builder().build().also {
-                            it.setAnalyzer(cameraExecutor, BarcodeAnalyser { code ->
-                                onCodeScanned(code)
-                                Toast.makeText(ctx, "Código: $code", Toast.LENGTH_SHORT).show()
-                            })
-                        }
+                    // Overlay de mira
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(280.dp)
+                                .align(Alignment.Center)
+                                .border(
+                                    width = 3.dp,
+                                    color = Color.White,
+                                    shape = RoundedCornerShape(16.dp)
+                                )
+                        )
 
-                        try {
-                            cameraProvider.unbindAll()
-                            cameraProvider.bindToLifecycle(
-                                lifecycleOwner,
-                                CameraSelector.DEFAULT_BACK_CAMERA,
-                                preview,
-                                imageAnalyzer
+                        // Botão de flash
+                        IconButton(
+                            onClick = {
+                                torchEnabled = !torchEnabled
+                                val hasFlash = cameraRef?.cameraInfo?.hasFlashUnit() == true
+                                if (hasFlash) {
+                                    cameraRef?.cameraControl?.enableTorch(torchEnabled)
+                                } else {
+                                    torchEnabled = false
+                                    Toast.makeText(context, "Sem flash disponível", Toast.LENGTH_SHORT).show()
+                                }
+                            },
+                            modifier = Modifier
+                                .align(Alignment.TopEnd)
+                                .padding(16.dp)
+                        ) {
+                            Icon(
+                                imageVector = if (torchEnabled) Icons.Default.FlashOn else Icons.Default.FlashOff,
+                                contentDescription = "Flash",
+                                tint = Color.White
                             )
-                        } catch (e: Exception) {
-                            Log.e("QR", "Erro na câmara: ${e.message}")
                         }
-                    }, ContextCompat.getMainExecutor(ctx))
-
-                    previewView
-                })
+                    }
+                }
             }
         }
     }
