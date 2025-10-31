@@ -19,6 +19,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8080/api/\"")
+        buildConfigField("String", "PAYPAL_CLIENT_ID", "\"EBFGH2RNBL3V-oheuKNy0oHqJ4qbTSp1k1A8SYEMt72EwT_CIOx082QAzl0YeM6UteBhTbxs8JxnUeBa\"")
     }
 
     buildFeatures {
