@@ -278,4 +278,5 @@ fun PreviewPaymentScreen() {
     val qrCode = ""
     PaymentScreen(navController, qrCode)
 }
+// testing this branch
 
