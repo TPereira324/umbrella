@@ -279,3 +279,4 @@ fun PreviewPaymentScreen() {
     PaymentScreen(navController, qrCode)
 }
 
+//pereira
