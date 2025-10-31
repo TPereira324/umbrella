@@ -114,36 +114,6 @@ O **depósito reembolsável** é o elemento-chave do sistema:
 Este método cria um equilíbrio entre confiança no utilizador e proteção da infraestrutura, tornando o sistema justo e eficiente.  
 
 ---
-## Base de Dados
-
-A base de dados do projeto Best Umbrella foi desenvolvida em MySQL, adotando um modelo relacional para garantir integridade, consistência e bom desempenho.
-A estrutura foi concebida para suportar todas as funcionalidades centrais da aplicação, incluindo gestão de utilizadores, aluguer de guarda-chuvas, localização de pontos de aluguer, envio de notificações e histórico de transações.
-
-**Estrutura das Entidades**
-
-A modelação da base de dados é composta por cinco entidades principais, interligadas através de chaves primárias e estrangeiras, assegurando coerência e integridade referencial:
- 
-  **Utilizador**
-
- **GuardaChuva**
-  
-   **Aluguer**
-
- **PontoAluguer**
- 
-  **Notificação**
-
-Utilizador-> Tabela que guarda as informações dos utilizadores, incluindo dados pessoais, credenciais e classificação média.
-
-Ponto de Aluguer->Tabela que representa os locais físicos onde os guarda-chuvas podem ser recolhidos ou devolvidos.
-
-Guarda-Chuva->Tabela que identifica cada guarda-chuva através de um código QR único e armazena o seu estado e características.
-
-Aluguer->Tabela que regista cada transação de aluguer, relacionando o utilizador, guarda-chuva e pontos de recolha/devolução.
-
-Notificação->Tabela responsável por armazenar mensagens e alertas enviados aos utilizadores, como alertas meteorológicos ou confirmações de reserva.
-
-
 
 
 

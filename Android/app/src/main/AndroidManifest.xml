@@ -2,11 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Permissões necessárias -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera.any" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,12 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BestUmbrella1">
-
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAWOO-efpqfd9rfJ_7z1vsFbtzvtiR4D2E" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -29,6 +18,7 @@
             android:theme="@style/Theme.BestUmbrella1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <!-- Browser switch da Braintree para retornos do PayPal -->
@@ -39,6 +29,12 @@
                 <data android:scheme="${applicationId}.braintree" />
             </intent-filter>
         </activity>
-
     </application>
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="A_TUA_API_KEY_AQUI" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.any" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 </manifest>

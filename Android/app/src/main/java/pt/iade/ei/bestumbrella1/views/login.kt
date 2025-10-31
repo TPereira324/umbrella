@@ -1,12 +1,13 @@
 package pt.iade.ei.bestumbrella1.views
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.MailOutline
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,41 +16,35 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.launch
 import pt.iade.ei.bestumbrella1.R
-import pt.iade.ei.bestumbrella1.models.SessionManager
-import pt.iade.ei.bestumbrella1.models.UserRepository
-import pt.iade.ei.bestumbrella1.utils.isValidEmail
-import pt.iade.ei.bestumbrella1.utils.isValidPassword
+import pt.iade.ei.bestumbrella1.data.FakeUserRepository
+import pt.iade.ei.bestumbrella1.data.UserRepository
 
 @Composable
 fun LoginScreen(
-    navController: NavController,
     userRepository: UserRepository,
-    onLoginSuccess: () -> Unit
+    onLoginSuccess: () -> Unit,
+    onRegisterClick: () -> Unit
 ) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var error by remember { mutableStateOf<String?>(null) }
-
-    val context = LocalContext.current
-    val sessionManager = remember { SessionManager(context) }
-    val coroutineScope = rememberCoroutineScope()
+    var loginError by remember { mutableStateOf(false) }
+    var passwordVisible by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFF1976D2), // Azul topo
-                        Color.White        // Branco em baixo
-                    )
+                    colors = listOf(Color(0xFFB3E5FC), Color.White)
                 )
             )
             .padding(24.dp),
@@ -57,99 +52,79 @@ fun LoginScreen(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.White.copy(alpha = 0.9f), RoundedCornerShape(16.dp))
-                .padding(24.dp)
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
         ) {
             Image(
                 painter = painterResource(id = R.mipmap.ic_launcher_foreground),
                 contentDescription = "Logo",
-                modifier = Modifier
-                    .size(300.dp)
-                    .padding(bottom = 24.dp)
+                modifier = Modifier.size(250.dp).padding(bottom = 16.dp)
             )
 
-            Text(
-                "Entrar",
-                style = MaterialTheme.typography.headlineMedium,
-                color = Color(0xFF1976D2)
-            )
+            Text("Iniciar Sessão", style = MaterialTheme.typography.titleLarge,
+                color = Color.Black,fontWeight = FontWeight.Bold)
 
-            Spacer(Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             OutlinedTextField(
                 value = email,
-                onValueChange = { email = it },
-                label = { Text("Email") },
-                leadingIcon = { Icon(Icons.Default.MailOutline, contentDescription = null) },
+                onValueChange = {
+                    email = it
+                    loginError = false
+                },
+                label = { Text("Email", fontWeight = FontWeight.Bold,color = Color.Black) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF1976D2),
-                    focusedLabelColor = Color(0xFF1976D2),
-                    cursorColor = Color(0xFF1976D2)
-                )
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
                 value = password,
-                onValueChange = { password = it },
-                label = { Text("Senha") },
-                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+                onValueChange = {
+                    password = it
+                    loginError = false
+                },
+                label = { Text("Palavra-passe", fontWeight = FontWeight.Bold,color = Color.Black) },
                 singleLine = true,
-                visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF1976D2),
-                    focusedLabelColor = Color(0xFF1976D2),
-                    cursorColor = Color(0xFF1976D2)
-                )
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    val icon = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(imageVector = icon, contentDescription = "Toggle password visibility")
+                    }
+                }
             )
 
-            Spacer(Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             Button(
                 onClick = {
-                    if (!isValidEmail(email)) {
-                        error = "Email inválido"
-                        return@Button
-                    }
-                    if (!isValidPassword(password)) {
-                        error = "Senha deve ter pelo menos 6 caracteres"
-                        return@Button
-                    }
-
-                    val success = userRepository.login(email, password)
-                    if (success) {
-                        error = null
-                        coroutineScope.launch {
-                            sessionManager.saveEmail(email)
+                    scope.launch {
+                        val user = userRepository.autenticar(email)
+                        loginError = user == null || user.password != password
+                        if (!loginError) {
+                            Toast.makeText(context, "Bem-vindo, ${user?.nome}!", Toast.LENGTH_SHORT).show()
                             onLoginSuccess()
                         }
-                    } else {
-                        error = "Email ou senha incorretos"
                     }
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1976D2))
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Entrar", color = Color.White)
+                Text("Entrar")
             }
 
-            Spacer(Modifier.height(8.dp))
-
-            TextButton(onClick = { navController.navigate("register") }) {
-                Text("Criar conta", color = Color(0xFF1976D2))
+            if (loginError) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text("Email ou palavra-passe incorretos", color = MaterialTheme.colorScheme.error)
             }
 
-            error?.let {
-                Spacer(Modifier.height(8.dp))
-                Text(it, color = MaterialTheme.colorScheme.error)
+            Spacer(modifier = Modifier.height(16.dp))
+
+            TextButton(onClick = onRegisterClick) {
+                Text("Ainda não tens conta? Regista-te")
             }
         }
     }
@@ -158,12 +133,9 @@ fun LoginScreen(
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    val navController = rememberNavController()
-    val fakeRepository = UserRepository()
-
     LoginScreen(
-        navController = navController,
-        userRepository = fakeRepository,
-        onLoginSuccess = {}
+        userRepository = FakeUserRepository(),
+        onLoginSuccess = {},
+        onRegisterClick = {}
     )
 }

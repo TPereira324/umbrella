@@ -1,189 +1,153 @@
 package pt.iade.ei.bestumbrella1.views
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material.icons.filled.Payment
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import pt.iade.ei.bestumbrella1.ui.theme.blue
+import pt.iade.ei.bestumbrella1.ui.theme.white
 
-@OptIn(ExperimentalMaterial3Api::class)
+data class Pagamento(
+    val id: Int,
+    val descricao: String,
+    val valor: Double,
+    val data: String
+)
+
+@SuppressLint("DefaultLocale")
 @Composable
-fun ProfileScreen(navController: NavController) {
-    Scaffold(
-        bottomBar = {
-            NavigationBar {
-                NavigationBarItem(
-                    selected = false,
-                    onClick = { navController.navigate("map") },
-                    icon = { Icon(Icons.Default.Map, null) },
-                    label = { Text("Mapa") }
-                )
-                NavigationBarItem(
-                    selected = false,
-                    onClick = { navController.navigate("qrscanner") },
-                    icon = { Icon(Icons.Default.QrCodeScanner, null) },
-                    label = { Text("Scanner") }
-                )
-                NavigationBarItem(
-                    selected = false,
-                    onClick = { navController.navigate("history") },
-                    icon = { Icon(Icons.Default.History, null) },
-                    label = { Text("Histórico") }
-                )
-                NavigationBarItem(
-                    selected = true,
-                    onClick = {},
-                    icon = { Icon(Icons.Default.Person, null) },
-                    label = { Text("Perfil") }
-                )
-            }
-        }
-    ) { padding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFF2196F3).copy(alpha = 0.7f), // Azul topo
-                            Color(0xFFE3F2FD)                      // Branco azulado
-                        )
-                    )
-                )
+fun ProfileScreen(
+    userName: String = "Taha-Wur Pereira",
+    userEmail: String = "tahawur@gmail.com",
+    onLogoutClick: (() -> Unit)? = null
+) {
+    val pagamentos = remember {
+        listOf(
+            Pagamento(1, "Aluguer Estação Moscavide", 2.50, "12/10/2025"),
+            Pagamento(2, "Aluguer Estação Iade", 1.80, "09/10/2025"),
+            Pagamento(3, "Aluguer Estação Oriente", 2.00, "05/10/2025")
+        )
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                brush = Brush.verticalGradient(listOf(blue, white))
+            )
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Icon(
+            imageVector = Icons.Default.AccountCircle,
+            contentDescription = "Foto de Perfil",
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.size(100.dp)
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            text = userName,
+            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+            textAlign = TextAlign.Center
+        )
+        Text(
+            text = userEmail,
+            style = MaterialTheme.typography.bodyMedium,
+            textAlign = TextAlign.Center
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Button(
+            onClick = { /* Aqui abres integração PayPal */ },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    "Perfil",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = Color.White
-                )
-                Spacer(Modifier.height(16.dp))
+            Icon(
+                imageVector = Icons.Default.Payment,
+                contentDescription = "PayPal",
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            Text("Gerir método de pagamento (PayPal)")
+        }
 
-                Icon(
-                    Icons.Default.AccountCircle,
-                    contentDescription = null,
-                    modifier = Modifier.size(100.dp),
-                    tint = Color.White
-                )
-                Text(
-                    "tahawurpereira1@gmail.com",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.White
-                )
+        Spacer(modifier = Modifier.height(24.dp))
 
-                AssistChip(
-                    onClick = {},
-                    label = { Text("Eco Warrior") },
-                    modifier = Modifier.padding(top = 6.dp)
-                )
+        Text(
+            text = "Histórico de Pagamentos",
+            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+            modifier = Modifier.align(Alignment.Start)
+        )
 
-                Spacer(Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
-                // Estatísticas do utilizador
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        ) {
+            items(pagamentos) { pagamento ->
                 Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.95f))
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 6.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                 ) {
                     Row(
                         modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
+                            .fillMaxWidth()
+                            .padding(12.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text("0", fontSize = 22.sp, color = Color(0xFF1565C0))
-                            Text("Usos", style = MaterialTheme.typography.bodySmall)
+                        Column {
+                            Text(pagamento.descricao, fontWeight = FontWeight.Bold)
+                            Text("Data: ${pagamento.data}", style = MaterialTheme.typography.bodySmall)
                         }
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text("50", fontSize = 22.sp, color = Color(0xFF1565C0))
-                            Text("Pontos", style = MaterialTheme.typography.bodySmall)
-                        }
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text("€0.28", fontSize = 22.sp, color = Color(0xFF1565C0))
-                            Text("Poupado", style = MaterialTheme.typography.bodySmall)
-                        }
-                    }
-                }
-
-                Spacer(Modifier.height(24.dp))
-
-                // Cartão de Saldo
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.95f))
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Saldo", style = MaterialTheme.typography.titleMedium)
-                        Spacer(Modifier.height(8.dp))
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text("€0.00", color = Color(0xFFD32F2F), fontSize = 20.sp)
-                            Button(onClick = { navController.navigate("payment") }) {
-                                Text("Recarregar")
-                            }
-                        }
-                        Spacer(Modifier.height(8.dp))
                         Text(
-                            "Recarregue para começar a usar guarda-chuvas",
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                    }
-                }
-
-                Spacer(Modifier.height(24.dp))
-
-                // Atividade recente
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.95f))
-                ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text("Atividade Recente", style = MaterialTheme.typography.titleMedium)
-                        Spacer(Modifier.height(16.dp))
-                        Icon(
-                            Icons.Default.Umbrella,
-                            contentDescription = null,
-                            modifier = Modifier.size(48.dp),
-                            tint = Color(0xFF1565C0)
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        Text("Nenhuma atividade ainda", style = MaterialTheme.typography.bodyMedium)
-                        Text(
-                            "Sua primeira reserva aparecerá aqui",
-                            style = MaterialTheme.typography.bodySmall
+                            text = "€${String.format("%.2f", pagamento.valor)}",
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
             }
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Button(
+            onClick = { onLogoutClick?.invoke() },
+            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.error),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Icon(
+                imageVector = Icons.Default.Logout,
+                contentDescription = "Sair",
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            Text("Terminar sessão", fontWeight = FontWeight.Bold)
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewProfileScreen() {
-    val navController = rememberNavController()
-    ProfileScreen(navController)
+fun ProfileScreenPreview() {
+    ProfileScreen()
 }
