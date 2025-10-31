@@ -6,20 +6,28 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.font.FontWeight
 import java.util.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.geometry.Offset
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.maps.android.compose.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Paint
 
 data class Station(
     val name: String,
@@ -31,6 +39,7 @@ data class Station(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MapScreenWithMarkers(navController: NavController) {
+    val context = LocalContext.current
     val lisboaCenter = LatLng(38.7682, -9.0985)
 
     val stations = listOf(
@@ -38,6 +47,11 @@ fun MapScreenWithMarkers(navController: NavController) {
         Station("Parque das Nações", LatLng(38.76800, -9.09400), 6, 10),
         Station("Metro Moscavide", LatLng(38.77639, -9.10169), 8, 10),
         Station("Metro Oriente", LatLng(38.76784, -9.09935), 4, 8),
+        // Novas estações centrais
+        Station("Terreiro do Paço", LatLng(38.7073, -9.1367), 10, 15),
+        Station("Baixa-Chiado", LatLng(38.7111, -9.1419), 8, 12),
+        Station("Marquês de Pombal", LatLng(38.7256, -9.1501), 12, 20),
+        Station("Rossio", LatLng(38.7142, -9.1410), 7, 12),
     )
 
     val cameraPositionState = rememberCameraPositionState {
@@ -132,10 +146,16 @@ fun MapScreenWithMarkers(navController: NavController) {
                                 station.location.latitude,
                                 station.location.longitude
                             )
+                    val iconDescriptor = umbrellaMarkerIcon(
+                        context = context,
+                        available = station.available > 0
+                    )
                     Marker(
                         state = MarkerState(position = station.location),
                         title = station.name,
-                        snippet = snippet
+                        snippet = snippet,
+                        icon = iconDescriptor,
+                        anchor = Offset(0.5f, 1.0f)
                     )
                 }
             }
@@ -160,4 +180,30 @@ fun MapScreenWithMarkers(navController: NavController) {
 fun PreviewMapScreenWithMarkers() {
     val navController = rememberNavController()
     MapScreenWithMarkers(navController)
+}
+
+// Gera um BitmapDescriptor com um círculo colorido e o emoji de guarda-chuva no centro
+private fun umbrellaMarkerIcon(context: android.content.Context, available: Boolean): BitmapDescriptor {
+    val density = context.resources.displayMetrics.density
+    val sizePx = (48 * density).toInt()
+    val bitmap = Bitmap.createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+
+    val bgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = (if (available) Color(0xFF1976D2) else Color(0xFF9E9E9E)).toArgb()
+    }
+    // Fundo circular
+    val radius = sizePx / 2f
+    canvas.drawCircle(radius, radius, radius, bgPaint)
+
+    val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = android.graphics.Color.WHITE
+        textAlign = Paint.Align.CENTER
+        textSize = sizePx * 0.6f
+    }
+    val fm = textPaint.fontMetrics
+    val textCenterY = sizePx / 2f - (fm.ascent + fm.descent) / 2f
+    canvas.drawText("☂", sizePx / 2f, textCenterY, textPaint)
+
+    return BitmapDescriptorFactory.fromBitmap(bitmap)
 }

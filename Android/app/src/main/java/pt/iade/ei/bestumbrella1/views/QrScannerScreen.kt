@@ -52,6 +52,8 @@ fun QrScannerScreen(
     var cameraProviderRef by remember { mutableStateOf<ProcessCameraProvider?>(null) }
     var cameraRef by remember { mutableStateOf<androidx.camera.core.Camera?>(null) }
     var torchEnabled by remember { mutableStateOf(false) }
+    var shouldStartAfterPermission by remember { mutableStateOf(false) }
+    var scannedText by remember { mutableStateOf("") }
     val cameraExecutor = remember { Executors.newSingleThreadExecutor() }
     DisposableEffect(Unit) {
         onDispose { cameraExecutor.shutdown() }
@@ -67,7 +69,13 @@ fun QrScannerScreen(
 
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { granted -> hasCameraPermission = granted }
+    ) { granted ->
+        hasCameraPermission = granted
+        if (granted && shouldStartAfterPermission) {
+            startScanner = true
+            shouldStartAfterPermission = false
+        }
+    }
 
     val scannerOptions = remember {
         BarcodeScannerOptions.Builder().setBarcodeFormats(Barcode.FORMAT_QR_CODE).build()
@@ -104,7 +112,14 @@ fun QrScannerScreen(
     }
 
     LaunchedEffect(Unit) {
-        if (!hasCameraPermission) launcher.launch(Manifest.permission.CAMERA)
+        if (!hasCameraPermission) {
+            // Solicitar permissão e iniciar automaticamente ao conceder
+            shouldStartAfterPermission = true
+            launcher.launch(Manifest.permission.CAMERA)
+        } else {
+            // Se já tiver permissão, iniciar imediatamente
+            startScanner = true
+        }
     }
 
     Scaffold(
@@ -160,6 +175,36 @@ fun QrScannerScreen(
                     .padding(30.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                OutlinedTextField(
+                    value = scannedText,
+                    onValueChange = { scannedText = it },
+                    label = { Text("Resultado do scan") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.height(16.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Button(
+                        onClick = {
+                            if (scannedText.isNotBlank()) {
+                                navController.navigate("rentalDetails/$scannedText")
+                            }
+                        },
+                        enabled = scannedText.isNotBlank()
+                    ) {
+                        Icon(Icons.Default.Check, contentDescription = null, tint = Color.Black)
+                        Spacer(Modifier.width(8.dp))
+                        Text("Usar código", color = Color.Black)
+                    }
+                    OutlinedButton(
+                        onClick = { scannedText = "" }
+                    ) {
+                        Icon(Icons.Default.Clear, contentDescription = null, tint = Color.Black)
+                        Spacer(Modifier.width(8.dp))
+                        Text("Limpar", color = Color.Black)
+                    }
+                }
+                Spacer(Modifier.height(16.dp))
                 Text("Scanner QR", style = MaterialTheme.typography.headlineMedium, color = Color.Black)
                 Spacer(Modifier.height(50.dp))
                 Text(
@@ -173,7 +218,15 @@ fun QrScannerScreen(
                 Text("Pronto para escanear", style = MaterialTheme.typography.titleMedium, color = Color.Black)
                 Text("Toque no botão abaixo para ativar a câmera", style = MaterialTheme.typography.bodySmall, color = Color.Black)
                 Spacer(Modifier.height(35.dp))
-                Button(onClick = { startScanner = true }) {
+                Button(onClick = {
+                    if (hasCameraPermission) {
+                        scannedText = ""
+                        startScanner = true
+                    } else {
+                        shouldStartAfterPermission = true
+                        launcher.launch(Manifest.permission.CAMERA)
+                    }
+                }) {
                     Icon(Icons.Default.CameraAlt, contentDescription = null, tint = Color.Black)
                     Spacer(Modifier.width(8.dp))
                     Text("Iniciar Scanner", color = Color.Black)
@@ -208,8 +261,11 @@ fun QrScannerScreen(
                     AndroidView(
                         modifier = Modifier.fillMaxSize(),
                         factory = { ctx ->
-                            val previewView = PreviewView(ctx)
-                            val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
+                    val previewView = PreviewView(ctx)
+                    // Melhor compatibilidade e preenchimento da área
+                    previewView.scaleType = PreviewView.ScaleType.FILL_CENTER
+                    previewView.implementationMode = PreviewView.ImplementationMode.COMPATIBLE
+                    val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
 
                             cameraProviderFuture.addListener({
                                 val provider = cameraProviderFuture.get()
@@ -223,10 +279,13 @@ fun QrScannerScreen(
                                     .setTargetResolution(Size(1280, 720))
                                     .build().also {
                                         it.setAnalyzer(cameraExecutor, BarcodeAnalyser { code ->
-                                            startScanner = false
-                                            onCodeScanned(code)
-                                            Toast.makeText(ctx, "Código: $code", Toast.LENGTH_SHORT).show()
-                                            cameraProviderRef?.unbindAll()
+                                            // Pausar após primeira leitura e mostrar código
+                                            if (scannedText != code) {
+                                                scannedText = code
+                                                Toast.makeText(ctx, "Código: $code", Toast.LENGTH_SHORT).show()
+                                                startScanner = false
+                                                cameraProviderRef?.unbindAll()
+                                            }
                                         })
                                     }
 
@@ -286,6 +345,8 @@ fun QrScannerScreen(
                                 tint = Color.White
                             )
                         }
+
+                        // Removidos controles de overlay para usar a linha inferior antiga
                     }
                 }
             }

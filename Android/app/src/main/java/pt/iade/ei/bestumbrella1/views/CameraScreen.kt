@@ -68,6 +68,9 @@ fun CameraPreviewScreen() {
                     .height(400.dp),
                 factory = { ctx ->
                     val previewView = PreviewView(ctx)
+                    // Melhor compatibilidade e preenchimento da área para evitar tela preta
+                    previewView.scaleType = PreviewView.ScaleType.FILL_CENTER
+                    previewView.implementationMode = PreviewView.ImplementationMode.COMPATIBLE
                     val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
 
                     cameraProviderFuture.addListener({
